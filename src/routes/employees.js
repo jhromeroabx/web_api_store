@@ -3,8 +3,18 @@ const router = express.Router();
 
 const mysqlConnection = require("../database");
 
-router.get("/", (req, res) => {
-  res.json("HOLA A TODOS");
+router.get("/employee", (req, res) => {
+  res.json("HOLA A TODOS LOS EMPLEADOS!!!");
+});
+
+router.get("/getAllEmployeeType", (req, res) => {
+  mysqlConnection.query("SELECT * FROM tb_employee_type ty WHERE ty.estado = 1", (err, rows, fields) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.json(rows);
+    }
+  });
 });
 
 router.get("/getAllEmployee", (req, res) => {
