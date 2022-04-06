@@ -12,3 +12,6 @@ node app
 nodemon app
 <!-- SI FALLA, SE REINSTALLA EL NODEMON -->
 npm install -g nodemon
+
+<!-- INICIAR PROYECTO -->
+node src/index.js

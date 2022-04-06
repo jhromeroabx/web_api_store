@@ -3,6 +3,10 @@ const router = express.Router();
 
 const mysqlConnection = require("../database");
 
+router.get("/", (req, res) => {
+  res.json("SERVICIO DE CALIDAD DE SOFTWARE");
+});
+
 router.get("/employee", (req, res) => {
   res.json("HOLA A TODOS LOS EMPLEADOS!!!");
 });

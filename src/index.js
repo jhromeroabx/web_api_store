@@ -10,6 +10,8 @@ app.use(express.json());//convertira en JSON nuestra info
 // routes
 app.use(require('./routes/employees'));
 app.use(require('./routes/users'));
+// app.use(require('./routes/productos'));
+// app.use(require('./routes/venta'));
 
 //Starting server
 app.listen(app.get('port'), ()=> {//setteamos la prop PORT asi que lo getteamos
