@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-04-2022 a las 03:03:04
+-- Tiempo de generación: 08-04-2022 a las 07:57:25
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.1
 
@@ -129,6 +129,50 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tb_categoria`
+--
+
+CREATE TABLE `tb_categoria` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(30) NOT NULL,
+  `comentario` varchar(150) NOT NULL,
+  `active` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_compra`
+--
+
+CREATE TABLE `tb_compra` (
+  `id` int(11) NOT NULL,
+  `comentario` varchar(150) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `id_user_responsable` int(11) NOT NULL,
+  `active` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_compra_producto`
+--
+
+CREATE TABLE `tb_compra_producto` (
+  `id` int(11) NOT NULL,
+  `id_compra` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad_comprada` int(11) NOT NULL,
+  `cantidad_restante` int(11) NOT NULL,
+  `precio_comprado` double NOT NULL,
+  `precio_actual` double NOT NULL,
+  `active` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tb_employee`
 --
 
@@ -173,6 +217,22 @@ INSERT INTO `tb_employee_type` (`id`, `nom_type`, `desc`, `estado`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tb_producto`
+--
+
+CREATE TABLE `tb_producto` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(20) NOT NULL,
+  `comentario` varchar(200) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio` double NOT NULL,
+  `id_categoria` int(11) NOT NULL,
+  `active` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tb_profile`
 --
 
@@ -192,6 +252,47 @@ INSERT INTO `tb_profile` (`id`, `id_user`, `user`, `contrasenia`, `last_connecti
 (1, 1, 'jhromero.abx@gmail.com', '12345', '2022-03-27 16:59:47'),
 (2, 2, 'dromero.abx@gmail.com', '12345', '2022-03-27 17:00:00'),
 (3, 4, 'wasd@gmail.com', '12345', '2022-03-27 18:02:10');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_retiro`
+--
+
+CREATE TABLE `tb_retiro` (
+  `id` int(11) NOT NULL,
+  `comentario` varchar(150) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `id_user_responsable` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_retiro_producto`
+--
+
+CREATE TABLE `tb_retiro_producto` (
+  `id` int(11) NOT NULL,
+  `id_retiro` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio` double NOT NULL,
+  `active` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_unidad_medida`
+--
+
+CREATE TABLE `tb_unidad_medida` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(20) NOT NULL,
+  `comentario` varchar(150) NOT NULL,
+  `level` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -249,6 +350,24 @@ INSERT INTO `tb_user_type` (`id`, `nombre`, `descripcion`, `estado`) VALUES
 --
 
 --
+-- Indices de la tabla `tb_categoria`
+--
+ALTER TABLE `tb_categoria`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tb_compra`
+--
+ALTER TABLE `tb_compra`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tb_compra_producto`
+--
+ALTER TABLE `tb_compra_producto`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `tb_employee`
 --
 ALTER TABLE `tb_employee`
@@ -262,11 +381,35 @@ ALTER TABLE `tb_employee_type`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `tb_producto`
+--
+ALTER TABLE `tb_producto`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `tb_profile`
 --
 ALTER TABLE `tb_profile`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_profile_user` (`id_user`);
+
+--
+-- Indices de la tabla `tb_retiro`
+--
+ALTER TABLE `tb_retiro`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tb_retiro_producto`
+--
+ALTER TABLE `tb_retiro_producto`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tb_unidad_medida`
+--
+ALTER TABLE `tb_unidad_medida`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `tb_user`
@@ -286,6 +429,24 @@ ALTER TABLE `tb_user_type`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `tb_categoria`
+--
+ALTER TABLE `tb_categoria`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tb_compra`
+--
+ALTER TABLE `tb_compra`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tb_compra_producto`
+--
+ALTER TABLE `tb_compra_producto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `tb_employee`
 --
 ALTER TABLE `tb_employee`
@@ -298,10 +459,34 @@ ALTER TABLE `tb_employee_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de la tabla `tb_producto`
+--
+ALTER TABLE `tb_producto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `tb_profile`
 --
 ALTER TABLE `tb_profile`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `tb_retiro`
+--
+ALTER TABLE `tb_retiro`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tb_retiro_producto`
+--
+ALTER TABLE `tb_retiro_producto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tb_unidad_medida`
+--
+ALTER TABLE `tb_unidad_medida`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_user`
