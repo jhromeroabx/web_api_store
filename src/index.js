@@ -12,7 +12,7 @@ try {
   app.use(require("./routes/employees"));
   app.use(require("./routes/users"));
   app.use(require("./routes/products"));
-  //   app.use(require('./routes/venta'));
+  app.use(require("./routes/compras"));
 
   //ruta incial de la app
   app.get("/", (req, res) => {
