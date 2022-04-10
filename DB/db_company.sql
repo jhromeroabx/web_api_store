@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-04-2022 a las 07:57:25
+-- Tiempo de generación: 10-04-2022 a las 04:46:19
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.1
 
@@ -25,9 +25,67 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `categoriaAddOrEdit` (IN `_id` INT, IN `_nombre` VARCHAR(30), IN `_comentario` VARCHAR(150), IN `_active` BOOLEAN)  BEGIN
+SET @error = 'TODO BIEN!!!';
+IF _id = 0 THEN
+	INSERT INTO tb_categoria (nombre, comentario, active) VALUES (_nombre, _comentario, 1);
+    SET _id = last_insert_id();
+ELSE
+	SET @existe_categoria = IF( EXISTS(select * from tb_categoria cat WHERE cat.id = _id),1,0);
+    IF @existe_categoria = 1 THEN
+    	UPDATE tb_categoria SET nombre = _nombre, comentario = _comentario, active = _active WHERE id = _id;
+    ELSE
+    	SET @error = 'NO EXISTE LA CATEGORIA';
+    END IF;
+END IF;
+SELECT _id AS id, @error as error;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `compraAdd` (IN `_comentario` VARCHAR(150), IN `_id_user_responsable` INT, IN `_productos_concat` VARCHAR(250), IN `_cantidad_productos` INT)  BEGIN
+	START TRANSACTION;
+	SET AUTOCOMMIT=0;
+    SET @error = 'TODO BIEN!!!';
+    INSERT INTO tb_compra (comentario,fecha,id_user_responsable,active) VALUES (_comentario, NOW(), _id_user_responsable, 1);
+    SET @id_compra = last_insert_id();
+    
+    
+    SET @contadorProductos = 1;
+    SET @error_gestion_productos = 0;
+    WHILE (@contadorProductos <= _cantidad_productos AND @error_gestion_productos = 0) DO
+    	SET @producto = SPLIT_STR(_productos_concat, '@', @contadorProductos);
+        
+        SET @contadorProductos = @contadorProductos + 1;
+        
+        SET @id_producto = SPLIT_STR(@producto, '|', 1);
+        SET @cantidad_comprada = SPLIT_STR(@producto, '|', 2);
+        SET @precio_comprado = SPLIT_STR(@producto, '|', 3);
+        
+        SET @existe_producto := IF( EXISTS(
+             SELECT *
+             FROM tb_producto tp
+             WHERE tp.id = @id_producto), 1, 0);
+        IF @existe_producto = 1 THEN
+        	INSERT INTO tb_compra_producto (id_compra, id_producto, cantidad_comprada, cantidad_restante, precio_comprado, precio_actual,   active)
+            VALUES (@id_compra, @id_producto, @cantidad_comprada, @cantidad_comprada, @precio_comprado, @precio_comprado, 1);
+            
+            SET @cantidad_producto := (SELECT cantidad FROM tb_producto where id = @id_producto);
+            
+            SET @cantidad_producto = @cantidad_producto + @cantidad_comprada;
+            
+            UPDATE tb_producto SET cantidad = @cantidad_producto, precio = @precio_comprado, active = 1 WHERE id = @id_producto;
+        ELSE
+            SET @error_gestion_productos = 1;
+        	SET @error = 'NO EXISTE EL PRODUCTO';
+        	ROLLBACK;
+        END IF;
+    END WHILE;
+    COMMIT;
+    SELECT @id_compra AS id, @error as error;
+END$$
+
 CREATE DEFINER=`qwert`@`%` PROCEDURE `employeeAddOrEdit` (`_id` INT, `_name` VARCHAR(50), `_salary` DECIMAL, `_id_employee_type` INT)  BEGIN
 	SET @EXISTE := 0;
-    SET @ERROR := 'no error';
+    SET @ERROR := 'TODO BIEN!!!';
 	IF _id = 0 THEN
 		INSERT INTO tb_employee (name, salary, id_employee_type)
         VALUES (_name,_salary, _id_employee_type);
@@ -54,7 +112,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (IN `_user` VARCHAR(30), IN `_contrasenia` VARCHAR(30))  BEGIN
 	SET @ACCESS := 0;
-    SET @MSG := 'no error, hay otro ROW con data';	
+    SET @MSG := 'TODO BIEN, HAY DATOS DEL USER!!!';	
     	SET @ACCESS := IF( EXISTS(
             SELECT * FROM tb_profile tp
             INNER JOIN tb_user tu 
@@ -70,11 +128,42 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (IN `_user` VARCHAR(30), IN 
     	END IF;
 END$$
 
+CREATE DEFINER=`qwert`@`%` PROCEDURE `productoAddOrEdit` (`_id` INT, `_nombre` VARCHAR(20), `_comentario` VARCHAR(200), `_id_categoria` INT, `_active` INT)  BEGIN	
+    SET @error = 'TODO BIEN';
+    
+    SET @existe_categoria = IF( EXISTS(select * from tb_categoria cat WHERE cat.id = _id_categoria AND cat.active = 1),1,0);
+	IF @existe_categoria = 1 THEN    
+		IF _id = 0 THEN
+			INSERT INTO tb_producto (nombre, comentario, cantidad, precio, id_categoria, active) VALUES (_nombre, _comentario, 0, 0, _id_categoria, 0);
+            SET _id = last_insert_id();
+		ELSE
+			SET @existe_producto = IF( EXISTS(select * from tb_producto prod WHERE prod.id = _id),1,0);
+			IF @existe_producto = 1 THEN
+				UPDATE tb_producto SET nombre = _nombre, comentario = _comentario, id_categoria = _id_categoria, active = _active WHERE id = _id;
+			ELSE
+				SET @error = 'NO EXISTE EL PRODUCTO';
+			END IF;
+        END IF;
+	ELSE
+		SET @error = 'NO EXISTE LA CATEGORIA';
+	END IF;
+    SELECT _id AS id, @error as error;
+END$$
+
+CREATE DEFINER=`qwert`@`%` PROCEDURE `SPLIT_LOOP_COUNTER_while` (`valores` VARCHAR(500), `_cant_valores` INT)  BEGIN
+SET @contador = 1;
+
+	WHILE (@contador <= _cant_valores) DO		
+		INSERT INTO test (valor,counter) VALUES (SPLIT_STR(valores, '|', @contador),@contador);
+        SET @contador=@contador+1;
+    END WHILE;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `userAddOrEdit` (IN `_id` INT, IN `_nombre` VARCHAR(200), IN `_apellido` VARCHAR(200), IN `_dni` VARCHAR(10), IN `_telefono` VARCHAR(30), IN `_email` VARCHAR(200), IN `_fecha_nacimiento` DATE, IN `_estado` TINYINT(1), IN `_id_user_type` INT, IN `_contrasenia` VARCHAR(15))  BEGIN
 	SET @EXISTE_user := 0;
     SET @EXISTE_dni := 0;
     SET @EXISTE_email := 0;
-    SET @ERROR := 'no error';	    
+    SET @ERROR := 'TODO BIEN!!!';
     
     IF _id = 0 THEN
     	SET @EXISTE_dni := IF( EXISTS(
@@ -124,6 +213,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `userAddOrEdit` (IN `_id` INT, IN `_
     SELECT _id AS id, @ERROR as error;
 END$$
 
+--
+-- Funciones
+--
+CREATE DEFINER=`qwert`@`%` FUNCTION `SPLIT_STR` (`x` VARCHAR(255), `delim` VARCHAR(12), `pos` INT) RETURNS VARCHAR(255) CHARSET utf8mb4 RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos),
+       LENGTH(SUBSTRING_INDEX(x, delim, pos -1)) + 1),
+       delim, '')$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -139,6 +235,20 @@ CREATE TABLE `tb_categoria` (
   `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `tb_categoria`
+--
+
+INSERT INTO `tb_categoria` (`id`, `nombre`, `comentario`, `active`) VALUES
+(1, 'menestras', 'Menestras de todo tipo que se pesan en gramos', 1),
+(2, 'bebidas', 'Bebidas de todo tipo que tiene diferentes presentaciones', 1),
+(3, 'Embutidos', 'Embutidos que vienen en diferentes presentaciones, no se vende en partes', 1),
+(4, 'Lacteos', 'Son queso y leche empaquetados o en embotellados, no se vende en partes, vienen en diferentes presentaciones', 1),
+(5, 'productos de aseo personal', 'Jabones, crema dental, Shampoo, entro otros para el aseo personal', 1),
+(6, 'productos de limpieza', 'Son productos solo para limpiar superficies, no para uso humano', 1),
+(7, 'comestibles', 'Son golosinas en general', 1),
+(8, 'comestible para mascotas', 'Comida para todo tipo de mascotas en distintas presentaciones', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -152,6 +262,16 @@ CREATE TABLE `tb_compra` (
   `id_user_responsable` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tb_compra`
+--
+
+INSERT INTO `tb_compra` (`id`, `comentario`, `fecha`, `id_user_responsable`, `active`) VALUES
+(1, 'Compra de agua y Rellenitas', '2022-04-09 21:10:54', 1, 1),
+(2, 'Compra de agua y Rellenitas', '2022-04-09 21:22:20', 1, 1),
+(4, 'Compra de galleta casino y Chistris', '2022-04-09 21:40:17', 3, 1),
+(5, 'Compra de galleta casino y Chistris', '2022-04-09 21:42:56', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -169,6 +289,20 @@ CREATE TABLE `tb_compra_producto` (
   `precio_actual` double NOT NULL,
   `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tb_compra_producto`
+--
+
+INSERT INTO `tb_compra_producto` (`id`, `id_compra`, `id_producto`, `cantidad_comprada`, `cantidad_restante`, `precio_comprado`, `precio_actual`, `active`) VALUES
+(1, 1, 3, 5, 5, 1.5, 1.5, 1),
+(2, 1, 4, 10, 10, 2.5, 2.5, 1),
+(3, 2, 3, 10, 10, 1.5, 1.5, 1),
+(4, 2, 4, 20, 20, 2.5, 2.5, 1),
+(6, 4, 6, 10, 10, 1.2, 1.2, 1),
+(7, 4, 7, 10, 10, 1, 1, 1),
+(8, 5, 6, 10, 10, 1.2, 1.2, 1),
+(9, 5, 7, 10, 10, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -188,9 +322,12 @@ CREATE TABLE `tb_employee` (
 --
 
 INSERT INTO `tb_employee` (`id`, `name`, `salary`, `id_employee_type`) VALUES
-(23, 'JHOSEP', 30000, 1),
-(24, 'Ximena', 3500, 2),
-(25, 'EDUARDAZO', 123123, 3);
+(1, 'Ing de sistemas', 35000, 1),
+(2, 'Administrador general', 50000, 1),
+(3, 'Contador y Financista', 25000, 4),
+(4, 'Asistente de contabilidad y almacen', 5000, 3),
+(5, 'Almacenero', 3500, 3),
+(6, 'Atencion  y soporte cliente', 4500, 3);
 
 -- --------------------------------------------------------
 
@@ -211,8 +348,9 @@ CREATE TABLE `tb_employee_type` (
 
 INSERT INTO `tb_employee_type` (`id`, `nom_type`, `desc`, `estado`) VALUES
 (1, 'admin', 'admin', 1),
-(2, 'help', 'help support', 0),
-(3, 'assitant', 'assitant for queries or guides', 1);
+(2, 'help', 'help support', 1),
+(3, 'assitant', 'assitant for queries or guides', 1),
+(4, 'accounting', 'Contabilidad general', 1);
 
 -- --------------------------------------------------------
 
@@ -229,6 +367,16 @@ CREATE TABLE `tb_producto` (
   `id_categoria` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tb_producto`
+--
+
+INSERT INTO `tb_producto` (`id`, `nombre`, `comentario`, `cantidad`, `precio`, `id_categoria`, `active`) VALUES
+(3, 'Agua Cielo', 'Agua Cielo de 650 Ml', 15, 1.5, 2, 1),
+(4, 'Rellenitas', 'Rellenitas de 6 galletas', 30, 2.5, 7, 1),
+(6, 'Chistris', 'Snack de queso Chistris', 20, 1.2, 7, 1),
+(7, 'Casino', 'Galleta con relleno de menta', 20, 1, 7, 1);
 
 -- --------------------------------------------------------
 
@@ -294,6 +442,14 @@ CREATE TABLE `tb_unidad_medida` (
   `level` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `tb_unidad_medida`
+--
+
+INSERT INTO `tb_unidad_medida` (`id`, `nombre`, `comentario`, `level`) VALUES
+(1, '1 Litro', '1 Litro para todo', 1),
+(2, '500 ml', 'medio litro para todo', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -345,6 +501,28 @@ INSERT INTO `tb_user_type` (`id`, `nombre`, `descripcion`, `estado`) VALUES
 (3, 'client assitant', 'asistente del cliente y recepcion de reqs de los clientes', 1),
 (4, 'client guide', 'Guia de los clientes para ubicacion de todo el sistema', 0);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `test`
+--
+
+CREATE TABLE `test` (
+  `id` int(11) NOT NULL,
+  `valor` varchar(30) NOT NULL,
+  `counter` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `test`
+--
+
+INSERT INTO `test` (`id`, `valor`, `counter`) VALUES
+(1, '20', 1),
+(2, 'galleta', 2),
+(3, 'comestible', 3),
+(4, '1', 4);
+
 --
 -- Índices para tablas volcadas
 --
@@ -365,7 +543,9 @@ ALTER TABLE `tb_compra`
 -- Indices de la tabla `tb_compra_producto`
 --
 ALTER TABLE `tb_compra_producto`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_compra` (`id_compra`),
+  ADD KEY `fk_compra_producto` (`id_producto`);
 
 --
 -- Indices de la tabla `tb_employee`
@@ -384,7 +564,8 @@ ALTER TABLE `tb_employee_type`
 -- Indices de la tabla `tb_producto`
 --
 ALTER TABLE `tb_producto`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tb_producto_ibfk_1` (`id_categoria`);
 
 --
 -- Indices de la tabla `tb_profile`
@@ -403,7 +584,9 @@ ALTER TABLE `tb_retiro`
 -- Indices de la tabla `tb_retiro_producto`
 --
 ALTER TABLE `tb_retiro_producto`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_retiro_producto` (`id_producto`),
+  ADD KEY `fk_retiro` (`id_retiro`);
 
 --
 -- Indices de la tabla `tb_unidad_medida`
@@ -425,6 +608,12 @@ ALTER TABLE `tb_user_type`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `test`
+--
+ALTER TABLE `test`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -432,37 +621,37 @@ ALTER TABLE `tb_user_type`
 -- AUTO_INCREMENT de la tabla `tb_categoria`
 --
 ALTER TABLE `tb_categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_compra`
 --
 ALTER TABLE `tb_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_compra_producto`
 --
 ALTER TABLE `tb_compra_producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_employee`
 --
 ALTER TABLE `tb_employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_employee_type`
 --
 ALTER TABLE `tb_employee_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_producto`
 --
 ALTER TABLE `tb_producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_profile`
@@ -486,7 +675,7 @@ ALTER TABLE `tb_retiro_producto`
 -- AUTO_INCREMENT de la tabla `tb_unidad_medida`
 --
 ALTER TABLE `tb_unidad_medida`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_user`
@@ -501,8 +690,21 @@ ALTER TABLE `tb_user_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT de la tabla `test`
+--
+ALTER TABLE `test`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `tb_compra_producto`
+--
+ALTER TABLE `tb_compra_producto`
+  ADD CONSTRAINT `fk_compra` FOREIGN KEY (`id_compra`) REFERENCES `tb_compra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_compra_producto` FOREIGN KEY (`id_producto`) REFERENCES `tb_producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `tb_employee`
@@ -511,10 +713,23 @@ ALTER TABLE `tb_employee`
   ADD CONSTRAINT `fk_type_employee` FOREIGN KEY (`id_employee_type`) REFERENCES `tb_employee_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Filtros para la tabla `tb_producto`
+--
+ALTER TABLE `tb_producto`
+  ADD CONSTRAINT `tb_producto_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `tb_categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Filtros para la tabla `tb_profile`
 --
 ALTER TABLE `tb_profile`
   ADD CONSTRAINT `fk_profile_user` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`);
+
+--
+-- Filtros para la tabla `tb_retiro_producto`
+--
+ALTER TABLE `tb_retiro_producto`
+  ADD CONSTRAINT `fk_retiro` FOREIGN KEY (`id_retiro`) REFERENCES `tb_retiro` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_retiro_producto` FOREIGN KEY (`id_producto`) REFERENCES `tb_producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `tb_user`
