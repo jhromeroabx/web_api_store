@@ -45,7 +45,11 @@ try {
   router.post("/login", (req, res) => {
     const { user, contrasenia } = req.body;
 
-    if (String(user).length > 50) {
+    if (String(user).length == 0 || String(contrasenia).length == 0) {
+      res
+        .status(500)
+        .send({ error: "el user y/o la contrasena estan vacias!" });
+    } else if (String(user).length > 50) {
       res
         .status(500)
         .send({ error: "el user no puede ser mayor de 50 caracteres!" });
@@ -59,7 +63,20 @@ try {
         if (err) {
           res.json("ERROR AT: /login", err);
         } else {
-          res.json(rows);
+          // const [RowDataPacket] = rows[0];
+          // console.log("PAQUETE DATA MYSQL",RowDataPacket);
+          // const {id,nombre,apellido,dni,telefono,email,estado} = RowDataPacket;
+          // console.log("ID DEL USER",id);
+          // if (condition) {
+
+          // }
+          // console.log("USER",rows[1]);
+          if (rows.length == 3) {
+            //el 1ero el state, el 2do del user y 3er del dataBDmysql
+            res.json({ state: rows[0], userData: rows[1] });
+          } else {
+            res.json({ state: rows[0], userData: null });
+          }
         }
       });
     }

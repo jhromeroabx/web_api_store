@@ -5,7 +5,8 @@ let mysqlConnection;
 try {
   mysqlConnection = mysql.createConnection({
     // host: "25.38.59.175",
-    host: "192.168.0.2",
+    // host: "192.168.0.2",
+    host: "127.0.0.1",
     // port: "3350",
     port: "3306",
     user: "qwert",
