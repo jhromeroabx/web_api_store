@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-04-2022 a las 04:46:19
+-- Tiempo de generación: 12-04-2022 a las 17:28:14
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.1
 
@@ -117,14 +117,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (IN `_user` VARCHAR(30), IN 
             SELECT * FROM tb_profile tp
             INNER JOIN tb_user tu 
             ON tp.id_user = tu.id 
-            WHERE tu.email = _user AND tp.contrasenia = 				_contrasenia), 1, 0);
+            WHERE tu.email = _user AND tp.contrasenia = _contrasenia), 1, 0);
     	IF @ACCESS = 1 THEN
-        	UPDATE tb_profile tp SET tp.last_connection = 					NOW() WHERE tp.user = _user;
-        	SELECT @MSG as msg;
-            SELECT * FROM tb_user tu WHERE tu.email = 				_user;
+        	UPDATE tb_profile tp SET tp.last_connection = NOW() WHERE tp.user = _user;
+        	SELECT @MSG as msg, true as state LIMIT 1;
+            SELECT * FROM tb_user tu WHERE tu.email = _user LIMIT 1;
         ELSE
         	SET @MSG = 'ACCESOS INCORRECTOS!!!';
-            SELECT @MSG as msg;
+            SELECT @MSG as msg, false as state LIMIT 1;
     	END IF;
 END$$
 
@@ -242,12 +242,12 @@ CREATE TABLE `tb_categoria` (
 INSERT INTO `tb_categoria` (`id`, `nombre`, `comentario`, `active`) VALUES
 (1, 'menestras', 'Menestras de todo tipo que se pesan en gramos', 1),
 (2, 'bebidas', 'Bebidas de todo tipo que tiene diferentes presentaciones', 1),
-(3, 'Embutidos', 'Embutidos que vienen en diferentes presentaciones, no se vende en partes', 1),
 (4, 'Lacteos', 'Son queso y leche empaquetados o en embotellados, no se vende en partes, vienen en diferentes presentaciones', 1),
 (5, 'productos de aseo personal', 'Jabones, crema dental, Shampoo, entro otros para el aseo personal', 1),
 (6, 'productos de limpieza', 'Son productos solo para limpiar superficies, no para uso humano', 1),
 (7, 'comestibles', 'Son golosinas en general', 1),
-(8, 'comestible para mascotas', 'Comida para todo tipo de mascotas en distintas presentaciones', 1);
+(8, 'comestible para mascotas', 'Comida para todo tipo de mascotas en distintas presentaciones', 1),
+(9, 'Herramientas', 'Herramientas para la cocina y aseo del hogar', 1);
 
 -- --------------------------------------------------------
 
@@ -271,7 +271,9 @@ INSERT INTO `tb_compra` (`id`, `comentario`, `fecha`, `id_user_responsable`, `ac
 (1, 'Compra de agua y Rellenitas', '2022-04-09 21:10:54', 1, 1),
 (2, 'Compra de agua y Rellenitas', '2022-04-09 21:22:20', 1, 1),
 (4, 'Compra de galleta casino y Chistris', '2022-04-09 21:40:17', 3, 1),
-(5, 'Compra de galleta casino y Chistris', '2022-04-09 21:42:56', 3, 1);
+(5, 'Compra de galleta casino y Chistris', '2022-04-09 21:42:56', 3, 1),
+(6, 'Comida para todo tipo de mascotas en distintas presentaciones', '2022-04-10 15:58:28', 3, 1),
+(7, 'Comida para todo tipo de mascotas en distintas presentaciones', '2022-04-10 16:00:37', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -302,7 +304,11 @@ INSERT INTO `tb_compra_producto` (`id`, `id_compra`, `id_producto`, `cantidad_co
 (6, 4, 6, 10, 10, 1.2, 1.2, 1),
 (7, 4, 7, 10, 10, 1, 1, 1),
 (8, 5, 6, 10, 10, 1.2, 1.2, 1),
-(9, 5, 7, 10, 10, 1, 1, 1);
+(9, 5, 7, 10, 10, 1, 1, 1),
+(10, 6, 6, 10, 10, 1.2, 1.2, 1),
+(11, 6, 7, 10, 10, 1, 1, 1),
+(12, 7, 6, 10, 10, 1.2, 1.2, 1),
+(13, 7, 7, 10, 10, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -322,7 +328,7 @@ CREATE TABLE `tb_employee` (
 --
 
 INSERT INTO `tb_employee` (`id`, `name`, `salary`, `id_employee_type`) VALUES
-(1, 'Ing de sistemas', 35000, 1),
+(1, 'Ing de sistemas e Informatica', 45000, 1),
 (2, 'Administrador general', 50000, 1),
 (3, 'Contador y Financista', 25000, 4),
 (4, 'Asistente de contabilidad y almacen', 5000, 3),
@@ -375,8 +381,9 @@ CREATE TABLE `tb_producto` (
 INSERT INTO `tb_producto` (`id`, `nombre`, `comentario`, `cantidad`, `precio`, `id_categoria`, `active`) VALUES
 (3, 'Agua Cielo', 'Agua Cielo de 650 Ml', 15, 1.5, 2, 1),
 (4, 'Rellenitas', 'Rellenitas de 6 galletas', 30, 2.5, 7, 1),
-(6, 'Chistris', 'Snack de queso Chistris', 20, 1.2, 7, 1),
-(7, 'Casino', 'Galleta con relleno de menta', 20, 1, 7, 1);
+(6, 'Chistris', 'Snack de queso Chistris', 40, 1.2, 7, 1),
+(7, 'Casino', 'Galleta con relleno de menta', 40, 1, 7, 1),
+(9, 'Picaras clasicas', 'Galleta picaras sabor clasica', 0, 0, 7, 1);
 
 -- --------------------------------------------------------
 
@@ -399,7 +406,7 @@ CREATE TABLE `tb_profile` (
 INSERT INTO `tb_profile` (`id`, `id_user`, `user`, `contrasenia`, `last_connection`) VALUES
 (1, 1, 'jhromero.abx@gmail.com', '12345', '2022-03-27 16:59:47'),
 (2, 2, 'dromero.abx@gmail.com', '12345', '2022-03-27 17:00:00'),
-(3, 4, 'wasd@gmail.com', '12345', '2022-03-27 18:02:10');
+(3, 4, 'wasd@gmail.com', '12345', '2022-04-11 23:42:05');
 
 -- --------------------------------------------------------
 
@@ -544,8 +551,8 @@ ALTER TABLE `tb_compra`
 --
 ALTER TABLE `tb_compra_producto`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_compra` (`id_compra`),
-  ADD KEY `fk_compra_producto` (`id_producto`);
+  ADD KEY `id_compra` (`id_compra`),
+  ADD KEY `id_producto` (`id_producto`);
 
 --
 -- Indices de la tabla `tb_employee`
@@ -621,19 +628,19 @@ ALTER TABLE `test`
 -- AUTO_INCREMENT de la tabla `tb_categoria`
 --
 ALTER TABLE `tb_categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_compra`
 --
 ALTER TABLE `tb_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_compra_producto`
 --
 ALTER TABLE `tb_compra_producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_employee`
@@ -651,7 +658,7 @@ ALTER TABLE `tb_employee_type`
 -- AUTO_INCREMENT de la tabla `tb_producto`
 --
 ALTER TABLE `tb_producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_profile`
@@ -703,8 +710,8 @@ ALTER TABLE `test`
 -- Filtros para la tabla `tb_compra_producto`
 --
 ALTER TABLE `tb_compra_producto`
-  ADD CONSTRAINT `fk_compra` FOREIGN KEY (`id_compra`) REFERENCES `tb_compra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_compra_producto` FOREIGN KEY (`id_producto`) REFERENCES `tb_producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `tb_compra_producto_ibfk_1` FOREIGN KEY (`id_compra`) REFERENCES `tb_compra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `tb_compra_producto_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `tb_producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `tb_employee`
