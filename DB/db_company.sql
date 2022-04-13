@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-04-2022 a las 17:28:14
+-- Tiempo de generación: 13-04-2022 a las 16:00:51
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.1
 
@@ -159,10 +159,11 @@ SET @contador = 1;
     END WHILE;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `userAddOrEdit` (IN `_id` INT, IN `_nombre` VARCHAR(200), IN `_apellido` VARCHAR(200), IN `_dni` VARCHAR(10), IN `_telefono` VARCHAR(30), IN `_email` VARCHAR(200), IN `_fecha_nacimiento` DATE, IN `_estado` TINYINT(1), IN `_id_user_type` INT, IN `_contrasenia` VARCHAR(15))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `userAddOrEdit` (IN `_id` INT, IN `_nombre` VARCHAR(200), IN `_apellido` VARCHAR(200), IN `_dni` VARCHAR(10), IN `_telefono` VARCHAR(30), IN `_email` VARCHAR(50), IN `_fecha_nacimiento` DATE, IN `_estado` TINYINT(1), IN `_id_user_type` INT, IN `_contrasenia` VARCHAR(15))  BEGIN
 	SET @EXISTE_user := 0;
     SET @EXISTE_dni := 0;
     SET @EXISTE_email := 0;
+    SET @STATE := true;
     SET @ERROR := 'TODO BIEN!!!';
     
     IF _id = 0 THEN
@@ -176,12 +177,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `userAddOrEdit` (IN `_id` INT, IN `_
              WHERE tu.email = _email), 1, 0);             
     	IF @EXISTE_dni = 1 OR @EXISTE_email = 1 THEN
         	SET @ERROR = 'EL DNI EXISTE Y/O EL EMAIL EXISTE';
+            SET @STATE := false;
         ELSE
-        	INSERT INTO tb_user (nombre, apellido, dni, telefono, email, 					fecha_nacimiento, estado, id_user_type) VALUES (_nombre, _apellido, 			_dni, _telefono, _email, _fecha_nacimiento, _estado, _id_user_type);
+        	INSERT INTO tb_user (nombre, apellido, dni, telefono, email,fecha_nacimiento, estado, id_user_type)
+            VALUES (_nombre, _apellido,_dni, _telefono, _email, _fecha_nacimiento, _estado, _id_user_type);
         
         	SET _id = last_insert_id();
         
-            INSERT INTO tb_profile (id_user, `user`, contrasenia, last_connection) VALUES (_id, _email, _contrasenia, NOW());                
+            INSERT INTO tb_profile (id_user, `user`, contrasenia, last_connection)
+            VALUES (_id, _email, _contrasenia, NOW());
     	END IF;		
 	ELSE
     	SET @EXISTE_dni := IF( EXISTS(
@@ -199,18 +203,20 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `userAddOrEdit` (IN `_id` INT, IN `_
              
     	IF @EXISTE_dni = 1 THEN
         	SET @ERROR = 'EL DNI YA EXISTE';
+            SET @STATE := false;
         ELSEIF @EXISTE_email = 1 THEN
         	SET @ERROR = 'EL CORREO YA EXISTE';
+            SET @STATE := false;
         ELSEIF @EXISTE_user = 0 THEN
         	SET @ERROR = 'EL USER NO EXISTE';
+            SET @STATE := false;
         ELSE
         	UPDATE tb_user SET nombre = _nombre, apellido = _apellido, dni = _dni, telefono = _telefono, email = _email, fecha_nacimiento = _fecha_nacimiento, estado = _estado, id_user_type = _id_user_type WHERE id = _id;
             
-            UPDATE tb_profile SET `user` = _email, last_connection = NOW() WHERE id_user = _id;
-            
+            UPDATE tb_profile SET `user` = _email WHERE id_user = _id;            
     	END IF;    
 	END IF;
-    SELECT _id AS id, @ERROR as error;
+    SELECT _id AS id, @ERROR as error, @STATE as state;
 END$$
 
 --
@@ -404,9 +410,15 @@ CREATE TABLE `tb_profile` (
 --
 
 INSERT INTO `tb_profile` (`id`, `id_user`, `user`, `contrasenia`, `last_connection`) VALUES
-(1, 1, 'jhromero.abx@gmail.com', '12345', '2022-03-27 16:59:47'),
+(1, 1, 'jhromero.abx@gmail.com', '12345', '2022-04-13 00:32:15'),
 (2, 2, 'dromero.abx@gmail.com', '12345', '2022-03-27 17:00:00'),
-(3, 4, 'wasd@gmail.com', '12345', '2022-04-11 23:42:05');
+(3, 4, 'wasd@gmail.com', '12345', '2022-04-12 22:41:52'),
+(7, 8, 'pepit1.abx@gmail.com', '12345', '2022-04-12 22:18:55'),
+(8, 9, 'pepitooo.abx@gmail.com', '12345', '2022-04-12 22:19:24'),
+(9, 10, 'Flutter.abx@gmail.com', '12345', '2022-04-12 23:34:10'),
+(10, 11, 'vimaloa@gmail.com', '123', '2022-04-13 00:31:22'),
+(11, 12, 'celu.loasi@gmail.com', '123', '2022-04-13 00:15:20'),
+(12, 13, 'dloa@papu', '1234', '2022-04-13 00:35:24');
 
 -- --------------------------------------------------------
 
@@ -483,7 +495,13 @@ INSERT INTO `tb_user` (`id`, `nombre`, `apellido`, `dni`, `telefono`, `email`, `
 (1, 'Jhosep Adbel', 'Romero Loa', '74810248', '928769204', 'jhromero.abx@gmail.com', '2001-01-26', 1, 1),
 (2, 'Diego Abbel', 'Romero Loa', '74810249', '957043843', 'dromero.abx@gmail.com', '2003-09-03', 1, 2),
 (3, 'Ximena Maritza', 'Romero Loa', '74810500', '932123123', 'ximenaromeroloa@gmail.com', '2005-02-05', 1, 3),
-(4, 'gato', 'felino', '12345678', '999555111', 'wasd@gmail.com', '2001-01-26', 1, 1);
+(4, 'gato', 'felino', '12345678', '999555111', 'wasd@gmail.com', '2001-01-26', 1, 1),
+(8, 'pepita', 'palotes', '12345601', '912312312', 'pepit1.abx@gmail.com', '2005-02-05', 1, 5),
+(9, 'pepita', 'palotes', '12345600', '912312312', 'pepitooo.abx@gmail.com', '2005-02-05', 1, 5),
+(10, 'Flutter', 'Dart', '12345679', '925769204', 'Flutter.abx@gmail.com', '0000-00-00', 1, 5),
+(11, 'vicky', 'v', '16125887', '6767934', 'vimaloa@gmail.com', '0000-00-00', 1, 5),
+(12, 'celu', 'xiaomi', '12345677', '6767934', 'celu.loasi@gmail.com', '0000-00-00', 1, 5),
+(13, 'DLoa', 'EPC', '74810243', '957043843', 'dloa@papu', '0000-00-00', 1, 5);
 
 -- --------------------------------------------------------
 
@@ -506,7 +524,8 @@ INSERT INTO `tb_user_type` (`id`, `nombre`, `descripcion`, `estado`) VALUES
 (1, 'admin', 'administrador del sistema en general', 1),
 (2, 'developer senior', 'desarrollador del sistema y analista de nuevas funciones', 1),
 (3, 'client assitant', 'asistente del cliente y recepcion de reqs de los clientes', 1),
-(4, 'client guide', 'Guia de los clientes para ubicacion de todo el sistema', 0);
+(4, 'client guide', 'Guia de los clientes para ubicacion de todo el sistema', 1),
+(5, 'User Default', 'Usuario Default listo para ser asignado por el administrador', 1);
 
 -- --------------------------------------------------------
 
@@ -646,7 +665,7 @@ ALTER TABLE `tb_compra_producto`
 -- AUTO_INCREMENT de la tabla `tb_employee`
 --
 ALTER TABLE `tb_employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_employee_type`
@@ -664,7 +683,7 @@ ALTER TABLE `tb_producto`
 -- AUTO_INCREMENT de la tabla `tb_profile`
 --
 ALTER TABLE `tb_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_retiro`
@@ -688,13 +707,13 @@ ALTER TABLE `tb_unidad_medida`
 -- AUTO_INCREMENT de la tabla `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_user_type`
 --
 ALTER TABLE `tb_user_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `test`
@@ -729,7 +748,7 @@ ALTER TABLE `tb_producto`
 -- Filtros para la tabla `tb_profile`
 --
 ALTER TABLE `tb_profile`
-  ADD CONSTRAINT `fk_profile_user` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`);
+  ADD CONSTRAINT `fk_profile_user` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tb_retiro_producto`
