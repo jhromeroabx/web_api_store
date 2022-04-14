@@ -21,3 +21,5 @@ npm install -g nodemon
 <!-- INICIAR PROYECTO -->
 
 node src/index.js
+
+npm install --save minio

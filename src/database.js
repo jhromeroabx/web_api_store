@@ -23,7 +23,7 @@ try {
     }
   });
 } catch (error) {
-  console.console.error("error DATABASE", error);
+  console.console.error("Error DATABASE: ", error);
 }
 
 module.exports = mysqlConnection;
