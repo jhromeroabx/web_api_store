@@ -13,6 +13,7 @@ try {
   app.use(require("./routes/users"));
   app.use(require("./routes/products"));
   app.use(require("./routes/compras"));
+  app.use(require("./routes/minio"));
 
   //ruta incial de la app
   app.get("/", (req, res) => {
