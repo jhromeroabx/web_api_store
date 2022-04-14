@@ -27,7 +27,7 @@ router.get("/getAllCategory", (req, res) => {
 router.get("/getAllProducts", (req, res) => {
   try {
     mysqlConnection.query(
-      "SELECT * FROM tb_producto pro WHERE pro.active = 1",
+      "SELECT * FROM QuantityAllProducts",
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /getAllProducts", err);

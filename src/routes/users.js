@@ -163,14 +163,15 @@ try {
         ],
         (err, rows, fields) => {
           if (err) {
-            res.json("ERROR AT: /AddUserOrEdit", err);
+            res.status("ERROR AT: /AddUserOrEdit").json(err);
+            // res.json("ERROR AT: /AddUserOrEdit", err);
           } else {
             const [RowDataPacket] = rows[0];
             const { state } = RowDataPacket;
             if (state == 1) {
-              res.json({ response: RowDataPacket, state: true });  
+              res.json({ response: RowDataPacket, state: true , gaa: "test"});  
             } else {
-              res.json({ response: RowDataPacket, state: false });
+              res.json({ response: RowDataPacket, state: false , gaa: "test" });
             }
           }
         }
