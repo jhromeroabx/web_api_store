@@ -23,3 +23,9 @@ npm install -g nodemon
 node src/index.js
 
 npm install --save minio
+
+<!-- ACCESO A CARPETAS Y ARCHIVOS -->
+npm i --save file-system
+
+<!-- HTTPS -->
+npm install --save https

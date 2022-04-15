@@ -144,19 +144,15 @@ router.delete("/DeleteCategoria", (req, res) => {
 
     const query = "DELETE FROM tb_categoria WHERE id = ?";
 
-    mysqlConnection.query(
-      query,
-      [id],
-      (err, rows, fields) => {
-        if (!err) {
-          res.json({ status: "Categoria deleted", response: rows[0] });
-        } else {
-          res.json({ error: "ERROR AT INSIDE: /DeleteCategoria: "+err});          
-        }
+    mysqlConnection.query(query, [id], (err, rows, fields) => {
+      if (!err) {
+        res.json({ status: "Categoria deleted", response: rows[0] });
+      } else {
+        res.json({ error: "ERROR AT INSIDE: /DeleteCategoria: " + err });
       }
-    );
+    });
   } catch (error) {
-    res.json({ error: "ERROR AT OUTSIDE: /DeleteCategoria: "+err});
+    res.json({ error: "ERROR AT OUTSIDE: /DeleteCategoria: " + err });
   }
 });
 

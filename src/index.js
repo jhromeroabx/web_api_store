@@ -1,30 +1,52 @@
 const express = require("express");
 const app = express();
+var fs = require("file-system");
+const https = require("https");
+var path = require("path");
 
-try {
-  // Settings
-  app.set("port", process.env.PORT || 5000); //si el sistema tiene un puerto que nos lo de o sino 5000 por defecto
+const PORT_HTTP = 5000;
+const PORT_HTTPS = 5001;
 
-  // Middlewares --process before transactions
-  app.use(express.json()); //convertira en JSON nuestra info
+// Settings
+// app.set("port", process.env.PORT || PORT_HTTP); //si el sistema tiene un puerto que nos lo de o sino 5000 por defecto
 
-  // routes
-  app.use(require("./routes/employees"));
-  app.use(require("./routes/users"));
-  app.use(require("./routes/products"));
-  app.use(require("./routes/compras"));
-  app.use(require("./routes/minio"));
+// Middlewares --process before transactions
+app.use(express.json()); //convertira en JSON nuestra info
 
-  //ruta incial de la app
-  app.get("/", (req, res) => {
-    res.json("SERVICIO DE CALIDAD DE SOFTWARE");
-  });
+// routes
+app.use(require("./routes/employees"));
+app.use(require("./routes/users"));
+app.use(require("./routes/products"));
+app.use(require("./routes/compras"));
+app.use(require("./routes/minio"));
 
-  //Starting server
-  app.listen(app.get("port"), () => {
+const https_state = false;
+
+//https://192.168.18.5:5001/getAllCategory
+//http://192.168.18.5:5000/getAllCategory
+
+if (https_state) {
+  https
+    .createServer(
+      {
+        cert: fs.readFileSync(path.join(path.resolve('.'), '/src/certs/server.cer')),
+        key: fs.readFileSync(path.join(path.resolve('.'), '/src/certs/server.key')),
+      },
+      app
+    )
+    .listen(PORT_HTTPS, () => {
+      //arriba setteamos la prop PORT asi que lo usamos
+      console.log("activoo!!!!! in https://localhost:" + PORT_HTTPS);
+    });
+} else {
+  app.set("port", process.env.PORT || PORT_HTTP); //si el sistema tiene un puerto que nos lo de o sino 5000 por defecto
+  app.listen(PORT_HTTP, () => {
     //arriba setteamos la prop PORT asi que lo usamos
-    console.log("activoo!!!!! in http://localhost:5000");
+    console.log("activoo!!!!! in http://localhost:" + PORT_HTTP);
   });
-} catch (error) {
-  console.log("ERROR MAIN", error);
 }
+
+//ruta incial de la app
+app.get("/", (req, res) => {
+  res.json("SERVICIO DE CALIDAD DE SOFTWARE");
+});

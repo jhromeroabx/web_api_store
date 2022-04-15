@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
+    "file-system": "^2.2.2",
+    "https": "^1.0.0",
     "minio": "^7.0.27",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.15"
