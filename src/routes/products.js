@@ -44,10 +44,23 @@ router.get("/getAllProducts", (req, res) => {
 router.get("/findProductBy", (req, res) => {
   try {
     // const id_antiguo  = req.params.id;
-    const { id } = req.body;
+    const { id, barcode } = req.body;
+    let error_message = "";
+    if (String(id).length == 0) {
+      id = 0;
+      error_message =
+        "El producto con barCode: " +
+        [barcode] +
+        " no existe o no esta habilitado!";
+    } else if (String(barcode).length == 0) {
+      barcode = 0;
+      error_message =
+        "El producto con id: " + [id] + " no existe o no esta habilitado!";
+    }
+
     mysqlConnection.query(
-      "SELECT * FROM tb_producto pro WHERE pro.active = 1 AND pro.id = ?",
-      [id],
+      "CALL findProductBy(?, ?);",
+      [id, barcode],
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /findProductBy/:id", err);
@@ -56,10 +69,7 @@ router.get("/findProductBy", (req, res) => {
             //indicamos si el err esta null no trae data del SQL
             console.log("CONSULTA A TABLA PRODUCTS SIN ROWS");
             res.json({
-              status:
-                "El producto con id: " +
-                [id] +
-                " no existe o no esta habilitado!",
+              status: error_message,
             });
           } else {
             res.json(rows[0]);
