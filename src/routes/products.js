@@ -41,18 +41,18 @@ router.get("/getAllProducts", (req, res) => {
   }
 });
 
-router.get("/findProductBy", (req, res) => {
+router.post("/findProductBy", (req, res) => {
   try {
     // const id_antiguo  = req.params.id;
-    const { id, barcode } = req.body;
-    let error_message = "";
+    let { id, barcode } = req.body;
+    let error_message = "EL PRODUCTO NO EXISTE";
     if (String(id).length == 0) {
       id = 0;
       error_message =
         "El producto con barCode: " +
         [barcode] +
         " no existe o no esta habilitado!";
-    } else if (String(barcode).length == 0) {
+    } else {
       barcode = 0;
       error_message =
         "El producto con id: " + [id] + " no existe o no esta habilitado!";
@@ -72,7 +72,8 @@ router.get("/findProductBy", (req, res) => {
               status: error_message,
             });
           } else {
-            res.json(rows[0]);
+            const [RowDataPacket] = rows[0];
+            res.json(RowDataPacket);
           }
         }
       }
@@ -106,13 +107,20 @@ router.post("/disableProductBy", (req, res) => {
 
 router.post("/productoAddOrEdit", (req, res) => {
   try {
-    const { id, nombre, comentario, id_categoria, active } = req.body;
-
-    const query = "CALL productoAddOrEdit(?, ?, ?, ?, ?);";
+    const {
+      id,
+      nombre,
+      comentario,
+      barcode,
+      imagen_url,
+      id_categoria,
+      active,
+    } = req.body;
+    const query = "CALL productoAddOrEdit(?, ?, ?, ?, ?, ?, ?);";
 
     mysqlConnection.query(
       query,
-      [id, nombre, comentario, id_categoria, active],
+      [id, nombre, comentario, barcode, imagen_url, id_categoria, active],
       (err, rows, fields) => {
         if (!err) {
           res.json({ status: "Producto Saved", response: rows[0] });
