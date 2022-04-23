@@ -123,7 +123,13 @@ router.post("/productoAddOrEdit", (req, res) => {
       [id, nombre, comentario, barcode, imagen_url, id_categoria, active],
       (err, rows, fields) => {
         if (!err) {
-          res.json({ status: "Producto Saved", response: rows[0] });
+          const [RowDataPacket] = rows[0];
+          const { state } = RowDataPacket;
+          if (state == 1) {
+            res.json({ response: RowDataPacket, state: true });
+          } else {
+            res.json({ response: RowDataPacket, state: false });
+          }
         } else {
           console.error("ERROR AT: /productoAddOrEdit", err);
         }

@@ -153,9 +153,9 @@ router.post("/AddUserOrEdit", (req, res) => {
           const [RowDataPacket] = rows[0];
           const { state } = RowDataPacket;
           if (state == 1) {
-            res.json({ response: RowDataPacket, state: true, gaa: "test" });
+            res.json({ response: RowDataPacket, state: true });
           } else {
-            res.json({ response: RowDataPacket, state: false, gaa: "test" });
+            res.json({ response: RowDataPacket, state: false });
           }
         }
       }
