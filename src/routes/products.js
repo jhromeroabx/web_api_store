@@ -24,15 +24,23 @@ router.get("/getAllCategory", (req, res) => {
   }
 });
 
-router.get("/getAllProducts", (req, res) => {
+router.post("/getAllProducts", (req, res) => {
   try {
+    let { id_categoria, active } = req.body;
+
+    if (String(id_categoria).length == 0) {
+      id_categoria = 0;
+    }
+
     mysqlConnection.query(
-      "SELECT * FROM QuantityAllProducts",
+      "CALL ProductsByCategoryANDORActive(?,?)",
+      [id_categoria, active],
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /getAllProducts", err);
         } else {
-          res.json(rows);
+          const [RowDataPacket] = rows;
+          res.json(RowDataPacket);
         }
       }
     );
