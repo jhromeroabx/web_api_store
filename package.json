@@ -8,15 +8,24 @@
     "pro": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhromeroabx/web_api_store.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhromeroabx/web_api_store/issues"
+  },
+  "homepage": "https://github.com/jhromeroabx/web_api_store#readme",
   "dependencies": {
-    "express": "^4.17.3",
+    "@sentry/node": "^6.19.7",
+    "@sentry/tracing": "^6.19.7",
+    "express": "^4.18.1",
     "file-system": "^2.2.2",
     "https": "^1.0.0",
-    "minio": "^7.0.27",
-    "mysql": "^2.18.1",
-    "nodemon": "^2.0.15"
+    "minio": "^7.0.28",
+    "mysql": "^2.18.1"
   }
 }

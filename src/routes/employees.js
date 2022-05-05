@@ -3,10 +3,6 @@ const router = express.Router();
 
 const mysqlConnection = require("../database");
 
-router.get("/", (req, res) => {
-  res.json("SERVICIO DE CALIDAD DE SOFTWARE");
-});
-
 router.get("/employee", (req, res) => {
   res.json("HOLA A TODOS LOS EMPLEADOS!!!");
 });
@@ -17,14 +13,20 @@ router.get("/getAllEmployeeType", (req, res) => {
       "SELECT * FROM tb_employee_type ty WHERE ty.estado = 1",
       (err, rows, fields) => {
         if (err) {
-          console.error("ERROR AT: /getAllEmployee",err);
+          res
+      .status(500)
+      .send({ error: "ERROR AT: /getAllEmployeeType" + String(err) });
+          // console.error("ERROR AT: /getAllEmployeeType",err);
         } else {
           res.json(rows);
         }
       }
     );
   } catch (error) {
-    console.error("ERROR AT: /getAllEmployee", error);
+    res
+    .status(500)
+    .send({ error: "ERROR AT: /getAllEmployeeType" + String(err) });
+    // console.error("ERROR AT: /getAllEmployeeType", error);
   }
 });
 

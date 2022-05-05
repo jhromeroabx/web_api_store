@@ -6,7 +6,7 @@ try {
     minioConnection = new Minio.Client({
         endPoint: '192.168.18.6',
         // endPoint: "play.minio.io",
-        port: 8500,
+        port: 7700,
         // port: 9000,
         // useSSL: true,
         accessKey: 'loasi.wastore',
