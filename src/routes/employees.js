@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const mysql = require("mysql");
+
 const mysqlConnection = require("../database");
 
 router.get("/employee", (req, res) => {
@@ -31,14 +33,36 @@ router.get("/getAllEmployeeType", (req, res) => {
 });
 
 router.get("/getAllEmployee", (req, res) => {
+  
+  let mysqlConnection2 = mysql.createConnection({
+    // host: "25.38.59.175",
+    host: "192.168.18.6",
+    // host: "192.168.0.2",
+    // host: "127.0.0.1",
+    port: "3350",
+    user: "qwert",
+    password: "wasd12125",
+    database: "db_company",
+  });
+
+  mysqlConnection2.connect(function (err) {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      console.log("DB CONNECTED");
+    }
+  });
+  
   try {
-    mysqlConnection.query("SELECT * FROM tb_employee", (err, rows, fields) => {
+    mysqlConnection2.query("SELECT * FROM tb_employee", (err, rows, fields) => {
       if (err) {
         console.error("ERROR AT: /getAllEmployee",err);
       } else {
         res.json(rows);
       }
     });
+    mysqlConnection2.end();
   } catch (error) {
     console.error("ERROR AT: /getAllEmployee", error);
   }

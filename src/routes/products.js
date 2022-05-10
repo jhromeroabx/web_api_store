@@ -1,26 +1,55 @@
 const express = require("express");
 const router = express.Router();
 
+const mysql = require("mysql");
+
 const mysqlConnection = require("../database");
 
 router.get("/products", (req, res) => {
+  /// inicias la conexión
   res.json("HOLA, ACA GESTIONAREMOS TODOS LOS PRODUCTOS!!!");
+  /// try catch
+  /// cierras la conexión si es que se conectó y luego de los procesos
 });
 
 router.get("/getAllCategory", (req, res) => {
   try {
-    mysqlConnection.query(
+
+    let mysqlConnection2 = mysql.createConnection({
+      // host: "25.38.59.175",
+      host: "192.168.18.6",
+      // host: "192.168.0.2",
+      // host: "127.0.0.1",
+      port: "3350",
+      user: "qwert",
+      password: "wasd12125",
+      database: "db_company",
+    });
+
+    mysqlConnection2.connect(function (err) {
+      if (err) {
+        console.log(err);
+        return;
+      } else {
+        console.log("DB CONNECTED");
+      }
+    });
+
+    mysqlConnection2.query(
       "SELECT * FROM tb_categoria cat WHERE cat.active = 1",
       (err, rows, fields) => {
         if (err) {
-          console.error("ERROR AT: /getAllCategory", err);
+          // res.status(500).send(`ERROR AT: /getAllCategory => ${err}`); 
+          res.status(500).send({ where: "ERROR AT SQL: /getAllCategory", err })
         } else {
           res.json(rows);
         }
       }
     );
-  } catch (error) {
-    console.error("ERROR AT: /getAllCategory", error);
+    mysqlConnection2.end();
+  } catch (err) {
+    console.error("ERROR AT ROUTER: /getAllCategory (SEE LOG FOR DETAILS) => ", err);
+    res.status(500).send({ where: "ERROR AT ROUTER: /getAllCategory (SEE LOG FOR DETAILS) ===> " });
   }
 });
 
@@ -32,7 +61,27 @@ router.post("/getAllProducts", (req, res) => {
       id_categoria = 0;
     }
 
-    mysqlConnection.query(
+    let mysqlConnection2 = mysql.createConnection({
+      // host: "25.38.59.175",
+      host: "192.168.18.6",
+      // host: "192.168.0.2",
+      // host: "127.0.0.1",
+      port: "3350",
+      user: "qwert",
+      password: "wasd12125",
+      database: "db_company",
+    });
+
+    mysqlConnection2.connect(function (err) {
+      if (err) {
+        console.log(err);
+        return;
+      } else {
+        console.log("DB CONNECTED");
+      }
+    });
+
+    mysqlConnection2.query(
       "CALL ProductsByCategoryANDORActive(?,?)",
       [id_categoria, active],
       (err, rows, fields) => {
@@ -44,6 +93,7 @@ router.post("/getAllProducts", (req, res) => {
         }
       }
     );
+    mysqlConnection2.end();
   } catch (error) {
     console.error("ERROR AT: /getAllProducts", error);
   }
