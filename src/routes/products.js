@@ -3,7 +3,7 @@ const router = express.Router();
 
 const mysql = require("mysql");
 
-const mysqlConnection = require("../database");
+const mysqlConfig = require("../database");
 
 router.get("/products", (req, res) => {
   /// inicias la conexión
@@ -15,38 +15,21 @@ router.get("/products", (req, res) => {
 router.get("/getAllCategory", (req, res) => {
   try {
 
-    let mysqlConnection2 = mysql.createConnection({
-      // host: "25.38.59.175",
-      host: "192.168.18.6",
-      // host: "192.168.0.2",
-      // host: "127.0.0.1",
-      port: "3350",
-      user: "qwert",
-      password: "wasd12125",
-      database: "db_company",
-    });
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
 
-    mysqlConnection2.connect(function (err) {
-      if (err) {
-        console.log(err);
-        return;
-      } else {
-        console.log("DB CONNECTED");
-      }
-    });
-
-    mysqlConnection2.query(
+    mysqlConnection.query(
       "SELECT * FROM tb_categoria cat WHERE cat.active = 1",
       (err, rows, fields) => {
         if (err) {
-          // res.status(500).send(`ERROR AT: /getAllCategory => ${err}`); 
+          console.error("ERROR AT: /getAllCategory", err);
           res.status(500).send({ where: "ERROR AT SQL: /getAllCategory", err })
         } else {
           res.json(rows);
         }
       }
     );
-    mysqlConnection2.end();
+    mysqlConnection.end();
   } catch (err) {
     console.error("ERROR AT ROUTER: /getAllCategory (SEE LOG FOR DETAILS) => ", err);
     res.status(500).send({ where: "ERROR AT ROUTER: /getAllCategory (SEE LOG FOR DETAILS) ===> " });
@@ -61,41 +44,26 @@ router.post("/getAllProducts", (req, res) => {
       id_categoria = 0;
     }
 
-    let mysqlConnection2 = mysql.createConnection({
-      // host: "25.38.59.175",
-      host: "192.168.18.6",
-      // host: "192.168.0.2",
-      // host: "127.0.0.1",
-      port: "3350",
-      user: "qwert",
-      password: "wasd12125",
-      database: "db_company",
-    });
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
 
-    mysqlConnection2.connect(function (err) {
-      if (err) {
-        console.log(err);
-        return;
-      } else {
-        console.log("DB CONNECTED");
-      }
-    });
-
-    mysqlConnection2.query(
+    mysqlConnection.query(
       "CALL ProductsByCategoryANDORActive(?,?)",
       [id_categoria, active],
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /getAllProducts", err);
+          res.status(500).send({ where: "ERROR AT ROUTER: /getAllProducts", err });
         } else {
           const [RowDataPacket] = rows;
           res.json(RowDataPacket);
         }
       }
     );
-    mysqlConnection2.end();
+    mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /getAllProducts", error);
+    res.status(500).send({ where: "ERROR AT ROUTER: /getAllProducts", error });
   }
 });
 
@@ -116,12 +84,16 @@ router.post("/findProductBy", (req, res) => {
         "El producto con id: " + [id] + " no existe o no esta habilitado!";
     }
 
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
+
     mysqlConnection.query(
       "CALL findProductBy(?, ?);",
       [id, barcode],
       (err, rows, fields) => {
         if (err) {
-          console.error("ERROR AT: /findProductBy/:id", err);
+          console.error("ERROR AT: /findProductBy", err);
+          res.status(500).send({ where: "ERROR AT ROUTER: /findProductBy", err });
         } else {
           if (!rows.length) {
             //indicamos si el err esta null no trae data del SQL
@@ -136,8 +108,10 @@ router.post("/findProductBy", (req, res) => {
         }
       }
     );
+    mysqlConnection.end();
   } catch (error) {
-    console.error("ERROR AT: /findProductBy/:id", error);
+    console.error("ERROR AT: /findProductBy", error);
+    res.status(500).send({ where: "ERROR AT ROUTER: /findProductBy", error });
   }
 });
 
@@ -145,12 +119,17 @@ router.post("/disableProductBy", (req, res) => {
   try {
     // const id_antiguo  = req.params.id;
     const { id } = req.body;
+
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
+
     mysqlConnection.query(
       "UPDATE tb_producto SET active = 0 WHERE id = ?",
       [id],
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /disableProductBy", err);
+          res.status(500).send({ where: "ERROR AT ROUTER: /disableProductBy", err });
         } else {
           res.json({
             status: "El producto con id: " + [id] + " ha sido deshabilitado!",
@@ -158,8 +137,10 @@ router.post("/disableProductBy", (req, res) => {
         }
       }
     );
+    mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /disableProductBy", error);
+    res.status(500).send({ where: "ERROR AT ROUTER: /disableProductBy", error });
   }
 });
 
@@ -176,11 +157,17 @@ router.post("/productoAddOrEdit", (req, res) => {
     } = req.body;
     const query = "CALL productoAddOrEdit(?, ?, ?, ?, ?, ?, ?);";
 
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
+
     mysqlConnection.query(
       query,
       [id, nombre, comentario, barcode, imagen_url, id_categoria, active],
       (err, rows, fields) => {
-        if (!err) {
+        if (err) {
+          console.error("ERROR AT: /productoAddOrEdit", err);
+          res.status(500).send({ where: "ERROR AT ROUTER: /productoAddOrEdit", err });
+        } else {
           const [RowDataPacket] = rows[0];
           const { state } = RowDataPacket;
           if (state == 1) {
@@ -188,13 +175,13 @@ router.post("/productoAddOrEdit", (req, res) => {
           } else {
             res.json({ response: RowDataPacket, state: false });
           }
-        } else {
-          console.error("ERROR AT: /productoAddOrEdit", err);
         }
       }
     );
+    mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /productoAddOrEdit", error);
+    res.status(500).send({ where: "ERROR AT ROUTER: /productoAddOrEdit", error });
   }
 });
 
@@ -204,19 +191,25 @@ router.post("/categoriaAddOrEdit", (req, res) => {
 
     const query = "CALL categoriaAddOrEdit(?, ?, ?, ?);";
 
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
+
     mysqlConnection.query(
       query,
       [id, nombre, comentario, active],
       (err, rows, fields) => {
-        if (!err) {
-          res.json({ status: "Categoria Saved", response: rows[0] });
-        } else {
+        if (err) {
           console.error("ERROR AT: /categoriaAddOrEdit", err);
+          res.status(500).send({ where: "ERROR AT ROUTER: /categoriaAddOrEdit", err });
+        } else {
+          res.json({ status: "Categoria Saved", response: rows[0] });
         }
       }
     );
+    mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /categoriaAddOrEdit", error);
+    res.status(500).send({ where: "ERROR AT ROUTER: /categoriaAddOrEdit", error });
   }
 });
 
@@ -226,15 +219,21 @@ router.delete("/DeleteCategoria", (req, res) => {
 
     const query = "DELETE FROM tb_categoria WHERE id = ?";
 
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
+
     mysqlConnection.query(query, [id], (err, rows, fields) => {
-      if (!err) {
-        res.json({ status: "Categoria deleted", response: rows[0] });
+      if (err) {
+        console.error("ERROR AT: /DeleteCategoria", err);
+        res.status(500).send({ where: "ERROR AT ROUTER: /DeleteCategoria", err });
       } else {
-        res.json({ error: "ERROR AT INSIDE: /DeleteCategoria: " + err });
+        res.json({ status: "Categoria deleted", response: rows[0] });        
       }
     });
+    mysqlConnection.end();
   } catch (error) {
-    res.json({ error: "ERROR AT OUTSIDE: /DeleteCategoria: " + err });
+    console.error("ERROR AT: /DeleteCategoria", error);
+    res.status(500).send({ where: "ERROR AT ROUTER: /DeleteCategoria", error });
   }
 });
 

@@ -11,47 +11,48 @@ router.get("/employee", (req, res) => {
 
 router.get("/getAllEmployeeType", (req, res) => {
   try {
-    
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
+
     mysqlConnection.query(
       "SELECT * FROM tb_employee_type ty WHERE ty.estado = 1",
       (err, rows, fields) => {
         if (err) {
+          console.error("ERROR AT: /getAllEmployeeType", err);
           res
-      .status(500)
-      .send({ error: "ERROR AT: /getAllEmployeeType" + String(err) });
-          // console.error("ERROR AT: /getAllEmployeeType",err);
+            .status(500)
+            .send({ error: "ERROR AT: /getAllEmployeeType", err });
         } else {
           res.json(rows);
         }
       }
     );
+    mysqlConnection.end();
   } catch (error) {
+    console.error("ERROR AT: /getAllEmployeeType", error);
     res
-    .status(500)
-    .send({ error: "ERROR AT: /getAllEmployeeType" + String(err) });
-    // console.error("ERROR AT: /getAllEmployeeType", error);
+      .status(500)
+      .send({ error: "ERROR AT: /getAllEmployeeType", error });
   }
 });
 
 router.get("/getAllEmployee", (req, res) => {
   try {
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
 
-  let mysqlConnection2 = mysql.createConnection(mysqlConfig);
-  mysqlConnection2.connect();
-  
-  
-  mysqlConnection2.query("SELECTT * FROM tb_employee", (err, rows, fields) => {
+    mysqlConnection.query("SELECT * FROM tb_employee", (err, rows, fields) => {
       if (err) {
-        console.error("ERROR AT: /getAllEmployee",err);
-        res.status(500).send({ where: "ERROR AT ROUTER: /getAllEmployee (SEE LOG FOR DETAILS) ===> ",err });
+        console.error("ERROR AT: /getAllEmployee", err);
+        res.status(500).send({ where: "ERROR AT ROUTER: /getAllEmployee (SEE LOG FOR DETAILS) ===> ", err });
       } else {
         res.json(rows);
       }
     });
-    mysqlConnection2.end();
+    mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /getAllEmployee", error);
-    res.status(500).send({ where: "ERROR AT ROUTER: /getAllEmployee (SEE LOG FOR DETAILS) ===> " });
+    res.status(500).send({ where: "ERROR AT ROUTER: /getAllEmployee (SEE LOG FOR DETAILS) ===> ", error });
   }
 });
 
@@ -59,12 +60,17 @@ router.get("/findEmployee/:id", (req, res) => {
   try {
     // const id_antiguo  = req.params.id;
     const { id } = req.params;
+
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
+
     mysqlConnection.query(
       "SELECT * FROM tb_employee WHERE id = ?",
       [id],
       (err, rows, fields) => {
         if (err) {
-          console.error("ERROR AT: /findEmployee/:id",err);
+          console.error("ERROR AT: /findEmployee/:id", err);
+          res.status(500).send({ error: "ERROR AT: /findEmployee", err });
         } else {
           if (!rows.length) {
             //indicamos si el err esta null no trae data del SQL
@@ -76,8 +82,10 @@ router.get("/findEmployee/:id", (req, res) => {
         }
       }
     );
+    mysqlConnection.end();
   } catch (error) {
-    console.error("ERROR AT: /findEmployee/:id", error);
+    console.error("ERROR AT: /findEmployee", error);
+    res.status(500).send({ error: "ERROR AT: /findEmployee", error });
   }
 });
 
@@ -85,12 +93,17 @@ router.delete("/deleteEmployee/:id", (req, res) => {
   try {
     // const id_antiguo  = req.params.id;
     const { id } = req.params;
+
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
+
     mysqlConnection.query(
       "DELETE FROM tb_employee WHERE id = ?",
       [id],
       (err, rows, fields) => {
         if (err) {
-          console.error("ERROR AT: /getAllEmployee",err);
+          console.error("ERROR AT: /getAllEmployee", err);
+          res.status(500).send({ error: "ERROR AT: /getAllEmployee", err });
         } else {
           res.json({
             status: "El empleado con id: " + [id] + " ha sido borrado!",
@@ -98,8 +111,10 @@ router.delete("/deleteEmployee/:id", (req, res) => {
         }
       }
     );
+    mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /getAllEmployee", error);
+    res.status(500).send({ error: "ERROR AT: /getAllEmployee", error });
   }
 });
 
@@ -109,19 +124,25 @@ router.post("/AddEmployeeOrEdit", (req, res) => {
 
     const query = "CALL employeeAddOrEdit(?, ?, ?, ?);";
 
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
+
     mysqlConnection.query(
       query,
       [id, name, salary, id_employee_type],
       (err, rows, fields) => {
-        if (!err) {
-          res.json({ status: "Employeed Saved", response: rows[0] });
+        if (err) {
+          console.error("ERROR AT: /getAllEmployee", err);
+          res.status(500).send({ error: "ERROR AT: /getAllEmployee", err });
         } else {
-          console.error("ERROR AT: /getAllEmployee",err);
+          res.json({ status: "Employeed Saved", response: rows[0] });
         }
       }
     );
+    mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /getAllEmployee", error);
+    res.status(500).send({ error: "ERROR AT: /getAllEmployee", error });
   }
 });
 

@@ -5,7 +5,7 @@ const minioConnection = require("../minioConnect");
 
 router.get("/miniotest", (req, res) => {
     
-    var size = 0
+    // var size = 0
     // minioClient.getObject('wasd', '123loasi.jpg', function(err, dataStream) {
     //   if (err) {
     //     return console.log("TEST: ",err)

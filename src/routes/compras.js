@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const mysqlConnection = require("../database");
+const mysql = require("mysql");
+
+const mysqlConfig = require("../database");
 
 router.get("/compras", (req, res) => {
   res.json(
@@ -9,8 +11,12 @@ router.get("/compras", (req, res) => {
   );
 });
 
-try {
-  router.get("/getAllCompras", (req, res) => {
+
+router.get("/getAllCompras", (req, res) => {
+  try {
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
+
     mysqlConnection.query(
       "SELECT * FROM tb_compra tc WHERE tc.active = 1",
       (err, rows, fields) => {
@@ -25,14 +31,21 @@ try {
         }
       }
     );
-  });
-} catch (error) {
-  console.error("ERROR AT: /getAllCompras", error);
-}
+    mysqlConnection.end();
+  } catch (error) {
+    console.error("ERROR AT: /getAllCompras", error);
+  }
+});
 
-try {
-  router.post("/getAllComprasDetailBy", (req, res) => {
+
+
+router.post("/getAllComprasDetailBy", (req, res) => {
+  try {
     const { id_compra } = req.body;
+    
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
+
     mysqlConnection.query(
       "SELECT tcp.*,tc.active compraState FROM tb_compra_producto TCP INNER JOIN tb_compra TC ON TC.id = TCP.id_compra WHERE tcp.id_compra = ?",
       [id_compra],
@@ -40,7 +53,7 @@ try {
         if (err) {
           res
             .status(500)
-            .send({ error: "Error en /getAllCompras!", cause: err });
+            .send({ error: "Error en /getAllCompras!", err });
 
           console.error("ERROR AT: /getAllCompras", err);
         } else {
@@ -48,13 +61,17 @@ try {
         }
       }
     );
-  });
-} catch (error) {
-  console.error("ERROR AT: /getAllCompras", error);
-}
+    mysqlConnection.end();
+  } catch (error) {
+    console.error("ERROR AT: /getAllCompras", error);
+    res.status(500).send({ error: "ERROR AT: /compraAdd", error });
+  }
+});
 
-try {
-  router.post("/compraAdd", (req, res) => {
+
+
+router.post("/compraAdd", (req, res) => {
+  try {
     const {
       comentario,
       id_user_responsable,
@@ -63,21 +80,27 @@ try {
     } = req.body;
 
     const query = "CALL compraAdd(?, ?, ?, ?);";
+
+    let mysqlConnection = mysql.createConnection(mysqlConfig);
+    mysqlConnection.connect();
+
     mysqlConnection.query(
       query,
       [comentario, id_user_responsable, productos_concat, cantidad_productos],
       (err, rows, fields) => {
         if (err) {
+          console.error("ERROR AT: /compraAdd", err);
           res.status(500).send({ error: "ERROR AT: /compraAdd", cause: err });
         } else {
           res.json(rows);
         }
       }
     );
-  });
-} catch (error) {
-  res.status(500).send({ error: "ERROR AT: /compraAdd", cause: error });
-  console.error("ERROR AT: /compraAdd", error);
-}
+    mysqlConnection.end();
+  } catch (error) {
+    res.status(500).send({ error: "ERROR AT: /compraAdd", error });
+    console.error("ERROR AT: /compraAdd", error);
+  }
+});
 
 module.exports = router;
