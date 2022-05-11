@@ -102,9 +102,9 @@ if (https_state) {
   app.set("port", process.env.PORT || PORT_HTTP); //si el sistema tiene un puerto que nos lo de o sino 5000 por defecto
   // app.set("Connection", "close");
 
-  app.get('*', function(req, res){
-    res.status(404).send('ERROR 404 | NO EXISTE TAL RUTA!!!')
-  });
+  // app.get('*', function(req, res){
+  //   res.status(404).send('ERROR 404 | NO EXISTE TAL RUTA!!!')
+  // });
 
   var server = app.listen(PORT_HTTP, () => {
     //arriba setteamos la prop PORT asi que lo usamos

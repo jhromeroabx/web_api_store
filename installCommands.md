@@ -43,4 +43,7 @@ sudo ln -s "$(which npm)" /usr/bin/npm
 
 <!-- USE NODE 16.15.0 -->
 https://www.youtube.com/watch?v=d2KYz8Qd6FE
-nvm use 16.15.0
+nvm use 16.15
+
+<!-- USAR EL NGROK CUANDO SE REINCIA -->
+/home/loasi# ngrok http 5000

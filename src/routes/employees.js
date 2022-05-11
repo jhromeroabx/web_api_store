@@ -3,7 +3,7 @@ const router = express.Router();
 
 const mysql = require("mysql");
 
-const mysqlConnection = require("../database");
+const mysqlConfig = require("../database");
 
 router.get("/employee", (req, res) => {
   res.json("HOLA A TODOS LOS EMPLEADOS!!!");
@@ -11,6 +11,7 @@ router.get("/employee", (req, res) => {
 
 router.get("/getAllEmployeeType", (req, res) => {
   try {
+    
     mysqlConnection.query(
       "SELECT * FROM tb_employee_type ty WHERE ty.estado = 1",
       (err, rows, fields) => {
@@ -33,31 +34,16 @@ router.get("/getAllEmployeeType", (req, res) => {
 });
 
 router.get("/getAllEmployee", (req, res) => {
-  
-  let mysqlConnection2 = mysql.createConnection({
-    // host: "25.38.59.175",
-    host: "192.168.18.6",
-    // host: "192.168.0.2",
-    // host: "127.0.0.1",
-    port: "3350",
-    user: "qwert",
-    password: "wasd12125",
-    database: "db_company",
-  });
-
-  mysqlConnection2.connect(function (err) {
-    if (err) {
-      console.log(err);
-      return;
-    } else {
-      console.log("DB CONNECTED");
-    }
-  });
-  
   try {
-    mysqlConnection2.query("SELECT * FROM tb_employee", (err, rows, fields) => {
+
+  let mysqlConnection2 = mysql.createConnection(mysqlConfig);
+  mysqlConnection2.connect();
+  
+  
+  mysqlConnection2.query("SELECTT * FROM tb_employee", (err, rows, fields) => {
       if (err) {
         console.error("ERROR AT: /getAllEmployee",err);
+        res.status(500).send({ where: "ERROR AT ROUTER: /getAllEmployee (SEE LOG FOR DETAILS) ===> ",err });
       } else {
         res.json(rows);
       }
@@ -65,6 +51,7 @@ router.get("/getAllEmployee", (req, res) => {
     mysqlConnection2.end();
   } catch (error) {
     console.error("ERROR AT: /getAllEmployee", error);
+    res.status(500).send({ where: "ERROR AT ROUTER: /getAllEmployee (SEE LOG FOR DETAILS) ===> " });
   }
 });
 
