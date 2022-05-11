@@ -27,6 +27,7 @@ router.get("/getAllCompras", (req, res) => {
 
           console.error("ERROR AT: /getAllCompras", err);
         } else {
+          console.log("DB CONNECTED");
           res.json(rows);
         }
       }
@@ -57,6 +58,7 @@ router.post("/getAllComprasDetailBy", (req, res) => {
 
           console.error("ERROR AT: /getAllCompras", err);
         } else {
+          console.log("DB CONNECTED");
           res.json(rows);
         }
       }
@@ -92,6 +94,7 @@ router.post("/compraAdd", (req, res) => {
           console.error("ERROR AT: /compraAdd", err);
           res.status(500).send({ error: "ERROR AT: /compraAdd", cause: err });
         } else {
+          console.log("DB CONNECTED");
           res.json(rows);
         }
       }

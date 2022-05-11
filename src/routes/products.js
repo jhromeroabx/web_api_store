@@ -25,6 +25,7 @@ router.get("/getAllCategory", (req, res) => {
           console.error("ERROR AT: /getAllCategory", err);
           res.status(500).send({ where: "ERROR AT SQL: /getAllCategory", err })
         } else {
+          console.log("DB CONNECTED");
           res.json(rows);
         }
       }
@@ -55,6 +56,7 @@ router.post("/getAllProducts", (req, res) => {
           console.error("ERROR AT: /getAllProducts", err);
           res.status(500).send({ where: "ERROR AT ROUTER: /getAllProducts", err });
         } else {
+          console.log("DB CONNECTED");
           const [RowDataPacket] = rows;
           res.json(RowDataPacket);
         }
@@ -95,6 +97,7 @@ router.post("/findProductBy", (req, res) => {
           console.error("ERROR AT: /findProductBy", err);
           res.status(500).send({ where: "ERROR AT ROUTER: /findProductBy", err });
         } else {
+          console.log("DB CONNECTED");
           if (!rows.length) {
             //indicamos si el err esta null no trae data del SQL
             console.log("CONSULTA A TABLA PRODUCTS SIN ROWS");
@@ -131,6 +134,7 @@ router.post("/disableProductBy", (req, res) => {
           console.error("ERROR AT: /disableProductBy", err);
           res.status(500).send({ where: "ERROR AT ROUTER: /disableProductBy", err });
         } else {
+          console.log("DB CONNECTED");
           res.json({
             status: "El producto con id: " + [id] + " ha sido deshabilitado!",
           });
@@ -168,6 +172,7 @@ router.post("/productoAddOrEdit", (req, res) => {
           console.error("ERROR AT: /productoAddOrEdit", err);
           res.status(500).send({ where: "ERROR AT ROUTER: /productoAddOrEdit", err });
         } else {
+          console.log("DB CONNECTED");
           const [RowDataPacket] = rows[0];
           const { state } = RowDataPacket;
           if (state == 1) {
@@ -202,6 +207,7 @@ router.post("/categoriaAddOrEdit", (req, res) => {
           console.error("ERROR AT: /categoriaAddOrEdit", err);
           res.status(500).send({ where: "ERROR AT ROUTER: /categoriaAddOrEdit", err });
         } else {
+          console.log("DB CONNECTED");
           res.json({ status: "Categoria Saved", response: rows[0] });
         }
       }
@@ -227,6 +233,7 @@ router.delete("/DeleteCategoria", (req, res) => {
         console.error("ERROR AT: /DeleteCategoria", err);
         res.status(500).send({ where: "ERROR AT ROUTER: /DeleteCategoria", err });
       } else {
+        console.log("DB CONNECTED");
         res.json({ status: "Categoria deleted", response: rows[0] });        
       }
     });
