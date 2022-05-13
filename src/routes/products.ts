@@ -37,8 +37,19 @@ router.get("/getAllCategory", (req, res) => {
   }
 });
 
+// interface GetAllProductos{
+// 	id_categoria: string;
+// 	active: boolean;
+// }
+
 router.post("/getAllProducts", (req, res) => {
   try {
+    // let getAllProductos : GetAllProductos = req.body;
+
+    // if (getAllProductos.id_categoria == null) {
+    //   getAllProductos.id_categoria = "0";
+    // }
+
     let { id_categoria, active } = req.body;
 
     if (String(id_categoria).length == 0) {
@@ -50,6 +61,7 @@ router.post("/getAllProducts", (req, res) => {
 
     mysqlConnection.query(
       "CALL ProductsByCategoryANDORActive(?,?)",
+      // [getAllProductos.id_categoria, getAllProductos.active],
       [id_categoria, active],
       (err, rows, fields) => {
         if (err) {

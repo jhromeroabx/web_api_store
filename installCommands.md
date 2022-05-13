@@ -18,6 +18,9 @@ nodemon app
 
 npm install -g nodemon
 
+<!-- INSTALAR TYPESCRIPT -->
+npm install -g typescript
+
 <!-- INICIAR PROYECTO -->
 
 node src/index.js

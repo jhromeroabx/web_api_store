@@ -47,6 +47,7 @@ router.get("/getAllEmployee", (req, res) => {
         console.error("ERROR AT: /getAllEmployee", err);
         res.status(500).send({ where: "ERROR AT ROUTER: /getAllEmployee (SEE LOG FOR DETAILS) ===> ", err });
       } else {
+        console.log("DB CONNECTED");
         res.json(rows);
       }
     });
@@ -104,8 +105,8 @@ router.delete("/deleteEmployee/:id", (req, res) => {
       [id],
       (err, rows, fields) => {
         if (err) {
-          console.error("ERROR AT: /getAllEmployee", err);
-          res.status(500).send({ error: "ERROR AT: /getAllEmployee", err });
+          console.error("ERROR AT: /deleteEmployee", err);
+          res.status(500).send({ error: "ERROR AT: /deleteEmployee", err });
         } else {
           console.log("DB CONNECTED");
           res.json({
@@ -116,8 +117,8 @@ router.delete("/deleteEmployee/:id", (req, res) => {
     );
     mysqlConnection.end();
   } catch (error) {
-    console.error("ERROR AT: /getAllEmployee", error);
-    res.status(500).send({ error: "ERROR AT: /getAllEmployee", error });
+    console.error("ERROR AT: /deleteEmployee", error);
+    res.status(500).send({ error: "ERROR AT: /deleteEmployee", error });
   }
 });
 
@@ -135,8 +136,8 @@ router.post("/AddEmployeeOrEdit", (req, res) => {
       [id, name, salary, id_employee_type],
       (err, rows, fields) => {
         if (err) {
-          console.error("ERROR AT: /getAllEmployee", err);
-          res.status(500).send({ error: "ERROR AT: /getAllEmployee", err });
+          console.error("ERROR AT: /AddEmployeeOrEdit", err);
+          res.status(500).send({ error: "ERROR AT: /AddEmployeeOrEdit", err });
         } else {
           console.log("DB CONNECTED");
           res.json({ status: "Employeed Saved", response: rows[0] });
