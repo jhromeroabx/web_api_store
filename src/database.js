@@ -14,12 +14,12 @@ let mysqlConfig;
 //   });
 
 mysqlConfig = {
-    host: "192.168.18.6",
-    port: "3350",
-    user: "qwert",
-    password: "wasd12125",
-    database: "db_company",
-  }
+  host: "192.168.1.2",
+  port: "3350",
+  user: "root",
+  password: "wasd12125",
+  database: "db_company",
+}
 
 //   // mysqlConnection.connect(function (err) {
 //   //   if (err) {

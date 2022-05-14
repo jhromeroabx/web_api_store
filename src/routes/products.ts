@@ -1,9 +1,12 @@
-const express = require("express");
+// import express from "express";
+const express = require('express');
 const router = express.Router();
 
-const mysql = require("mysql");
+// import mysql from "mysql2";
+const mysql = require('mysql2');
 
-const mysqlConfig = require("../database");
+// import mysqlConfig from "../database";
+const mysqlConfig = require('../database');
 
 router.get("/products", (req, res) => {
   /// inicias la conexión
@@ -69,7 +72,7 @@ router.post("/getAllProducts", (req, res) => {
           res.status(500).send({ where: "ERROR AT ROUTER: /getAllProducts", err });
         } else {
           console.log("DB CONNECTED");
-          const [RowDataPacket] = rows;
+          const [RowDataPacket] = rows[0];
           res.json(RowDataPacket);
         }
       }
@@ -110,16 +113,18 @@ router.post("/findProductBy", (req, res) => {
           res.status(500).send({ where: "ERROR AT ROUTER: /findProductBy", err });
         } else {
           console.log("DB CONNECTED");
-          if (!rows.length) {
-            //indicamos si el err esta null no trae data del SQL
-            console.log("CONSULTA A TABLA PRODUCTS SIN ROWS");
-            res.json({
-              status: error_message,
-            });
-          } else {
-            const [RowDataPacket] = rows[0];
+          // if (!rows.length) {
+          //   //indicamos si el err esta null no trae data del SQL
+          //   console.log("CONSULTA A TABLA PRODUCTS SIN ROWS");
+          //   res.json({
+          //     status: error_message,
+          //   });
+          // } else {
+          //   const [RowDataPacket] = rows[0];
+          //   res.json(RowDataPacket);
+          // }
+          const [RowDataPacket] = rows[0];
             res.json(RowDataPacket);
-          }
         }
       }
     );

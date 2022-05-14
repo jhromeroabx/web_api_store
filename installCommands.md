@@ -38,6 +38,10 @@ npm install --save @sentry/node @sentry/tracing
 
 <!-- INSTALL NGROK IN UBUNTU -->
 https://youtu.be/_WttIi-24PQ
+<!-- wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz --> EL LINK SE OBTIENE EN LA PAGINA OFICIAL
+<!-- tar -xvzf ngrok-v3.tgz -->
+<!-- ./ngrok config add-authtoken 28TrjrFEe0bUxojmhfFd1ySnRzk_2BUAajPKjoPUv8CX9SJpy -->
+<!-- /root/.config/ngrok/ngrok.yml CONFIG PATH -->
 <!-- ALSO SEE THE DOCS for more steps -->
 
 <!-- USER NODE DEL NVM DEL DIGITAL OCEAN INSTALL NODE -->
