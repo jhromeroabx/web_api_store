@@ -54,3 +54,10 @@ nvm use 16.15
 
 <!-- USAR EL NGROK CUANDO SE REINCIA -->
 /home/loasi# ngrok http 5000
+
+docker build -t node-store-loasi .
+docker run \
+--name storeloasi \
+--restart always \
+-u root \
+-p 4000:5000 node-store-loasi
