@@ -95,7 +95,10 @@ router.post("/compraAdd", (req, res) => {
           res.status(500).send({ error: "ERROR AT: /compraAdd", cause: err });
         } else {
           console.log("DB CONNECTED");
-          res.json(rows);
+          const [RowDataPacket] = rows[0];
+          console.log(RowDataPacket)
+          const {state, response} = RowDataPacket;
+          res.json({state, response});
         }
       }
     );
