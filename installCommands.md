@@ -61,3 +61,7 @@ docker run \
 --restart always \
 -u root \
 -p 4000:5000 node-store-loasi
+
+<!-- GIT CREDENTIALS FOR CLONE PUSH etcetera -->
+git config --global user.name "jhosepromeroabx"
+git config --global user.email "jhromero.abx@gmail.com"

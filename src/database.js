@@ -14,7 +14,7 @@ let mysqlConfig;
 //   });
 
 mysqlConfig = {
-  host: "192.168.1.2",
+  host: "192.168.18.6",
   port: "3350",
   user: "root",
   password: "wasd12125",

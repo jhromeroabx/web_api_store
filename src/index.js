@@ -63,7 +63,7 @@ app.use(express.json()); //convertira en JSON nuestra info
 // routes
 app.use(require("./routes/employees"));
 app.use(require("./routes/users"));
-app.use(require("./routes/products.ts"));
+app.use(require("./routes/products"));
 app.use(require("./routes/compras"));
 app.use(require("./routes/minio"));
 

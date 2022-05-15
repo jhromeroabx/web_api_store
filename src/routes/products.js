@@ -71,8 +71,7 @@ router.post("/getAllProducts", (req, res) => {
           console.error("ERROR AT: /getAllProducts", err);
           res.status(500).send({ where: "ERROR AT ROUTER: /getAllProducts", err });
         } else {
-          console.log("DB CONNECTED");
-          const [RowDataPacket] = rows[0];
+          const [RowDataPacket] = rows;
           res.json(RowDataPacket);
         }
       }
@@ -124,7 +123,7 @@ router.post("/findProductBy", (req, res) => {
           //   res.json(RowDataPacket);
           // }
           const [RowDataPacket] = rows[0];
-            res.json(RowDataPacket);
+          res.json(RowDataPacket);
         }
       }
     );
@@ -251,7 +250,7 @@ router.delete("/DeleteCategoria", (req, res) => {
         res.status(500).send({ where: "ERROR AT ROUTER: /DeleteCategoria", err });
       } else {
         console.log("DB CONNECTED");
-        res.json({ status: "Categoria deleted", response: rows[0] });        
+        res.json({ status: "Categoria deleted", response: rows[0] });
       }
     });
     mysqlConnection.end();

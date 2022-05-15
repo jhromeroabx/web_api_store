@@ -93,19 +93,14 @@ router.post("/login", (req, res) => {
           res.status(500).send({ where: "ERROR AT ROUTER: /login (SEE LOG FOR DETAILS) ===> ", err });
         } else {
           console.log("DB CONNECTED");
-          // const [RowDataPacket] = rows[0];
-          // console.log("PAQUETE DATA MYSQL",RowDataPacket);
-          // const {id,nombre,apellido,dni,telefono,email,estado} = RowDataPacket;
-          // console.log("ID DEL USER",id);
-          // if (condition) {
-
-          // }
-          // console.log("USER",rows[1]);
-          if (rows.length == 3) {
-            //el 1ero el state, el 2do del user y 3er del dataBDmysql
-            res.json({ state: rows[0], userData: rows[1] });
+          let RowDataPacket;
+          [RowDataPacket] = rows[0];
+          const {msg, state} = RowDataPacket;
+          if (state == 1) {
+            [RowDataPacket] = rows[1];
+            res.json({ state: {msg, state}, userData: RowDataPacket });
           } else {
-            res.json({ state: rows[0], userData: null });
+            res.json({ state: {msg, state}, userData: null });
           }
         }
       });
