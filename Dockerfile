@@ -20,5 +20,5 @@ COPY . .
 
 EXPOSE 5000
 #comandos a ejecutar para levantar proyecto
-CMD [ "npm", "pro" ]
+CMD [ "npm", "run","pro" ]
 #docker build -t urname

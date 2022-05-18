@@ -59,7 +59,6 @@ docker build -t node-store-loasi .
 docker run \
 --name storeloasi \
 --restart always \
--u root \
 -p 4000:5000 node-store-loasi
 
 <!-- GIT CREDENTIALS FOR CLONE PUSH etcetera -->
