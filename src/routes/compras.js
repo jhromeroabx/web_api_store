@@ -27,7 +27,7 @@ router.get("/getAllCompras", (req, res) => {
 
           console.error("ERROR AT: /getAllCompras", err);
         } else {
-          console.log("DB CONNECTED");
+          console.log("DB CONNECTED : getAllCompras");
           res.json(rows);
         }
       }
@@ -58,7 +58,7 @@ router.post("/getAllComprasDetailBy", (req, res) => {
 
           console.error("ERROR AT: /getAllCompras", err);
         } else {
-          console.log("DB CONNECTED");
+          console.log("DB CONNECTED : getAllComprasDetailBy");
           res.json(rows);
         }
       }
@@ -94,7 +94,7 @@ router.post("/compraAdd", (req, res) => {
           console.error("ERROR AT: /compraAdd", err);
           res.status(500).send({ error: "ERROR AT: /compraAdd", cause: err });
         } else {
-          console.log("DB CONNECTED");
+          console.log("DB CONNECTED : compraAdd");
           const [RowDataPacket] = rows[0];
           const {state, response} = RowDataPacket;
           res.json({state, response});

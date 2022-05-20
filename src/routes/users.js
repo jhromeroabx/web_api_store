@@ -24,7 +24,7 @@ router.get("/getAllUser", (req, res) => {
             .status(500)
             .send({ error: "ERROR AT: /getAllUser", err });
         } else {
-          console.log("DB CONNECTED");
+          console.log("DB CONNECTED : getAllUser");
           res.json(rows);
         }
       }
@@ -53,7 +53,7 @@ router.get("/getAllUserType", (req, res) => {
             .status(500)
             .send({ error: "ERROR AT: /getAllUserType", err });
         } else {
-          console.log("DB CONNECTED");
+          console.log("DB CONNECTED : getAllUserType");
           res.json(rows);
         }
       }
@@ -92,7 +92,7 @@ router.post("/login", (req, res) => {
           console.error("ERROR AT: /login", err);
           res.status(500).send({ where: "ERROR AT ROUTER: /login (SEE LOG FOR DETAILS) ===> ", err });
         } else {
-          console.log("DB CONNECTED");
+          console.log("DB CONNECTED : login");
           let RowDataPacket;
           [RowDataPacket] = rows[0];
           const {msg, state} = RowDataPacket;
@@ -197,7 +197,7 @@ router.post("/AddUserOrEdit", (req, res) => {
             console.error("ERROR AT: /AddUserOrEdit", err);
             res.status(500).send({ where: "ERROR AT ROUTER: /AddUserOrEdit (SEE LOG FOR DETAILS) ===> ", err });
           } else {
-            console.log("DB CONNECTED");
+            console.log("DB CONNECTED : AddUserOrEdit");
             const [RowDataPacket] = rows[0];
             const { state } = RowDataPacket;
             if (state == 1) {

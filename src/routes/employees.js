@@ -23,7 +23,7 @@ router.get("/getAllEmployeeType", (req, res) => {
             .status(500)
             .send({ error: "ERROR AT: /getAllEmployeeType", err });
         } else {
-          console.log("DB CONNECTED");
+          console.log("DB CONNECTED : getAllEmployeeType");
           res.json(rows);
         }
       }
@@ -47,7 +47,7 @@ router.get("/getAllEmployee", (req, res) => {
         console.error("ERROR AT: /getAllEmployee", err);
         res.status(500).send({ where: "ERROR AT ROUTER: /getAllEmployee (SEE LOG FOR DETAILS) ===> ", err });
       } else {
-        console.log("DB CONNECTED");
+        console.log("DB CONNECTED : getAllEmployee");
         res.json(rows);
       }
     });
@@ -76,10 +76,10 @@ router.get("/findEmployee/:id", (req, res) => {
         } else {
           if (!rows.length) {
             //indicamos si el err esta null no trae data del SQL
-            console.log("CONSULTA A TABLA EMPLOYEES SIN ROWS");
+            console.log("CONSULTA A TABLA EMPLOYEES SIN ROWS : findEmployee");
             res.json({ status: "El empleado con id: " + [id] + " no existe!" });
           } else {
-            console.log("DB CONNECTED");
+            console.log("DB CONNECTED : findEmployee");
             res.json(rows[0]);
           }
         }
@@ -108,7 +108,7 @@ router.delete("/deleteEmployee/:id", (req, res) => {
           console.error("ERROR AT: /deleteEmployee", err);
           res.status(500).send({ error: "ERROR AT: /deleteEmployee", err });
         } else {
-          console.log("DB CONNECTED");
+          console.log("DB CONNECTED : deleteEmployee");
           res.json({
             status: "El empleado con id: " + [id] + " ha sido borrado!",
           });
@@ -139,7 +139,7 @@ router.post("/AddEmployeeOrEdit", (req, res) => {
           console.error("ERROR AT: /AddEmployeeOrEdit", err);
           res.status(500).send({ error: "ERROR AT: /AddEmployeeOrEdit", err });
         } else {
-          console.log("DB CONNECTED");
+          console.log("DB CONNECTED : AddEmployeeOrEdit");
           res.json({ status: "Employeed Saved", response: rows[0] });
         }
       }

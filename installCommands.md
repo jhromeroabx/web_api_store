@@ -61,6 +61,20 @@ docker run \
 --restart always \
 -p 4000:5000 node-store-loasi
 
+docker-compose -f docker-compose-test1.yml up -d
+docker-compose -f docker-compose-test1.yml down
+
 <!-- GIT CREDENTIALS FOR CLONE PUSH etcetera -->
 git config --global user.name "jhosepromeroabx"
 git config --global user.email "jhromero.abx@gmail.com"
+
+<!-- BACK UP -->
+https://youtu.be/6kPIiY4La8Q //EXPORTE DATA
+<!-- SI FALLA EL BACK UP DE WORKBENCH, AGREGAR ESTO (solo sirve para PHPMYADMIN) -->
+SET GLOBAL log_bin_trust_function_creators = 1;
+
+<!-- FIX TIME ZONE MYSQL but see docker compose && volumes -->
+SELECT * FROM `tb_retiro` WHERE 1;
+<!-- VERIFY TIMEZONE -->
+SELECT NOW();
+

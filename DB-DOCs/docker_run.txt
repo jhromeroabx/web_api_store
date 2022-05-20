@@ -1,0 +1,68 @@
+NODE
+docker run \
+--name storeloasi \
+--restart always \
+-u root \
+-p 4000:5000 node-store-loasi
+
+docker run -p 4000:5000 node-store-loasi
+MYSQL
+docker run \
+--restart always \
+--name mysqllast -p 3350:3306 \
+-e MYSQL_ROOT_PASSWORD=wasd12125 \
+-e MYSQL_DATABASE=db_loasi \
+-e MYSQL_USER=jhosep \
+-e MYSQL_PASSWORD=wasd12125 \
+-v /home/loasi/Documentos/MYSQL_DATA:/var/lib/mysql \
+mysql:latest
+
+PHPMYADMIN
+docker run \
+--restart always \
+--name phpmyadmin \
+-d --link mysqllast:db \
+-p 8060:80 \
+phpmyadmin
+
+PROBAR EL MOSQUITO
+nos dirigimos al DIR del mosquitto_sub.exe
+		-el 00000000### es el id o topico de comunicacion
+	- mosquitto_sub.exe -h mosquitto.dns.abexacloud.com -p 1883 -t ABX/BS/BD/0000000004/RQ
+	- mosquitto_sub.exe -h mosquitto.dns.abexacloud.com -p 1883 -t ABX/BS/MP/0002500069/RQ
+
+mkdir -p /minio/data
+docker run \
+--restart always \
+  -p 9700:9000 \
+  -p 9701:9001 \
+  --name minio_server \
+  -v /mnt/miniodata:/Data \
+  -e "MINIO_ROOT_USER=loasi.wastore" \
+  -e "MINIO_ROOT_PASSWORD=loasi.wastore@wasd12125" \
+  minio/minio server /Data --console-address ":9001"
+
+minio server /data
+
+UI CONSOLE: http://192.168.18.6:8501/buckets
+
+TUTORIAL MINIO
+CREAR SERVER MINIO SERVER WINDOWS(PowerShell):
+	- descargamos el instalador del server en c:
+	PS> Invoke-WebRequest -Uri "https://dl.min.io/server/minio/release/windows-amd64/minio.exe" -OutFile "C:\minio.exe"
+	- establecemos las variables de autenticacion
+	PS> setx MINIO_ROOT_USER admin
+	PS> setx MINIO_ROOT_PASSWORD password
+	- iniciamos server -//CREAMOS SERVER EN OTRO DISCO DE MAYOR TAMAÑO
+	PS> C:\minio.exe server D:\Data --console-address ":9001"
+
+CREAR CLIENT (PowerShell):
+	- descargamos el instalador del cliente:
+	PS> Invoke-WebRequest -Uri "https://dl.minio.io/client/mc/release/windows-amd64/mc.exe" -OutFile "C:\mc.exe"
+	- mc.exe alias set myminio http://192.168.1.17:9000 minio123@123 minio123@123
+
+mc ls myminio //LISTAR BUCKETS
+
+mc mb myminio/wasd //CREAR BUCKET PREFIJO ALIAS DEL SERVER
+
+mc cp "todo beet.txt" myminio/wasd //COPIAR ARCHIVO AL BUCKET
