@@ -1,6 +1,6 @@
 #USAMOS node 17
 #FROM node:16
-FROM node
+FROM node:17
 
 #creamos carpeta de trabajo
 WORKDIR /app
