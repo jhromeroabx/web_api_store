@@ -19,7 +19,6 @@ Sentry.init({
       app,
     }),
   ],
-
   tracesSampleRate: 1.0,
 });
 
@@ -64,7 +63,7 @@ app.use(express.json()); //convertira en JSON nuestra info
 app.use(require("./routes/employees"));
 app.use(require("./routes/users"));
 app.use(require("./routes/products"));
-app.use(require("./routes/compras"));
+app.use(require("./routes/ingreso_salida"));
 app.use(require("./routes/minio"));
 app.use(require("./routes/correo"));
 
