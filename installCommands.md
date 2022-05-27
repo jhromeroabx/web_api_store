@@ -78,3 +78,4 @@ SELECT * FROM `tb_retiro` WHERE 1;
 <!-- VERIFY TIMEZONE -->
 SELECT NOW();
 
+npm i swagger-jsdoc swagger-ui-express

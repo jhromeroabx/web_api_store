@@ -162,18 +162,19 @@ router.post("/productoAddOrEdit", (req, res) => {
       nombre,
       comentario,
       barcode,
+      stock_min,
       imagen_url,
       id_categoria,
       active,
     } = req.body;
-    const query = "CALL productoAddOrEdit(?, ?, ?, ?, ?, ?, ?);";
+    const query = "CALL productoAddOrEdit(?, ?, ?, ?, ?, ?, ?, ?);";
 
     let mysqlConnection = mysql.createConnection(mysqlConfig);
     mysqlConnection.connect();
 
     mysqlConnection.query(
       query,
-      [id, nombre, comentario, barcode, imagen_url, id_categoria, active],
+      [id, nombre, comentario, barcode, stock_min, imagen_url, id_categoria, active],
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /productoAddOrEdit", err);
