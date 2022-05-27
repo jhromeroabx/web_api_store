@@ -100,7 +100,6 @@ if (https_state) {
   server.headersTimeout = 60 * 1000 + 2000;
 } else {
   app.set("port", process.env.PORT || PORT_HTTP); //si el sistema tiene un puerto que nos lo de o sino 5000 por defecto
-  // app.set("Connection", "close");
 
   // app.get('*', function(req, res){
   //   res.status(404).send('ERROR 404 | NO EXISTE TAL RUTA!!!')

@@ -5,7 +5,7 @@ const mysql = require("mysql2");
 
 const mysqlConfig = require("../database");
 
-router.get("/ingresos", (req, res) => {
+router.get("/ingresos&salidas", (req, res) => {
   res.json(
     "HOLA ACA SE GESTIONARA TODOS LOS INGRESOS Y SALIDAS DE PRODUCTOS PARA ALMACEN!!!"
   );
@@ -76,17 +76,16 @@ router.post("/ingresoAdd", (req, res) => {
       comentario,
       id_user_responsable,
       productos_concat,
-      cantidad_productos,
     } = req.body;
 
-    const query = "CALL ingresoAdd(?, ?, ?, ?);";
+    const query = "CALL ingresoAdd(?, ?, ?);";
 
     let mysqlConnection = mysql.createConnection(mysqlConfig);
     mysqlConnection.connect();
 
     mysqlConnection.query(
       query,
-      [comentario, id_user_responsable, productos_concat, cantidad_productos],
+      [comentario, id_user_responsable, productos_concat],
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /ingresoAdd", err);
@@ -142,17 +141,16 @@ router.post("/retiroAdd", (req, res) => {
       comentario,
       id_user_responsable,
       productos_concat,
-      cantidad_productos,
     } = req.body;
 
-    const query = "CALL retiroAdd(?, ?, ?, ?);";
+    const query = "CALL retiroAdd(?, ?, ?);";
 
     let mysqlConnection = mysql.createConnection(mysqlConfig);
     mysqlConnection.connect();
 
     mysqlConnection.query(
       query,
-      [comentario, id_user_responsable, productos_concat, cantidad_productos],
+      [comentario, id_user_responsable, productos_concat],
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /retiroAdd", err);
