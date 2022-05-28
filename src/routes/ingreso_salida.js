@@ -84,17 +84,13 @@ router.post("/ingresoAdd", (req, res) => {
     var listaProductos = productos_concat.split("@");
 
     for (let i = 0; i < listaProductos.length && !error; i++) {
-      var producto = listaProductos[i].split("|");
-      //si el Stock a ingresar es CERO ó NEGATIVO
+      var producto = listaProductos[i].split("|");      
+      //si el stock compra a ingresar es NEGATIVO o CERO
       if (parseInt(producto[1]) <= 0) {
         error = true;
-        mensaje_error = `el producto ${producto[0]}, tiene stock negativo`;
+        mensaje_error = `el producto ${producto[0]}, tiene stock cero o negativo`;
       }
-      if (parseInt(producto[1]) === 0) {
-        error = true;
-        mensaje_error = `el producto ${producto[0]}, tiene stock cero`;
-      }
-      //si el precio compra a ingresar es CERO ó NEGATIVO
+      //si el precio compra a ingresar es CERO
       if (parseFloat(producto[2]) <= 0) {
         error = true;
         mensaje_error = `el producto ${producto[0]}, tiene precio compra cero o negativo`;
@@ -103,8 +99,8 @@ router.post("/ingresoAdd", (req, res) => {
 
     if (error) {
       res.status(500).send({
-        response: mensaje_error,
         state: false,
+        response: mensaje_error,        
       });
     }
 
@@ -174,21 +170,28 @@ router.post("/retiroAdd", (req, res) => {
     } = req.body;
 
     let error = false;
+    let mensaje_error = "";
 
     var listaProductos = productos_concat.split("@");
 
     for (let i = 0; i < listaProductos.length && !error; i++) {
       var producto = listaProductos[i].split("|");
-      //si el Stock a ingresar es CERO ó NEGATIVO
+      //si el Stock a retirar es NEGATIVO o CERO
       if (parseInt(producto[1]) <= 0) {
         error = true;
+        mensaje_error = `el producto ${producto[0]}, tiene stock cero o negativo`;
+      }
+      //si el Stock a retirar es CERO
+      if (parseInt(producto[1]) === 0) {
+        error = true;
+        mensaje_error = `el producto ${producto[0]}, tiene stock cero`;
       }
     }
 
     if (error) {
       res.status(500).send({
-        response: "Hay productos con stock CERO ó NEGATIVO",
         state: false,
+        response: mensaje_error,        
       });
     }
 
@@ -208,7 +211,7 @@ router.post("/retiroAdd", (req, res) => {
           console.log("DB CONNECTED : retiroAdd");
           const [RowDataPacket] = rows[0];
           const { state, response } = RowDataPacket;
-          res.json({ state, response });
+          res.json({ state: state === 1 ? true : false, response });
         }
       }
     );
