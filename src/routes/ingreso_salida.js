@@ -78,6 +78,29 @@ router.post("/ingresoAdd", (req, res) => {
       productos_concat,
     } = req.body;
 
+    let error = false;
+
+    var listaProductos = productos_concat.split("@");
+
+    for (let i = 0; i < listaProductos.length && !error; i++) {
+      var producto = listaProductos[i].split("|");
+      //si el Stock a ingresar es CERO ó NEGATIVO
+      if (parseInt(producto[1]) <= 0) {
+        error = true;
+      }
+      //si el precio compra a ingresar es CERO ó NEGATIVO
+      if (parseFloat(producto[2]) <= 0) {
+        error = true;
+      }
+    }
+
+    if (error) {
+      res.status(500).send({
+        error: "Hay productos con (stock|precio) CERO ó NEGATIVO",
+        state: false,
+      });
+    }
+
     const query = "CALL ingresoAdd(?, ?, ?);";
 
     let mysqlConnection = mysql.createConnection(mysqlConfig);
@@ -142,6 +165,25 @@ router.post("/retiroAdd", (req, res) => {
       id_user_responsable,
       productos_concat,
     } = req.body;
+
+    let error = false;
+
+    var listaProductos = productos_concat.split("@");
+
+    for (let i = 0; i < listaProductos.length && !error; i++) {
+      var producto = listaProductos[i].split("|");
+      //si el Stock a ingresar es CERO ó NEGATIVO
+      if (parseInt(producto[1]) <= 0) {
+        error = true;
+      }
+    }
+
+    if (error) {
+      res.status(500).send({
+        error: "Hay productos con stock CERO ó NEGATIVO",
+        state: false,
+      });
+    }
 
     const query = "CALL retiroAdd(?, ?, ?);";
 
