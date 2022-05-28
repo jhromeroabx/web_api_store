@@ -79,6 +79,7 @@ router.post("/ingresoAdd", (req, res) => {
     } = req.body;
 
     let error = false;
+    let mensaje_error = "";
 
     var listaProductos = productos_concat.split("@");
 
@@ -87,16 +88,22 @@ router.post("/ingresoAdd", (req, res) => {
       //si el Stock a ingresar es CERO ó NEGATIVO
       if (parseInt(producto[1]) <= 0) {
         error = true;
+        mensaje_error = `el producto ${producto[0]}, tiene stock negativo`;
+      }
+      if (parseInt(producto[1]) === 0) {
+        error = true;
+        mensaje_error = `el producto ${producto[0]}, tiene stock cero`;
       }
       //si el precio compra a ingresar es CERO ó NEGATIVO
       if (parseFloat(producto[2]) <= 0) {
         error = true;
+        mensaje_error = `el producto ${producto[0]}, tiene precio compra cero o negativo`;
       }
     }
 
     if (error) {
       res.status(500).send({
-        error: "Hay productos con (stock|precio) CERO ó NEGATIVO",
+        response: mensaje_error,
         state: false,
       });
     }
@@ -116,8 +123,8 @@ router.post("/ingresoAdd", (req, res) => {
         } else {
           console.log("DB CONNECTED : ingresoAdd");
           const [RowDataPacket] = rows[0];
-          const { state, response } = RowDataPacket;
-          res.json({ state, response });
+          const { state , response } = RowDataPacket;
+          res.json({ state: state === 1 ? true : false , response });
         }
       }
     );
@@ -180,7 +187,7 @@ router.post("/retiroAdd", (req, res) => {
 
     if (error) {
       res.status(500).send({
-        error: "Hay productos con stock CERO ó NEGATIVO",
+        response: "Hay productos con stock CERO ó NEGATIVO",
         state: false,
       });
     }
