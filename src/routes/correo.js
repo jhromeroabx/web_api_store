@@ -1,32 +1,115 @@
 const express = require("express");
-const router = express.Router();
+// const router = express.Router();
 const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'shareconmigo123@gmail.com',
-        pass: 'solojhosep@20'
-    }
-});
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//         user: 'shareconmigo123@gmail.com',
+//         pass: 'solojhosep@20'
+//     }
+// });
 
-const mailOptions = {
-    from: 'shareconmigo123@gmail.com',
-    to: 'jhromero.abx@gmail.com',
-    subject: 'JHOSEPPPPPPPPPPPPPPPPP',
-    text: 'JHOSEPPPPPPPPPPPPPPPPP FROM NODE APP!!!'
-};
+// const mailOptions = {
+//     from: 'shareconmigo123@gmail.com',
+//     to: 'jhromero.abx@gmail.com',
+//     subject: 'JHOSEPPPPPPPPPPPPPPPPP',
+//     text: 'JHOSEPPPPPPPPPPPPPPPPP FROM NODE APP!!!',
+//     html: '<p>Sending some HTML to test.</p>'
+// };
 
-router.post("/sendmail", (req, res) => {
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-            res.json("END error");
-        } else {
-            console.log('Email sent: ' + info.response);
-            res.json({ res: 'Email sent: ' + info.response });
+// router.post("/sendmail", (req, res) => {
+//     transporter.sendMail(mailOptions, function (error, info) {
+//         if (error) {
+//             console.log(error);
+//             res.json("END error");
+//         } else {
+//             console.log('Email sent: ' + info.response);
+//             res.json({ res: 'Email sent: ' + info.response });
+//         }
+//     });
+// });
+
+let sendEmail = function (to, subject, body) {
+    // SEND EMAIL
+    // https://cheatcode.co/tutorials/how-to-send-email-with-nodemailer
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'shareconmigo123@gmail.com',
+            pass: 'solojhosep@20'
         }
     });
-});
 
-module.exports = router;
+    let error = false;
+
+    const mailOptions = {
+        from: 'shareconmigo123@gmail.com',
+        to: to,
+        subject: subject,
+        text: body,
+        html: '<p>Sending some HTML to test.</p>'
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log("END error", error);
+            // res.json("END error");
+            error = true;
+        } else {
+            console.log('Email sent: ' + info.response);
+            // res.json({ res: 'Email sent: ' + info.response });
+            // error = false;
+        }
+    });
+
+    return error;
+}
+
+module.exports.sendEmail = sendEmail;
+// // EXPORT SHAPES
+// var add = require('./counter').add;
+// var sub = require('./counter').sub;
+
+// add(1,2);
+// sub(1,2);
+
+// function sleep() {
+//   .......
+//   return *something*;
+// };
+// module.exports.sleep = sleep;
+// const task = require(__dirname + "/task.js");
+//task is the name of the file
+// let eat = task.eat();
+// let sleep = task.sleep();
+
+// // Function
+
+// function square(number) {
+//     return number * number;
+//   }
+
+// function sumar(sum1, sum2)
+
+
+// {
+
+
+//     var resultado;
+
+
+//     resultado = sum1 + sum2;
+
+
+//     return resultado;
+
+
+// }
+
+// var exports = module.exports = {};
+
+// exports.AddNumber = function(a, b) {
+//     return a + b;
+// }
