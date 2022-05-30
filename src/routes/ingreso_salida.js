@@ -209,9 +209,15 @@ router.post("/retiroAdd", (req, res) => {
           res.status(500).send({ error: "ERROR AT: /retiroAdd", cause: err });
         } else {
           console.log("DB CONNECTED : retiroAdd");
-          const [RowDataPacket] = rows[0];
+          let RowDataPacket;
+          [RowDataPacket] = rows[0];
+          const { procesado } = RowDataPacket;
+          // console.log("procesado: ",procesado); // LISTO PARA USAR!!!
+
+          [RowDataPacket] = rows[1];
           const { state, response } = RowDataPacket;
-          res.json({ state: state === 1 ? true : false, response });
+
+          res.json({ state: state === 1 ? true : false, response, procesado });
         }
       }
     );

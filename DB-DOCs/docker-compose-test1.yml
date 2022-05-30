@@ -1,16 +1,59 @@
 version: '3.5'
 services:
-  minio_jhosep:
-    container_name: minio_server_new
-    image: minio/minio:RELEASE.2022-04-29T01-27-09Z
+  mysql_jhosep:
+    container_name: mysql_jhosep
+    image: mysql:latest
     volumes:
-      - /mnt/miniodata:/Data
-      - /mnt/ssl:/root/.minio/certs/CAs
-    command: server /Data --console-address ":9001" 
+      - /home/loasi/Documentos/MYSQL_DATA:/var/lib/mysql
     ports:
-      - '8530:9000'
-      - '8531:9001'
+      - 3350:3306
     environment:
-      - MINIO_ROOT_USER=123wasd
-      - MINIO_ROOT_PASSWORD=123wasd@wasd
+      - MYSQL_ROOT_PASSWORD=wasd12125
+      - MYSQL_DATABASE=db_loasiv2
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=wasd12125
+      - TZ=America/Lima
     restart: always
+    network_mode: bridge
+
+  myadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin2
+    links:
+      - mysql_jhosep
+    environment:
+      PMA_HOST: mysql_jhosep
+      PMA_PORT: 3350
+      PMA_ARBITRARY: 1
+      # MYSQL_ROOT_PASSWORD: wasd12125
+      # PMA_USER: root
+      # PMA_PASSWORD: wasd12125
+      # PMA_CONTROLUSER: root
+      # PMA_CONTROLPASS: wasd12125
+    volumes:
+      - /home/loasi/Documentos/PHPMYADMIN:/var/www/html/phpmyadmin/themes
+    restart: always
+    ports:
+      - 8070:80
+    network_mode: bridge
+
+
+    # minio_jhosep:
+    # container_name: minio_server_new
+    # image: minio/minio:RELEASE.2022-04-29T01-27-09Z
+    # volumes:
+    #   - /mnt/miniodata:/Data
+    #   - /mnt/ssl:/root/.minio/certs/CAs
+    # command: server /Data --console-address ":9001" 
+    # ports:
+    #   - '8530:9000'
+    #   - '8531:9001'
+    # environment:
+    #   - MINIO_ROOT_USER=123wasd
+    #   - MINIO_ROOT_PASSWORD=123wasd@wasd
+    # restart: always
+#command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-time-zone=+09:00']
+# docker-compose -f docker-compose-test1.yml down
+# docker-compose -f docker-compose-test1.yml up -d
+# docker-composer -f mysql-phpmyadmin.yml stop 
+# docker-composer -f mysql-phpmyadmin.yml start
