@@ -69,6 +69,7 @@ let sendEmail = function (to, subject, body) {
 
 module.exports.sendEmail = sendEmail;
 // // EXPORT SHAPES
+// https://www.sitepoint.com/understanding-module-exports-exports-node-js/
 // var add = require('./counter').add;
 // var sub = require('./counter').sub;
 
