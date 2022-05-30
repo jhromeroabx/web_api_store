@@ -79,3 +79,9 @@ SELECT * FROM `tb_retiro` WHERE 1;
 SELECT NOW();
 
 npm i swagger-jsdoc swagger-ui-express
+
+<!-- VER PUERTO, SI ESTA USADO O APAGADO -->
+netstat -a -n -o | grep 5000
+netstat -tupln <!-- usados -->
+netstat -antu <!-- escucha -->
+kill -9 $( lsof -i:5000 -t ) <!-- mata proceso -->
