@@ -65,7 +65,6 @@ app.use(require("./routes/users"));
 app.use(require("./routes/products"));
 app.use(require("./routes/ingreso_salida"));
 app.use(require("./routes/minio"));
-app.use(require("./routes/correo"));
 
 app.use(function onError(err, req, res, next) {
   res.statusCode = 500;

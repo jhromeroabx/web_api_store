@@ -1,4 +1,4 @@
-const express = require("express");
+// const express = require("express");
 // const router = express.Router();
 const nodemailer = require('nodemailer');
 
@@ -49,7 +49,7 @@ let sendEmail = function (to, subject, body) {
         to: to,
         subject: subject,
         text: body,
-        html: '<p>Sending some HTML to test.</p>'
+        // html: '<p>Sending some HTML to test.</p>'
     };
 
     transporter.sendMail(mailOptions, function (error, info) {

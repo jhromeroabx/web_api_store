@@ -84,7 +84,7 @@ router.post("/ingresoAdd", (req, res) => {
     var listaProductos = productos_concat.split("@");
 
     for (let i = 0; i < listaProductos.length && !error; i++) {
-      var producto = listaProductos[i].split("|");      
+      var producto = listaProductos[i].split("|");
       //si el stock compra a ingresar es NEGATIVO o CERO
       if (parseInt(producto[1]) <= 0) {
         error = true;
@@ -100,7 +100,7 @@ router.post("/ingresoAdd", (req, res) => {
     if (error) {
       res.status(500).send({
         state: false,
-        response: mensaje_error,        
+        response: mensaje_error,
       });
     }
 
@@ -119,8 +119,8 @@ router.post("/ingresoAdd", (req, res) => {
         } else {
           console.log("DB CONNECTED : ingresoAdd");
           const [RowDataPacket] = rows[0];
-          const { state , response } = RowDataPacket;
-          res.json({ state: state === 1 ? true : false , response });
+          const { state, response } = RowDataPacket;
+          res.json({ state: state === 1 ? true : false, response });
         }
       }
     );
@@ -161,6 +161,28 @@ router.post("/getAllRetirosDetailBy", (req, res) => {
   }
 });
 
+let sendEmail = require('./correo').sendEmail;
+
+function armarListaCompras(serializado) {
+
+  let listaProductos = serializado.split("@");
+
+  let listaCompras = "PRODUCTOS A COMPRAR: \n\n\n";
+
+
+  for (let i = 0; i < listaProductos.length; i++) {
+    let producto = listaProductos[i].split("|");
+
+    let id = producto[0];
+    let nombre = producto[1];
+    let stockMin = producto[2];
+    let fecha = producto[3];
+
+    listaCompras += `(${id}) - ${nombre}: necesita como minimo ${stockMin} \n fecha solicitud: ${fecha} \n\n`;
+  }
+  return listaCompras;
+}
+
 router.post("/retiroAdd", (req, res) => {
   try {
     const {
@@ -191,17 +213,14 @@ router.post("/retiroAdd", (req, res) => {
     if (error) {
       res.status(500).send({
         state: false,
-        response: mensaje_error,        
+        response: mensaje_error,
       });
     }
-
-    const query = "CALL retiroAdd(?, ?, ?);";
 
     let mysqlConnection = mysql.createConnection(mysqlConfig);
     mysqlConnection.connect();
 
-    mysqlConnection.query(
-      query,
+    mysqlConnection.query("CALL retiroAdd(?, ?, ?);",
       [comentario, id_user_responsable, productos_concat],
       (err, rows, fields) => {
         if (err) {
@@ -212,7 +231,12 @@ router.post("/retiroAdd", (req, res) => {
           let RowDataPacket;
           [RowDataPacket] = rows[0];
           const { procesado } = RowDataPacket;
-          // console.log("procesado: ",procesado); // LISTO PARA USAR!!!
+
+          if (procesado != null) {// VALIDAR QUE CUANDO NO HAYA PRODUCTOS BAJO NO ENVIE DATA
+            let emailToSend = armarListaCompras(procesado);
+
+            sendEmail('jhosepromero14@gmail.com', 'PRODUCTOS A COMPRAR - STOCK BAJO!!!', emailToSend);
+          }
 
           [RowDataPacket] = rows[1];
           const { state, response } = RowDataPacket;
@@ -227,5 +251,7 @@ router.post("/retiroAdd", (req, res) => {
     console.error("ERROR AT: /retiroAdd", error);
   }
 });
+
+
 
 module.exports = router;

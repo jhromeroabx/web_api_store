@@ -88,7 +88,7 @@ router.post("/findProductBy", (req, res) => {
   try {
     // const id_antiguo  = req.params.id;
     let { id, barcode } = req.body;
-    let error_message = "EL PRODUCTO NO EXISTE";
+    let error_message = "";
     if (String(id).length == 0) {
       id = 0;
       error_message =
@@ -114,7 +114,17 @@ router.post("/findProductBy", (req, res) => {
         } else {
           console.log("DB CONNECTED : findProductBy");
           const [RowDataPacket] = rows[0];
-          res.json(RowDataPacket);
+          if (RowDataPacket != undefined) { // si es null no traemos data
+            res.json({
+              status: true,
+              response: RowDataPacket
+            });
+          } else {
+            res.json({
+              status: false,
+              response: error_message
+            });
+          }
         }
       }
     );
