@@ -67,7 +67,8 @@ let sendEmail = function (to, subject, body) {
     return error;
 }
 
-module.exports.sendEmail = sendEmail;
+// module.exports.sendEmail = sendEmail;
+module.exports = sendEmail;
 // // EXPORT SHAPES
 // https://www.sitepoint.com/understanding-module-exports-exports-node-js/
 // var add = require('./counter').add;

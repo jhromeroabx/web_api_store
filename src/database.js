@@ -1,19 +1,9 @@
-// const mysql = require("mysql");
+const mysql = require("mysql2");
 
-let mysqlConfig;
-
-//   mysqlConnection = mysql.createConnection({
-//     host: "25.38.59.175",
-//     host: "192.168.18.6",
-//     host: "192.168.0.2",
-//     host: "127.0.0.1",
-//     port: "3350",
-//     user: "qwert",
-//     password: "wasd12125",
-//     database: "db_company",
-//   });
-
-mysqlConfig = {
+const mysqlConfig = {
+  //     host: "25.38.59.175",
+  //     host: "192.168.18.5",
+  //     host: "127.0.0.1",
   host: "192.168.18.6",
   port: "3350",
   user: "root",
@@ -21,13 +11,20 @@ mysqlConfig = {
   database: "db_company",
 }
 
-// mysqlConnection.connect(function (err) {
-//   if (err) {
-//     console.log(err);
-//     return;
-//   } else {
-//     console.log("DB CONNECTED");
-//   }
-// });
+function connectMysql(funcion) {
+  let mysqlConnection = mysql.createConnection(mysqlConfig);
 
-module.exports = mysqlConfig;
+  mysqlConnection.connect(function (err) {
+    if (err) {
+      console.log(`ERROR CAUSADO EN => ${funcion} : `, err);
+      return;
+    } else {
+      console.log(`DB CONNECTED => ${funcion}`);
+    }
+  });
+
+  return mysqlConnection;
+}
+
+// module.exports = mysqlConfig;
+module.exports = connectMysql;

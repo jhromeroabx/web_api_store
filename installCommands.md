@@ -5,6 +5,8 @@ npm init -y
 <!-- modulos -->
 
 npm install express mysql nodemon
+<!-- usamos GITIGNORE para "NODEMODULES", este comando reinstalamos para las futuras clonaciones-->
+npm install
 
 <!-- corriendo servicios -->
 

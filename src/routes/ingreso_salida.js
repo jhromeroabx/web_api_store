@@ -161,7 +161,7 @@ router.post("/getAllRetirosDetailBy", (req, res) => {
   }
 });
 
-let sendEmail = require('./correo').sendEmail;
+let sendEmail = require('../utils/correo');
 
 function armarListaCompras(serializado) {
 

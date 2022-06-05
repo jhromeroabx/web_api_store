@@ -1,9 +1,11 @@
+const e = require("express");
 const express = require("express");
 const router = express.Router();
 
 const mysql = require("mysql2");
 
-const mysqlConfig = require("../database");
+// const mysqlConfig = require("../database");
+const connectMysql = require("../database");
 
 router.get("/users", (req, res) => {
   res.json("HOLA A TODOS LOS USERS!!!");
@@ -11,9 +13,7 @@ router.get("/users", (req, res) => {
 
 router.get("/getAllUser", (req, res) => {
   try {
-
-    let mysqlConnection = mysql.createConnection(mysqlConfig);
-    mysqlConnection.connect();
+    let mysqlConnection = connectMysql("/getAllUser");
 
     mysqlConnection.query(
       "SELECT * FROM tb_user tu WHERE tu.estado = 1",
@@ -24,7 +24,6 @@ router.get("/getAllUser", (req, res) => {
             .status(500)
             .send({ error: "ERROR AT: /getAllUser", err });
         } else {
-          console.log("DB CONNECTED : getAllUser");
           res.json(rows);
         }
       }
@@ -41,10 +40,12 @@ router.get("/getAllUser", (req, res) => {
 router.get("/getAllUserType", (req, res) => {
   try {
 
-    let mysqlConnection = mysql.createConnection(mysqlConfig);
-    mysqlConnection.connect();
+    // let mysqlConnection = mysql.createConnection(mysqlConfig);
+    // mysqlConnection.connect();
+    
+    let mysqlConnection1 = connectMysql("/getAllUser");
 
-    mysqlConnection.query(
+    mysqlConnection1.query(
       "SELECT * FROM tb_user_type tuy WHERE tuy.estado = 1",
       (err, rows, fields) => {
         if (err) {
@@ -58,12 +59,12 @@ router.get("/getAllUserType", (req, res) => {
         }
       }
     );
-    mysqlConnection.end();
+    mysqlConnection1.end();
   } catch (error) {
-    console.error("ERROR AT ROUTER: /getAllUserType (SEE LOG FOR DETAILS) => ", err);
+    console.error("ERROR AT ROUTER: /getAllUserType (SEE LOG FOR DETAILS) => ", error);
     res
       .status(500)
-      .send({ error: "ERROR AT: /getAllUserType", error });
+      .send({ error_causado: "ERROR AT: /getAllUserType", error });
   }
 });
 
