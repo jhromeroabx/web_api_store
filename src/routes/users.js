@@ -1,9 +1,5 @@
-const e = require("express");
 const express = require("express");
 const router = express.Router();
-
-const mysql = require("mysql2");
-
 // const mysqlConfig = require("../database");
 const connectMysql = require("../database");
 
@@ -40,12 +36,9 @@ router.get("/getAllUser", (req, res) => {
 router.get("/getAllUserType", (req, res) => {
   try {
 
-    // let mysqlConnection = mysql.createConnection(mysqlConfig);
-    // mysqlConnection.connect();
-    
-    let mysqlConnection1 = connectMysql("/getAllUser");
+    let mysqlConnection = connectMysql("/getAllUser");
 
-    mysqlConnection1.query(
+    mysqlConnection.query(
       "SELECT * FROM tb_user_type tuy WHERE tuy.estado = 1",
       (err, rows, fields) => {
         if (err) {
@@ -54,12 +47,11 @@ router.get("/getAllUserType", (req, res) => {
             .status(500)
             .send({ error: "ERROR AT: /getAllUserType", err });
         } else {
-          console.log("DB CONNECTED : getAllUserType");
           res.json(rows);
         }
       }
     );
-    mysqlConnection1.end();
+    mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT ROUTER: /getAllUserType (SEE LOG FOR DETAILS) => ", error);
     res
@@ -84,8 +76,7 @@ router.post("/login", (req, res) => {
         .send({ error: "la contrasenia no puede ser mayor a 15 caracteres!" });
     } else {
 
-      let mysqlConnection = mysql.createConnection(mysqlConfig);
-      mysqlConnection.connect();
+      let mysqlConnection = connectMysql("/login");
 
       const query = "CALL login(?, ?);";
       mysqlConnection.query(query, [user, contrasenia], (err, rows, fields) => {
@@ -93,15 +84,14 @@ router.post("/login", (req, res) => {
           console.error("ERROR AT: /login", err);
           res.status(500).send({ where: "ERROR AT ROUTER: /login (SEE LOG FOR DETAILS) ===> ", err });
         } else {
-          console.log("DB CONNECTED : login");
           let RowDataPacket;
           [RowDataPacket] = rows[0];
-          const {msg, state} = RowDataPacket;
+          const { msg, state } = RowDataPacket;
           if (state == 1) {
             [RowDataPacket] = rows[1];
-            res.json({ state: {msg, state}, userData: RowDataPacket });
+            res.json({ state: { msg, state }, userData: RowDataPacket });
           } else {
-            res.json({ state: {msg, state}, userData: null });
+            res.json({ state: { msg, state }, userData: null });
           }
         }
       });
@@ -176,8 +166,7 @@ router.post("/AddUserOrEdit", (req, res) => {
     } else {
       const query = "CALL userAddOrEdit(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-      let mysqlConnection = mysql.createConnection(mysqlConfig);
-      mysqlConnection.connect();
+      let mysqlConnection = connectMysql("/userAddOrEdit");
 
       mysqlConnection.query(
         query,
@@ -198,7 +187,6 @@ router.post("/AddUserOrEdit", (req, res) => {
             console.error("ERROR AT: /AddUserOrEdit", err);
             res.status(500).send({ where: "ERROR AT ROUTER: /AddUserOrEdit (SEE LOG FOR DETAILS) ===> ", err });
           } else {
-            console.log("DB CONNECTED : AddUserOrEdit");
             const [RowDataPacket] = rows[0];
             const { state } = RowDataPacket;
             if (state == 1) {

@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const mysql = require("mysql2");
-
-const mysqlConfig = require("../database");
+const connectMysql = require("../database");
 
 router.get("/employee", (req, res) => {
   res.json("HOLA A TODOS LOS EMPLEADOS!!!");
@@ -11,8 +9,8 @@ router.get("/employee", (req, res) => {
 
 router.get("/getAllEmployeeType", (req, res) => {
   try {
-    let mysqlConnection = mysql.createConnection(mysqlConfig);
-    mysqlConnection.connect();
+
+    let mysqlConnection = connectMysql("/getAllEmployeeType");
 
     mysqlConnection.query(
       "SELECT * FROM tb_employee_type ty WHERE ty.estado = 1",
@@ -23,7 +21,6 @@ router.get("/getAllEmployeeType", (req, res) => {
             .status(500)
             .send({ error: "ERROR AT: /getAllEmployeeType", err });
         } else {
-          console.log("DB CONNECTED : getAllEmployeeType");
           res.json(rows);
         }
       }
@@ -39,15 +36,14 @@ router.get("/getAllEmployeeType", (req, res) => {
 
 router.get("/getAllEmployee", (req, res) => {
   try {
-    let mysqlConnection = mysql.createConnection(mysqlConfig);
-    mysqlConnection.connect();
+
+    let mysqlConnection = connectMysql("/getAllEmployee");
 
     mysqlConnection.query("SELECT * FROM tb_employee", (err, rows, fields) => {
       if (err) {
         console.error("ERROR AT: /getAllEmployee", err);
         res.status(500).send({ where: "ERROR AT ROUTER: /getAllEmployee (SEE LOG FOR DETAILS) ===> ", err });
       } else {
-        console.log("DB CONNECTED : getAllEmployee");
         res.json(rows);
       }
     });
@@ -58,13 +54,13 @@ router.get("/getAllEmployee", (req, res) => {
   }
 });
 
-router.get("/findEmployee/:id", (req, res) => {
+router.get("/findEmployee", (req, res) => {
   try {
+    // /findEmployee/:id
     // const id_antiguo  = req.params.id;
-    const { id } = req.params;
+    const { id } = req.body;
 
-    let mysqlConnection = mysql.createConnection(mysqlConfig);
-    mysqlConnection.connect();
+    let mysqlConnection = connectMysql("/findEmployee");
 
     mysqlConnection.query(
       "SELECT * FROM tb_employee WHERE id = ?",
@@ -75,11 +71,8 @@ router.get("/findEmployee/:id", (req, res) => {
           res.status(500).send({ error: "ERROR AT: /findEmployee", err });
         } else {
           if (!rows.length) {
-            //indicamos si el err esta null no trae data del SQL
-            console.log("CONSULTA A TABLA EMPLOYEES SIN ROWS : findEmployee");
             res.json({ status: "El empleado con id: " + [id] + " no existe!" });
           } else {
-            console.log("DB CONNECTED : findEmployee");
             res.json(rows[0]);
           }
         }
@@ -92,13 +85,13 @@ router.get("/findEmployee/:id", (req, res) => {
   }
 });
 
-router.delete("/deleteEmployee/:id", (req, res) => {
+router.delete("/deleteEmployee", (req, res) => {
   try {
+    // /deleteEmployee/:id GET PARAM
     // const id_antiguo  = req.params.id;
-    const { id } = req.params;
+    const { id } = req.body;
 
-    let mysqlConnection = mysql.createConnection(mysqlConfig);
-    mysqlConnection.connect();
+    let mysqlConnection = connectMysql("/deleteEmployee");
 
     mysqlConnection.query(
       "DELETE FROM tb_employee WHERE id = ?",
@@ -108,7 +101,6 @@ router.delete("/deleteEmployee/:id", (req, res) => {
           console.error("ERROR AT: /deleteEmployee", err);
           res.status(500).send({ error: "ERROR AT: /deleteEmployee", err });
         } else {
-          console.log("DB CONNECTED : deleteEmployee");
           res.json({
             status: "El empleado con id: " + [id] + " ha sido borrado!",
           });
@@ -128,8 +120,7 @@ router.post("/AddEmployeeOrEdit", (req, res) => {
 
     const query = "CALL employeeAddOrEdit(?, ?, ?, ?);";
 
-    let mysqlConnection = mysql.createConnection(mysqlConfig);
-    mysqlConnection.connect();
+    let mysqlConnection = connectMysql("/AddEmployeeOrEdit");
 
     mysqlConnection.query(
       query,
@@ -139,15 +130,14 @@ router.post("/AddEmployeeOrEdit", (req, res) => {
           console.error("ERROR AT: /AddEmployeeOrEdit", err);
           res.status(500).send({ error: "ERROR AT: /AddEmployeeOrEdit", err });
         } else {
-          console.log("DB CONNECTED : AddEmployeeOrEdit");
           res.json({ status: "Employeed Saved", response: rows[0] });
         }
       }
     );
     mysqlConnection.end();
   } catch (error) {
-    console.error("ERROR AT: /getAllEmployee", error);
-    res.status(500).send({ error: "ERROR AT: /getAllEmployee", error });
+    console.error("ERROR AT: /AddEmployeeOrEdit", error);
+    res.status(500).send({ error: "ERROR AT: /AddEmployeeOrEdit", error });
   }
 });
 

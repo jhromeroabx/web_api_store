@@ -1,9 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
-const mysql = require("mysql2");
-
-const mysqlConfig = require("../database");
+const connectMysql = require("../database");
 
 router.get("/ingresos&salidas", (req, res) => {
   res.json(
@@ -14,8 +11,8 @@ router.get("/ingresos&salidas", (req, res) => {
 // EVALUAR 
 router.get("/getAllIngresos", (req, res) => {
   try {
-    let mysqlConnection = mysql.createConnection(mysqlConfig);
-    mysqlConnection.connect();
+    
+    let mysqlConnection = connectMysql("/getAllIngresos");
 
     mysqlConnection.query(
       "SELECT * FROM tb_ingreso tc WHERE tc.active = 1",
@@ -27,7 +24,6 @@ router.get("/getAllIngresos", (req, res) => {
 
           console.error("ERROR AT: /getAllIngresos", err);
         } else {
-          console.log("DB CONNECTED : getAllIngresos");
           res.json(rows);
         }
       }
@@ -44,8 +40,7 @@ router.post("/getAllIngresosDetailBy", (req, res) => {
   try {
     const { id_ingreso } = req.body;
 
-    let mysqlConnection = mysql.createConnection(mysqlConfig);
-    mysqlConnection.connect();
+    let mysqlConnection = connectMysql("/getAllIngresosDetailBy");
 
     mysqlConnection.query(
       "SELECT TIP.*,TP.nombre,TI.active ingresoState FROM tb_ingreso_producto TIP INNER JOIN tb_ingreso TI ON TI.id = TIP.id_ingreso INNER JOIN tb_producto TP ON TIP.id_producto = TP.id WHERE TIP.id_ingreso = ?",
@@ -58,7 +53,6 @@ router.post("/getAllIngresosDetailBy", (req, res) => {
 
           console.error("ERROR AT: /getAllIngresosDetailBy", err);
         } else {
-          console.log("DB CONNECTED : getAllIngresosDetailBy");
           res.json(rows);
         }
       }
@@ -106,8 +100,7 @@ router.post("/ingresoAdd", (req, res) => {
 
     const query = "CALL ingresoAdd(?, ?, ?);";
 
-    let mysqlConnection = mysql.createConnection(mysqlConfig);
-    mysqlConnection.connect();
+    let mysqlConnection = connectMysql("/ingresoAdd");
 
     mysqlConnection.query(
       query,
@@ -117,7 +110,6 @@ router.post("/ingresoAdd", (req, res) => {
           console.error("ERROR AT: /ingresoAdd", err);
           res.status(500).send({ error: "ERROR AT: /ingresoAdd", cause: err });
         } else {
-          console.log("DB CONNECTED : ingresoAdd");
           const [RowDataPacket] = rows[0];
           const { state, response } = RowDataPacket;
           res.json({ state: state === 1 ? true : false, response });
@@ -135,8 +127,7 @@ router.post("/getAllRetirosDetailBy", (req, res) => {
   try {
     const { id_retiro } = req.body;
 
-    let mysqlConnection = mysql.createConnection(mysqlConfig);
-    mysqlConnection.connect();
+    let mysqlConnection = connectMysql("/getAllRetirosDetailBy");
 
     mysqlConnection.query(
       "SELECT TRP.*,TP.nombre,TR.comentario FROM tb_retiro TR INNER JOIN tb_retiro_producto TRP ON TR.id = TRP.id_retiro INNER JOIN tb_producto TP ON TRP.id_producto = TP.id WHERE TRP.id_retiro = ?",
@@ -149,7 +140,6 @@ router.post("/getAllRetirosDetailBy", (req, res) => {
 
           console.error("ERROR AT: /getAllRetirosDetailBy", err);
         } else {
-          console.log("DB CONNECTED : getAllRetirosDetailBy");
           res.json(rows);
         }
       }
@@ -217,9 +207,8 @@ router.post("/retiroAdd", (req, res) => {
       });
     }
 
-    let mysqlConnection = mysql.createConnection(mysqlConfig);
-    mysqlConnection.connect();
-
+    let mysqlConnection = connectMysql("/retiroAdd");
+    
     mysqlConnection.query("CALL retiroAdd(?, ?, ?);",
       [comentario, id_user_responsable, productos_concat],
       (err, rows, fields) => {
@@ -227,9 +216,11 @@ router.post("/retiroAdd", (req, res) => {
           console.error("ERROR AT: /retiroAdd", err);
           res.status(500).send({ error: "ERROR AT: /retiroAdd", cause: err });
         } else {
-          console.log("DB CONNECTED : retiroAdd");
           let RowDataPacket;
           [RowDataPacket] = rows[0];
+          const { state, response } = RowDataPacket;
+
+          [RowDataPacket] = rows[1];
           const { procesado } = RowDataPacket;
 
           if (procesado != null) {// VALIDAR QUE CUANDO NO HAYA PRODUCTOS BAJO NO ENVIE DATA
@@ -237,9 +228,6 @@ router.post("/retiroAdd", (req, res) => {
 
             sendEmail('jhosepromero14@gmail.com', 'PRODUCTOS A COMPRAR - STOCK BAJO!!!', emailToSend);
           }
-
-          [RowDataPacket] = rows[1];
-          const { state, response } = RowDataPacket;
 
           res.json({ state: state === 1 ? true : false, response, procesado });
         }
