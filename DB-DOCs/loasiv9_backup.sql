@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `db_company` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `db_company` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db_company`;
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
@@ -24,7 +24,7 @@ USE `db_company`;
 DROP TABLE IF EXISTS `QuantityAllProducts`;
 /*!50001 DROP VIEW IF EXISTS `QuantityAllProducts`*/;
 SET @saved_cs_client     = @@character_set_client;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 /*!50001 CREATE VIEW `QuantityAllProducts` AS SELECT 
  1 AS `id`,
  1 AS `nombre`,
@@ -44,14 +44,14 @@ SET character_set_client = @saved_cs_client;
 
 DROP TABLE IF EXISTS `tb_categoria`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_categoria` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(30) NOT NULL,
-  `comentario` varchar(150) NOT NULL,
+  `nombre` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `comentario` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,16 +70,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_employee` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
+  `name` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `salary` int DEFAULT NULL,
   `id_employee_type` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_type_employee` (`id_employee_type`),
   CONSTRAINT `fk_type_employee` FOREIGN KEY (`id_employee_type`) REFERENCES `tb_employee_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,14 +98,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_employee_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_employee_type` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nom_type` varchar(45) NOT NULL,
-  `desc` varchar(150) DEFAULT NULL,
+  `nom_type` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `desc` varchar(150) COLLATE utf8_unicode_ci DEFAULT NULL,
   `estado` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,15 +124,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_ingreso`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_ingreso` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `comentario` varchar(150) NOT NULL,
+  `comentario` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `fecha` datetime NOT NULL,
   `id_user_responsable` int NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,7 +151,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_ingreso_producto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_ingreso_producto` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_ingreso` int NOT NULL,
@@ -166,7 +166,7 @@ CREATE TABLE `tb_ingreso_producto` (
   KEY `id_producto` (`id_producto`),
   CONSTRAINT `tb_ingreso_producto_ibfk_1` FOREIGN KEY (`id_ingreso`) REFERENCES `tb_ingreso` (`id`),
   CONSTRAINT `tb_ingreso_producto_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `tb_producto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,7 +185,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_orden_compra`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_orden_compra` (
   `id_orden_compra` int NOT NULL AUTO_INCREMENT,
   `id_producto` int NOT NULL,
@@ -193,7 +193,7 @@ CREATE TABLE `tb_orden_compra` (
   `stock_min` int NOT NULL,
   `fecha` datetime NOT NULL,
   PRIMARY KEY (`id_orden_compra`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,22 +212,22 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_producto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_producto` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `comentario` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `nombre` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `comentario` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `cantidad` int NOT NULL,
   `precio` double NOT NULL,
-  `barcode` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `barcode` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `stock_min` int NOT NULL DEFAULT '20',
-  `imagen_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `imagen_url` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `id_categoria` int NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `tb_producto_ibfk_1` (`id_categoria`),
   CONSTRAINT `tb_producto_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `tb_categoria` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -246,17 +246,17 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_profile`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_profile` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_user` int NOT NULL,
-  `user` varchar(50) NOT NULL,
-  `contrasenia` varchar(15) NOT NULL,
+  `user` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `contrasenia` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `last_connection` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_profile_user` (`id_user`),
   CONSTRAINT `fk_profile_user` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,7 +265,7 @@ CREATE TABLE `tb_profile` (
 
 LOCK TABLES `tb_profile` WRITE;
 /*!40000 ALTER TABLE `tb_profile` DISABLE KEYS */;
-INSERT INTO `tb_profile` VALUES (1,1,'jhromero.abx@gmail.com','123','2022-06-02 00:50:27'),(2,2,'dromero.abx@gmail.com','123','2022-03-27 17:00:00'),(3,4,'wasd@gmail.com','123','2022-05-14 22:06:21'),(7,8,'pepit1.abx@gmail.com','12345','2022-04-12 22:18:55'),(8,9,'pepitooo.abx@gmail.com','12345','2022-04-12 22:19:24'),(9,10,'Flutter.abx@gmail.com','12345','2022-04-12 23:34:10'),(10,11,'vimaloa@gmail.com','123','2022-04-15 04:37:36'),(11,12,'celu.loasi@gmail.com','123','2022-04-13 00:15:20'),(12,13,'dloa@papu','1234','2022-04-13 00:35:24'),(13,14,'mouse.loasi@gmail.com','123','2022-04-14 22:32:28'),(14,16,'123','123','2022-05-15 02:39:06'),(15,17,'ffffff','123','2022-04-14 23:37:02'),(16,18,'jgarcia.abx@gmail.com','123','2022-05-13 19:14:40');
+INSERT INTO `tb_profile` VALUES (1,1,'jhromero.abx@gmail.com','123','2022-06-05 17:08:23'),(2,2,'dromero.abx@gmail.com','123','2022-03-27 17:00:00'),(3,4,'wasd@gmail.com','123','2022-05-14 22:06:21'),(7,8,'pepit1.abx@gmail.com','12345','2022-04-12 22:18:55'),(8,9,'pepitooo.abx@gmail.com','12345','2022-04-12 22:19:24'),(9,10,'Flutter.abx@gmail.com','12345','2022-04-12 23:34:10'),(10,11,'vimaloa@gmail.com','123','2022-04-15 04:37:36'),(11,12,'celu.loasi@gmail.com','123','2022-04-13 00:15:20'),(12,13,'dloa@papu','1234','2022-04-13 00:35:24'),(13,14,'mouse.loasi@gmail.com','123','2022-04-14 22:32:28'),(14,16,'123','123','2022-05-15 02:39:06'),(15,17,'ffffff','123','2022-04-14 23:37:02'),(16,18,'jgarcia.abx@gmail.com','123','2022-05-13 19:14:40');
 /*!40000 ALTER TABLE `tb_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,15 +275,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_retiro`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_retiro` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `comentario` varchar(150) NOT NULL,
+  `comentario` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `fecha` datetime NOT NULL,
   `id_user_responsable` int NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,7 +302,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_retiro_producto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_retiro_producto` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_retiro` int NOT NULL,
@@ -315,7 +315,7 @@ CREATE TABLE `tb_retiro_producto` (
   KEY `fk_retiro` (`id_retiro`),
   CONSTRAINT `fk_retiro` FOREIGN KEY (`id_retiro`) REFERENCES `tb_retiro` (`id`),
   CONSTRAINT `fk_retiro_producto` FOREIGN KEY (`id_producto`) REFERENCES `tb_producto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,14 +334,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_unidad_medida`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_unidad_medida` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(20) NOT NULL,
-  `comentario` varchar(150) NOT NULL,
+  `nombre` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `comentario` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `level` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,21 +360,21 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_user` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(200) NOT NULL,
-  `apellido` varchar(200) NOT NULL,
-  `dni` varchar(10) NOT NULL,
-  `telefono` varchar(30) NOT NULL,
-  `email` varchar(50) NOT NULL,
+  `nombre` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `apellido` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `dni` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `telefono` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `estado` tinyint(1) NOT NULL,
   `id_user_type` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_type_user` (`id_user_type`),
   CONSTRAINT `fk_type_user` FOREIGN KEY (`id_user_type`) REFERENCES `tb_user_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -383,7 +383,7 @@ CREATE TABLE `tb_user` (
 
 LOCK TABLES `tb_user` WRITE;
 /*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
-INSERT INTO `tb_user` VALUES (1,'Jhosep Adbel','Romero Loa','74810248','928769204','jhromero.abx@gmail.com','2001-01-26',1,1),(2,'Diego Abbel','Romero Loa','74810249','957043843','dromero.abx@gmail.com','2003-09-03',1,2),(3,'Ximena Maritza','Romero Loa','74810500','932123123','ximenaromeroloa@gmail.com','2005-02-05',1,3),(4,'gato','felino','12345678','999555111','wasd@gmail.com','2001-01-26',1,1),(8,'pepita','palotes','12345601','912312312','pepit1.abx@gmail.com','2005-02-05',1,5),(9,'pepita','palotes','12345600','912312312','pepitooo.abx@gmail.com','2005-02-05',1,5),(10,'Flutter','Dart','12345679','925769204','Flutter.abx@gmail.com','0000-00-00',1,5),(11,'vicky','v','16125887','6767934','vimaloa@gmail.com','0000-00-00',1,5),(12,'celu','xiaomi','12345677','6767934','celu.loasi@gmail.com','0000-00-00',1,5),(13,'DLoa','EPC','74810243','957043843','dloa@papu','0000-00-00',1,5),(14,'mouse','disney','67679344','928769204','mouse.loasi@gmail.com','2015-02-05',1,5),(15,'mouse','disney','67679355','928769204','mouse.loasi@loasi','2015-02-05',1,5),(16,'123','123','12312312','123','123','2015-01-01',1,5),(17,'ffff','fffff','12345121','6767934','ffffff','2010-01-01',1,5),(18,'juan','García Supa','70936394','925591889','jgarcia.abx@gmail.com','1996-07-15',1,5);
+INSERT INTO `tb_user` VALUES (1,'Jhosep Adbel','Romero Loa','74810248','928769204','jhromero.abx@gmail.com','2001-01-26',1,1),(2,'Diego Abbel','Romero Loa','74810249','957043843','dromero.abx@gmail.com','2003-09-03',1,2),(3,'Ximena Maritza','Romero Loa','74810500','932123123','ximenaromeroloa@gmail.com','2005-02-05',1,3),(4,'gato','felino','12345678','999555111','wasd@gmail.com','2001-01-26',1,1),(8,'pepita','palotes','12345601','912312312','pepit1.abx@gmail.com','2005-02-05',1,5),(9,'pepita','palotes','12345600','912312312','pepitooo.abx@gmail.com','2005-02-05',1,5),(10,'Flutter','Dart','12345679','925769204','Flutter.abx@gmail.com','2005-02-05',1,5),(11,'vicky','v','16125887','6767934','vimaloa@gmail.com','2005-02-05',1,5),(12,'celu','xiaomi','12345677','6767934','celu.loasi@gmail.com','2005-02-05',1,5),(13,'DLoa','EPC','74810243','957043843','dloa@papu','2005-02-05',1,5),(14,'mouse','disney','67679344','928769204','mouse.loasi@gmail.com','2015-02-05',1,5),(15,'mouse','disney','67679355','928769204','mouse.loasi@loasi','2015-02-05',1,5),(16,'123','123','12312312','123','123','2015-01-01',1,5),(17,'ffff','fffff','12345121','6767934','ffffff','2010-01-01',1,5),(18,'juan','García Supa','70936394','925591889','jgarcia.abx@gmail.com','1996-07-15',1,5);
 /*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,14 +393,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_user_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_user_type` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(200) NOT NULL,
-  `descripcion` varchar(200) NOT NULL,
+  `nombre` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `descripcion` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `estado` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -421,16 +421,17 @@ UNLOCK TABLES;
 -- Dumping routines for database 'db_company'
 --
 /*!50003 DROP FUNCTION IF EXISTS `SPLIT_STR` */;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`qwert`@`%` FUNCTION `SPLIT_STR`(`x` VARCHAR(500), `delim` VARCHAR(2), `pos` INT) RETURNS varchar(500) CHARSET utf8mb4
+CREATE DEFINER=`qwert`@`%` FUNCTION `SPLIT_STR`(`x` VARCHAR(500), `delim` VARCHAR(2), `pos` INT) RETURNS varchar(500) CHARSET utf8
 BEGIN
 -- EJECUTAMOS ANTES YA QUE LAS FUNCION NECESITA DESACTIVAR SEGURIDAD
 -- SET GLOBAL log_bin_trust_function_creators = 1;
@@ -452,13 +453,15 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `categoriaAddOrEdit` */;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
@@ -483,13 +486,15 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `descontarStockProducto` */;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -586,13 +591,15 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `employeeAddOrEdit` */;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -628,13 +635,15 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `findProductBy` */;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -665,13 +674,15 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `generarOrdenCompra` */;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -703,13 +714,15 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `ingresoAdd` */;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -770,13 +783,15 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `login` */;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
@@ -803,13 +818,15 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `productoAddOrEdit` */;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -883,13 +900,15 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `ProductsByCategoryANDORActive` */;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -922,13 +941,15 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `retiroAdd` */;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -979,13 +1000,15 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `userAddOrEdit` */;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
@@ -1054,13 +1077,15 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `validarRetiros` */;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -1129,6 +1154,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 
 --
 -- Final view structure for view `QuantityAllProducts`
@@ -1138,9 +1164,9 @@ DELIMITER ;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_unicode_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
 /*!50001 VIEW `QuantityAllProducts` AS select `p`.`id` AS `id`,`p`.`nombre` AS `nombre`,`p`.`comentario` AS `comentario`,`p`.`cantidad` AS `cantidad`,`p`.`precio` AS `precio`,`p`.`id_categoria` AS `id_categoria`,`p`.`active` AS `active`,`p`.`barcode` AS `barcode`,`p`.`imagen_url` AS `imagen_url`,`cat`.`nombre` AS `categoria` from (`tb_producto` `p` join `tb_categoria` `cat` on((`p`.`id_categoria` = `cat`.`id`))) */;
@@ -1157,4 +1183,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-04 23:17:18
+-- Dump completed on 2022-06-06  1:09:20

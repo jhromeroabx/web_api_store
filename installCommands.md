@@ -75,10 +75,11 @@ https://youtu.be/6kPIiY4La8Q //EXPORTE DATA
 <!-- SI FALLA EL BACK UP DE WORKBENCH, AGREGAR ESTO (solo sirve para PHPMYADMIN) -->
 SET GLOBAL log_bin_trust_function_creators = 1;
 
-<!-- FIX TIME ZONE MYSQL but see docker compose && volumes -->
-SELECT * FROM `tb_retiro` WHERE 1;
-<!-- VERIFY TIMEZONE -->
-SELECT NOW();
+<!-- EXPORTA TABLE AND PROCS -->
+SHOW CREATE TABLE tb_producto
+
+<!-- PARA VER LA ESTRUCTURA DEL SP -->
+SHOW CREATE PROCEDURE findProductBy
 
 npm i swagger-jsdoc swagger-ui-express
 
