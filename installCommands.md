@@ -57,11 +57,14 @@ nvm use 16.15
 <!-- USAR EL NGROK CUANDO SE REINCIA -->
 /home/loasi# ngrok http 5000
 
+<!-- CREAMOS LA IMAGEN CON EL DOCKERFILE -->
 docker build -t node-store-loasi .
+
+<!-- INICIAMOS LA IMANGEN EN CONTENEDOR BACKGROUND -->
 docker run \
 --name storeloasi \
 --restart always \
--p 4000:5000 node-store-loasi
+-d -p 7770:5000 node-store-loasi
 
 docker-compose -f docker-compose-test1.yml up -d
 docker-compose -f docker-compose-test1.yml down
@@ -91,3 +94,8 @@ netstat -a -n -o | grep 5000
 netstat -tupln <!-- usados -->
 netstat -antu <!-- escucha -->
 kill -9 $( lsof -i:5000 -t ) <!-- mata proceso -->
+
+<!-- BIND9   NGINX -->
+systemctl restart bind9
+systemctl restart nginx 
+<!-- BIND9   NGINX -->
