@@ -3,6 +3,8 @@ const app = express();
 var fs = require("file-system");
 const https = require("https");
 var path = require("path");
+const swaggerUI = require("swagger-ui-express");
+const docs = require('./docs');
 
 const PORT_HTTP = 5000;
 const PORT_HTTPS = 5001;
@@ -65,6 +67,8 @@ app.use(require("./routes/users"));
 app.use(require("./routes/products"));
 app.use(require("./routes/ingreso_salida"));
 app.use(require("./routes/minio"));
+
+app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(docs));
 
 app.use(function onError(err, req, res, next) {
   res.statusCode = 500;

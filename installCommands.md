@@ -82,6 +82,9 @@ SHOW CREATE TABLE tb_producto
 SHOW CREATE PROCEDURE findProductBy
 
 npm i swagger-jsdoc swagger-ui-express
+npm install --save swagger-ui-express <!-- SI FALLA -->
+https://www.section.io/engineering-education/documenting-node-js-rest-api-using-swagger/ JSON
+https://medium.com/@diegopm2000/creando-un-api-rest-con-swagger-node-c880bdac04a5 ??
 
 <!-- VER PUERTO, SI ESTA USADO O APAGADO -->
 netstat -a -n -o | grep 5000
