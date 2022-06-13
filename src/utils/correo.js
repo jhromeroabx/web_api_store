@@ -36,8 +36,30 @@ let sendEmail = function (to, subject, body) {
     return error;
 }
 
+
+let armarListaCompras = function (serializado) {
+
+    let listaProductos = serializado.split("@");
+  
+    let listaCompras = "PRODUCTOS A COMPRAR: \n\n\n";
+  
+  
+    for (let i = 0; i < listaProductos.length; i++) {
+      let producto = listaProductos[i].split("|");
+  
+      let id = producto[0];
+      let nombre = producto[1];
+      let stockMin = producto[2];
+      let fecha = producto[3];
+  
+      listaCompras += `(${id}) - ${nombre}: necesita como minimo ${stockMin} \n fecha solicitud: ${fecha} \n\n`;
+    }
+    return listaCompras;
+  }
+
 // module.exports.sendEmail = sendEmail;
 module.exports = sendEmail;
+module.exports = armarListaCompras;
 // // EXPORT SHAPES
 // https://www.sitepoint.com/understanding-module-exports-exports-node-js/
 // var add = require('./counter').add;

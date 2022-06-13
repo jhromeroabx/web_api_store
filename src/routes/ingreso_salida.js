@@ -8,34 +8,46 @@ router.get("/ingresos&salidas", (req, res) => {
   );
 });
 
-// EVALUAR 
+// lo veran solo los administradores 3
 router.get("/getAllIngresos", (req, res) => {
   try {
-    
     let mysqlConnection = connectMysql("/getAllIngresos");
 
+    const {
+      id_user_responsable,
+    } = req.body;
+
     mysqlConnection.query(
-      "SELECT * FROM tb_ingreso tc WHERE tc.active = 1",
+      "CALL getAllIngresos(?);",
+      [id_user_responsable],
       (err, rows, fields) => {
         if (err) {
           res
             .status(500)
             .send({ error: "Error en /getAllIngresos!", cause: err });
-
-          console.error("ERROR AT: /getAllIngresos", err);
+          console.error("ERROR AT: /getAllIngresos: ", err);
         } else {
-          res.json(rows);
+          let rptaFromMysql;
+          [rptaFromMysql] = rows[0];// si encerramos entre corchetes obtenemos el objeto del arreglo
+          const { state, response } = rptaFromMysql;
+          if (state === 1) {
+            rptaFromMysql = rows[1];
+            res.json({ state: state, response: response, content: rptaFromMysql });
+          } else {
+            res.json({ state: state, response: response, content: null });
+          }
         }
       }
     );
     mysqlConnection.end();
   } catch (error) {
+    res.status(500).send({ error: "ERROR AT: /getAllIngresos", error });
     console.error("ERROR AT: /getAllIngresos", error);
   }
 });
 
 
-// EVALUAR 
+// EVALUAR
 router.post("/getAllIngresosDetailBy", (req, res) => {
   try {
     const { id_ingreso } = req.body;
@@ -152,26 +164,7 @@ router.post("/getAllRetirosDetailBy", (req, res) => {
 });
 
 let sendEmail = require('../utils/correo');
-
-function armarListaCompras(serializado) {
-
-  let listaProductos = serializado.split("@");
-
-  let listaCompras = "PRODUCTOS A COMPRAR: \n\n\n";
-
-
-  for (let i = 0; i < listaProductos.length; i++) {
-    let producto = listaProductos[i].split("|");
-
-    let id = producto[0];
-    let nombre = producto[1];
-    let stockMin = producto[2];
-    let fecha = producto[3];
-
-    listaCompras += `(${id}) - ${nombre}: necesita como minimo ${stockMin} \n fecha solicitud: ${fecha} \n\n`;
-  }
-  return listaCompras;
-}
+let armarListaCompras = require('../utils/correo');
 
 router.post("/retiroAdd", (req, res) => {
   try {
@@ -208,7 +201,7 @@ router.post("/retiroAdd", (req, res) => {
     }
 
     let mysqlConnection = connectMysql("/retiroAdd");
-    
+
     mysqlConnection.query("CALL retiroAdd(?, ?, ?);",
       [comentario, id_user_responsable, productos_concat],
       (err, rows, fields) => {
