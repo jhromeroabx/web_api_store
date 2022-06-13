@@ -4,11 +4,13 @@ let sendEmail = function (to, subject, body) {
     // SEND EMAIL
     // https://cheatcode.co/tutorials/how-to-send-email-with-nodemailer
 
+
+    //https://www.youtube.com/watch?v=RpSQQIGTpTM GENERATE APP PASSWORD - GOOGLE AUTH NICE
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
             user: 'shareconmigo123@gmail.com',
-            pass: 'solojhosep@20'
+            pass: 'nwwvjvtxgiomglnn'
         }
     });
 

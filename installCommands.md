@@ -86,6 +86,7 @@ SHOW CREATE PROCEDURE findProductBy
 
 npm i swagger-jsdoc swagger-ui-express
 npm install --save swagger-ui-express <!-- SI FALLA -->
+npm i --save nodemailer
 https://www.section.io/engineering-education/documenting-node-js-rest-api-using-swagger/ JSON
 https://medium.com/@diegopm2000/creando-un-api-rest-con-swagger-node-c880bdac04a5 ??
 
