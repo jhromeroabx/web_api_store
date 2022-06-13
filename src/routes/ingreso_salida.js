@@ -163,8 +163,7 @@ router.post("/getAllRetirosDetailBy", (req, res) => {
   }
 });
 
-let sendEmail = require('../utils/correo');
-let armarListaCompras = require('../utils/correo');
+const { sendEmail, armarListaCompras } = require('../utils/correo');
 
 router.post("/retiroAdd", (req, res) => {
   try {

@@ -1,9 +1,8 @@
 const nodemailer = require('nodemailer');
 
-let sendEmail = function (to, subject, body) {
+function sendEmail(to, subject, body) {
     // SEND EMAIL
     // https://cheatcode.co/tutorials/how-to-send-email-with-nodemailer
-
 
     //https://www.youtube.com/watch?v=RpSQQIGTpTM GENERATE APP PASSWORD - GOOGLE AUTH NICE
     const transporter = nodemailer.createTransport({
@@ -36,73 +35,29 @@ let sendEmail = function (to, subject, body) {
     return error;
 }
 
+function armarListaCompras(serializado) {
 
-let armarListaCompras = function (serializado) {
+    console.log('SI CUMPLE CRJJJJ!!!');
 
     let listaProductos = serializado.split("@");
-  
-    let listaCompras = "PRODUCTOS A COMPRAR: \n\n\n";
-  
-  
+
+    let listaCompras = "PRODUCTOS A COMPRAR CRJ: \n\n\n";
+
+
     for (let i = 0; i < listaProductos.length; i++) {
-      let producto = listaProductos[i].split("|");
-  
-      let id = producto[0];
-      let nombre = producto[1];
-      let stockMin = producto[2];
-      let fecha = producto[3];
-  
-      listaCompras += `(${id}) - ${nombre}: necesita como minimo ${stockMin} \n fecha solicitud: ${fecha} \n\n`;
+        let producto = listaProductos[i].split("|");
+
+        let id = producto[0];
+        let nombre = producto[1];
+        let stockMin = producto[2];
+        let fecha = producto[3];
+
+        listaCompras += `(${id}) - ${nombre}: necesita como minimo ${stockMin} \n fecha solicitud: ${fecha} \n\n`;
     }
     return listaCompras;
-  }
+}
 
-// module.exports.sendEmail = sendEmail;
-module.exports = sendEmail;
-module.exports = armarListaCompras;
-// // EXPORT SHAPES
-// https://www.sitepoint.com/understanding-module-exports-exports-node-js/
-// var add = require('./counter').add;
-// var sub = require('./counter').sub;
-
-// add(1,2);
-// sub(1,2);
-
-// function sleep() {
-//   .......
-//   return *something*;
-// };
-// module.exports.sleep = sleep;
-// const task = require(__dirname + "/task.js");
-//task is the name of the file
-// let eat = task.eat();
-// let sleep = task.sleep();
-
-// // Function
-
-// function square(number) {
-//     return number * number;
-//   }
-
-// function sumar(sum1, sum2)
-
-
-// {
-
-
-//     var resultado;
-
-
-//     resultado = sum1 + sum2;
-
-
-//     return resultado;
-
-
-// }
-
-// var exports = module.exports = {};
-
-// exports.AddNumber = function(a, b) {
-//     return a + b;
-// }
+module.exports = {
+    sendEmail,
+    armarListaCompras
+};
