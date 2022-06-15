@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `tb_profile`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_profile` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_user` int NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `tb_profile` (
   PRIMARY KEY (`id`),
   KEY `fk_profile_user` (`id_user`),
   CONSTRAINT `fk_profile_user` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

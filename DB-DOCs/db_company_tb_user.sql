@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `tb_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(200) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE `tb_user` (
   PRIMARY KEY (`id`),
   KEY `fk_type_user` (`id_user_type`),
   CONSTRAINT `fk_type_user` FOREIGN KEY (`id_user_type`) REFERENCES `tb_user_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `tb_compra_producto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_compra_producto` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_compra` int NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `tb_compra_producto` (
   KEY `id_producto` (`id_producto`),
   CONSTRAINT `tb_compra_producto_ibfk_1` FOREIGN KEY (`id_compra`) REFERENCES `tb_compra` (`id`),
   CONSTRAINT `tb_compra_producto_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `tb_producto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `db_company` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `db_company` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db_company`;
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
@@ -24,7 +24,7 @@ USE `db_company`;
 DROP TABLE IF EXISTS `QuantityAllProducts`;
 /*!50001 DROP VIEW IF EXISTS `QuantityAllProducts`*/;
 SET @saved_cs_client     = @@character_set_client;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 /*!50001 CREATE VIEW `QuantityAllProducts` AS SELECT 
  1 AS `id`,
  1 AS `nombre`,
@@ -44,7 +44,7 @@ SET character_set_client = @saved_cs_client;
 
 DROP TABLE IF EXISTS `losafutbol`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `losafutbol` (
   `NomLosa` varchar(50) NOT NULL,
   `id_losa` int NOT NULL AUTO_INCREMENT,
@@ -52,7 +52,7 @@ CREATE TABLE `losafutbol` (
   `MaxJugadores` int NOT NULL,
   `Estado` char(1) NOT NULL,
   PRIMARY KEY (`id_losa`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,14 +71,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_categoria`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_categoria` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(30) NOT NULL,
   `comentario` varchar(150) NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +97,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_compra`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_compra` (
   `id` int NOT NULL AUTO_INCREMENT,
   `comentario` varchar(150) NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE `tb_compra` (
   `id_user_responsable` int NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +124,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_compra_producto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_compra_producto` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_compra` int NOT NULL,
@@ -139,7 +139,7 @@ CREATE TABLE `tb_compra_producto` (
   KEY `id_producto` (`id_producto`),
   CONSTRAINT `tb_compra_producto_ibfk_1` FOREIGN KEY (`id_compra`) REFERENCES `tb_compra` (`id`),
   CONSTRAINT `tb_compra_producto_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `tb_producto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +158,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_employee` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
@@ -167,7 +167,7 @@ CREATE TABLE `tb_employee` (
   PRIMARY KEY (`id`),
   KEY `fk_type_employee` (`id_employee_type`),
   CONSTRAINT `fk_type_employee` FOREIGN KEY (`id_employee_type`) REFERENCES `tb_employee_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,14 +186,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_employee_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_employee_type` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nom_type` varchar(45) NOT NULL,
   `desc` varchar(150) DEFAULT NULL,
   `estado` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,21 +212,21 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_producto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_producto` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `comentario` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `nombre` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `comentario` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `cantidad` int NOT NULL,
   `precio` double NOT NULL,
-  `barcode` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `imagen_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `barcode` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `imagen_url` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `id_categoria` int NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `tb_producto_ibfk_1` (`id_categoria`),
   CONSTRAINT `tb_producto_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `tb_categoria` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,7 +245,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_profile`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_profile` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_user` int NOT NULL,
@@ -255,7 +255,7 @@ CREATE TABLE `tb_profile` (
   PRIMARY KEY (`id`),
   KEY `fk_profile_user` (`id_user`),
   CONSTRAINT `fk_profile_user` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,14 +274,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_retiro`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_retiro` (
   `id` int NOT NULL AUTO_INCREMENT,
   `comentario` varchar(150) NOT NULL,
   `fecha` datetime NOT NULL,
   `id_user_responsable` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -299,7 +299,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_retiro_producto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_retiro_producto` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_retiro` int NOT NULL,
@@ -312,7 +312,7 @@ CREATE TABLE `tb_retiro_producto` (
   KEY `fk_retiro` (`id_retiro`),
   CONSTRAINT `fk_retiro` FOREIGN KEY (`id_retiro`) REFERENCES `tb_retiro` (`id`),
   CONSTRAINT `fk_retiro_producto` FOREIGN KEY (`id_producto`) REFERENCES `tb_producto` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -330,14 +330,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_unidad_medida`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_unidad_medida` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) NOT NULL,
   `comentario` varchar(150) NOT NULL,
   `level` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -356,7 +356,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(200) NOT NULL,
@@ -370,7 +370,7 @@ CREATE TABLE `tb_user` (
   PRIMARY KEY (`id`),
   KEY `fk_type_user` (`id_user_type`),
   CONSTRAINT `fk_type_user` FOREIGN KEY (`id_user_type`) REFERENCES `tb_user_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -389,14 +389,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tb_user_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_user_type` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(200) NOT NULL,
   `descripcion` varchar(200) NOT NULL,
   `estado` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -415,13 +415,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `test`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `test` (
   `id` int NOT NULL AUTO_INCREMENT,
   `valor` varchar(30) NOT NULL,
   `counter` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -447,13 +447,13 @@ SET GLOBAL log_bin_trust_function_creators = 1;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` FUNCTION `SPLIT_STR`(`x` VARCHAR(255), `delim` VARCHAR(12), `pos` INT) RETURNS varchar(255) CHARSET utf8mb4
+CREATE DEFINER=`root`@`%` FUNCTION `SPLIT_STR`(`x` VARCHAR(255), `delim` VARCHAR(12), `pos` INT) RETURNS varchar(255) CHARSET utf8
 BEGIN
 -- SET GLOBAL log_bin_trust_function_creators = 1;
 RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos),
@@ -469,9 +469,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
@@ -500,55 +500,96 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `compraAdd`(IN `_comentario` VARCHAR(150), IN `_id_user_responsable` INT, IN `_productos_concat` VARCHAR(250), IN `_cantidad_productos` INT)
-BEGIN
-	-- call db_company.compraAdd('Comida para todo tipo de mascotas en distintas presentaciones', 3, '6|10|1.2@7|10|1', 2);
-	START TRANSACTION;
-	SET AUTOCOMMIT=0;
-    SET @response = 'COMPRA EXITOSA!!!';
-    INSERT INTO tb_compra (comentario,fecha,id_user_responsable,active) VALUES (_comentario, NOW(), _id_user_responsable, 1);
-    SET @id_compra = last_insert_id();
-    
-    
-    SET @contadorProductos = 1;
+BEGIN
+
+	-- call db_company.compraAdd('Comida para todo tipo de mascotas en distintas presentaciones', 3, '6|10|1.2@7|10|1', 2);
+
+	START TRANSACTION;
+
+	SET AUTOCOMMIT=0;
+
+    SET @response = 'COMPRA EXITOSA!!!';
+
+    INSERT INTO tb_compra (comentario,fecha,id_user_responsable,active) VALUES (_comentario, NOW(), _id_user_responsable, 1);
+
+    SET @id_compra = last_insert_id();
+
+    
+
+    
+
+    SET @contadorProductos = 1;
+
     SET @state = 1;
-    
-    WHILE (@contadorProductos <= _cantidad_productos AND @state = 1) DO
-    	SET @producto = SPLIT_STR(_productos_concat, '@', @contadorProductos);
-        
-        SET @contadorProductos = @contadorProductos + 1;
-        
-        SET @id_producto = SPLIT_STR(@producto, '|', 1);
-        SET @cantidad_comprada = SPLIT_STR(@producto, '|', 2);
-        SET @precio_comprado = SPLIT_STR(@producto, '|', 3);
-        
-        SET @existe_producto = IF( EXISTS(
-             SELECT *
-             FROM tb_producto tp
-             WHERE tp.id = @id_producto), 1, 0);
-        IF @existe_producto = 1 THEN
-        	INSERT INTO tb_compra_producto (id_compra, id_producto, cantidad_comprada, cantidad_restante, precio_comprado, precio_actual,   active)
-            VALUES (@id_compra, @id_producto, @cantidad_comprada, @cantidad_comprada, @precio_comprado, @precio_comprado, 1);
-            
-            SET @cantidad_producto = (SELECT cantidad FROM tb_producto where id = @id_producto);
-            
-            SET @cantidad_producto = @cantidad_producto + @cantidad_comprada;
-            
-            UPDATE tb_producto SET cantidad = @cantidad_producto, precio = @precio_comprado, active = 1 WHERE id = @id_producto;
-        ELSE
-            SET @state = 0;            
-        	SET @response = CONCAT('NO EXISTE EL PRODUCTO', ': ' , @id_producto);
-        	ROLLBACK;
-        END IF;
-    END WHILE;
-    COMMIT;
-    SELECT @state AS state, @response as response;
+    
+
+    WHILE (@contadorProductos <= _cantidad_productos AND @state = 1) DO
+
+    	SET @producto = SPLIT_STR(_productos_concat, '@', @contadorProductos);
+
+        
+
+        SET @contadorProductos = @contadorProductos + 1;
+
+        
+
+        SET @id_producto = SPLIT_STR(@producto, '|', 1);
+
+        SET @cantidad_comprada = SPLIT_STR(@producto, '|', 2);
+
+        SET @precio_comprado = SPLIT_STR(@producto, '|', 3);
+
+        
+
+        SET @existe_producto = IF( EXISTS(
+
+             SELECT *
+
+             FROM tb_producto tp
+
+             WHERE tp.id = @id_producto), 1, 0);
+
+        IF @existe_producto = 1 THEN
+
+        	INSERT INTO tb_compra_producto (id_compra, id_producto, cantidad_comprada, cantidad_restante, precio_comprado, precio_actual,   active)
+utf8
+            VALUES (@id_compra, @id_putf8, @cantidad_comprada, @cantidad_comprada, @precio_comprado, @precio_comprado, 1);
+utf8
+            
+
+            SET @cantidad_producto = (SELECT cantidad FROM tb_producto where id = @id_producto);
+
+            
+
+            SET @cantidad_producto = @cantidad_producto + @cantidad_comprada;
+
+            
+
+            UPDATE tb_producto SET cantidad = @cantidad_producto, precio = @precio_comprado, active = 1 WHERE id = @id_producto;
+
+        ELSE
+
+            SET @state = 0;            
+
+        	SET @response = CONCAT('NO EXISTE EL PRODUCTO', ': ' , @id_producto);
+
+        	ROLLBACK;
+
+        END IF;
+
+    END WHILE;
+
+    COMMIT;
+
+    SELECT @state AS state, @response as response;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -560,9 +601,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = utf8ode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE DEFINER=`qwert`@`%` PROCEDURE `employeeAddOrEdit`(`_id` INT, `_name` VARCHAR(50), `_salary` DECIMAL, `_id_employee_type` INT)
@@ -587,9 +628,9 @@ BEGIN
             id_employee_type = _id_employee_type
             WHERE id = _id;
         ELSE
-        	SET @ERROR = 'NO EXISTE EL USER';
-    	END IF;    
-	END IF;
+        	SET @ERROR = 'NO EXISTE EL Uutf8
+    	END IF;    utf8
+	END IF;utf8
     SELECT _id AS id, @ERROR as error;
 END ;;
 DELIMITER ;
@@ -608,16 +649,26 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`%` PROCEDURE `findProductBy`(IN `_id` INT, IN `_barcode` VARCHAR(50))
-BEGIN
-	IF _id = 0 THEN    	
-        SELECT * FROM tb_producto pro WHERE 
-        -- pro.active = 1 AND 
-        pro.barcode = _barcode;
-    ELSEIF _barcode = 0 THEN
-    	SELECT * FROM tb_producto pro WHERE 
-        -- pro.active = 1 AND 
-        pro.id = _id;
-    END IF;
+BEGIN
+
+	IF _id = 0 THEN    	
+
+        SELECT * FROM tb_producto pro WHERE 
+
+        -- pro.active = 1 AND 
+
+        pro.barcode = _barcode;
+
+    ELSEIF _barcode = 0 THEN
+
+    	SELECT * FROM tb_producto pro WHutf8
+utf8
+        -- pro.active = 1 AND utf8
+
+        pro.id = _id;
+
+    END IF;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -658,9 +709,9 @@ DELIMITER ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `productoAddOrEdit` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET @saved_cs_client      = utf8cter_set_client */ ;
+/*!50003 SET @saved_cs_results     = utf8cter_set_results */ ;
+/*!50003 SET @saved_col_connection = utf8tion_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
@@ -668,37 +719,68 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`qwert`@`%` PROCEDURE `productoAddOrEdit`(IN `_id` INT, IN `_nombre` VARCHAR(50), IN `_comentario` VARCHAR(200), IN `_barcode` VARCHAR(50), IN `_imagen_url` TEXT, IN `_id_categoria` INT, IN `_active` INT)
-BEGIN	
-    SET @error = 'TODO BIEN';
-    SET @STATE := true;
-    
-    SET @existe_categoria = IF( EXISTS(select * from tb_categoria cat WHERE cat.id = _id_categoria AND cat.active = 1),1,0);
-	IF @existe_categoria = 1 THEN    
-		IF _id = 0 THEN
-			INSERT INTO tb_producto (nombre, comentario, cantidad, precio, barcode, imagen_url,id_categoria, active) VALUES 
-            (_nombre, _comentario, 0, 0,_barcode,_imagen_url, _id_categoria, 0);
-            SET _id = last_insert_id();
-		ELSE
-			SET @existe_producto = IF( EXISTS(select * from tb_producto prod WHERE prod.id = _id),1,0);
-			IF @existe_producto = 1 THEN
-				UPDATE tb_producto 
-                SET nombre = _nombre,
-                comentario = _comentario,
-                id_categoria = _id_categoria,
-                active = _active,
-                barcode = _barcode,
-                imagen_url = _imagen_url
-                WHERE id = _id;
-			ELSE
-				SET @error = 'NO EXISTE EL PRODUCTO';
-                SET @STATE := false;
-			END IF;
-        END IF;
-	ELSE
-		SET @error = 'NO EXISTE LA CATEGORIA';
-        SET @STATE := false;
-	END IF;
-    SELECT _id AS id, @error as error, @STATE as state;
+BEGIN	
+
+    SET @error = 'TODO BIEN';
+
+    SET @STATE := true;
+
+    
+
+    SET @existe_categoria = IF( EXISTS(select * from tb_categoria cat WHERE cat.id = _id_categoria AND cat.active = 1),1,0);
+
+	IF @existe_categoria = 1 THEN    
+
+		IF _id = 0 THEN
+
+			INSERT INTO tb_producto (nombre, comentario, cantidad, precio, barcode, imagen_url,id_categoria, active) VALUES 
+
+            (_nombre, _comentario, 0, 0,_barcode,_imagen_url, _id_categoria, 0);
+
+            SET _id = last_insert_id(utf8
+utf8
+		ELSEutf8
+
+			SET @existe_producto = IF( EXISTS(select * from tb_producto prod WHERE prod.id = _id),1,0);
+
+			IF @existe_producto = 1 THEN
+
+				UPDATE tb_producto 
+
+                SET nombre = _nombre,
+
+                comentario = _comentario,
+
+                id_categoria = _id_categoria,
+
+                active = _active,
+
+                barcode = _barcode,
+
+                imagen_url = _imagen_url
+
+                WHERE id = _id;
+
+			ELSEutf8
+utf8
+				SET @error = 'NO EXISTE EL PRODUCutf8
+
+                SET @STATE := false;
+
+			END IF;
+
+        END IF;
+
+	ELSE
+
+		SET @error = 'NO EXISTE LA CATEGORIA';
+
+        SET @STATE := false;
+
+	END IF;
+
+    SELECT _id AS id, @error as error, @STATE as state;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -713,29 +795,40 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `ProductsByCategoryANDORActive`(IN `_id_categoria` INT, IN `_active` INT)
-BEGIN
-	IF _id_categoria = 0 THEN    	
-        -- SOLO ACTIVOS Y DESACTIVOS
-        SELECT * FROM tb_producto pro WHERE 
-        pro.active = _active;
-    ELSE
-    	-- CATEGORIAS CON ACTIVO/ DESACTIVO
-    	SELECT * FROM tb_producto pro WHERE 
-        pro.active = _active AND 
-        pro.id_categoria = _id_categoria;
-    END IF;
+/*!50003 SET sql_mode              = utf8ULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;utf8
+CREATE DEFINER=`root`@`%` PROCEDURE `utf8sByCategoryANDORActive`(IN `_id_categoria` INT, IN `_active` INT)
+BEGIN
+
+	IF _id_categoria = 0 THEN    	
+
+        -- SOLO ACTIVOS Y DESACTIVOS
+
+        SELECT * FROM tb_producto pro WHERE 
+
+        pro.active = _active;
+
+    ELSE
+
+    	-- CATEGORIAS CON ACTIVO/ DESACTIVO
+
+    	SELECT * FROM tb_producto pro WHERE 
+
+        pro.active = _active AND 
+
+        pro.id_categoria = _id_categoria;
+
+    END IF;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `SPLIT_LOOP_COUNTER_while` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SPutf8P_COUNTER_while` */;
+/*!50003 SET @saved_cs_client      = utf8cter_set_client */ ;
+/*!50003 SET @saved_cs_results     = utf8cter_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
@@ -755,9 +848,9 @@ END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_EditarLosa` */;
+/*!50003 SET character_set_results = utf8cs_results */ ;
+/*!50003 SET collation_connection  = utf8col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sputf8Losa` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -769,29 +862,45 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_EditarLosa`(IN `_aforo` INT, IN `_estado` CHAR(1), IN `_maxjugadores` INT, IN `_nomlosa` VARCHAR(50), IN `_id_losa` INT)
     NO SQL
-BEGIN
-UPDATE losafutbol
-set Aforo= _aforo,
-Estado= _estado,
-MaxJugadores= _maxjugadores ,
-NomLosa=  _nomlosa
-WHERE id_losa= _id_losa;
-
-
-IF (ROW_COUNT() > 0) THEN
-	SELECT 1 AS CodResultado,
-    'Actulizó correctamente' AS DesResultado;
-ELSE
-	SELECT 0 AS CodResultado,
-    'Ocurrió un error al actualizar el registro' AS DesResultado;
-END IF;
+BEGIN
+
+UPDATE losafutbol
+
+set Aforo= _aforo,
+
+Estado= _estado,
+
+MaxJugadores= _maxjugadores ,utf8
+utf8
+NomLosa=  _nomlosautf8
+
+WHERE id_losa= _id_losa;
+
+
+
+
+
+IF (ROW_COUNT() > 0) THEN
+
+	SELECT 1 AS CodResultado,
+
+    'Actulizó correctamente' AS DesResultado;
+
+ELSE
+
+	SELECT 0 AS CodResultado,
+
+    'Ocurrió un error al actualizar el registro' AS DesResultado;
+
+END IF;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_EliminarLosa` */;
+/*!50003 SET character_set_results = utf8cs_results */ ;
+/*!50003 SET collation_connection  = utf8col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sputf8arLosa` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -803,19 +912,32 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_EliminarLosa`(IN `_id_losa` INT)
     NO SQL
-BEGIN
-
-UPDATE losafutbol set Estado = 'I'
- where id_losa = _id_losa;
- 
- IF (ROW_COUNT() > 0) THEN
-	SELECT 1 AS CodResultado,
-    'Se eliminó correctamente' AS DesResultado;
-ELSE
-	SELECT 0 AS CodResultado,
-    'Ocurrió un error al eliminar el registro' AS DesResultado;
-END IF;
-
+BEGIN
+
+
+
+UPDATE losafutbol set Estado = 'I'
+
+ where id_losa = _id_losa;
+
+ 
+
+ IF (ROW_COUNT() > 0) THEN
+
+	SELECT 1 AS CodResultado,
+
+    'Se eliminó correctamente' AS DesResultado;
+
+ELSE
+
+	SELECT 0 AS CodResultado,
+
+    'Ocurrió un error al eliminar el registro' AS DesResultado;
+
+END IF;
+
+
+
  END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -834,10 +956,14 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ListarLosa`()
     NO SQL
-begin
-	SELECT Aforo, Estado, id_losa,MaxJugadores, NomLosa
-	FROM		losafutbol lf WHERE lf.Estado = 'A'
-	ORDER BY	id_losa DESC;
+begin
+
+	SELECT Aforo, Estado, id_losa,MaxJugadores, NomLosa
+
+	FROM		losafutbol lf WHERE lf.Estado = 'A'
+
+	ORDER BY	id_losa DESC;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -852,14 +978,18 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ListarLosaPorCodigo`(IN `_id_losa` INT)
+/*!50003 SET sql_mode              = 'NO_utf8LUE_ON_ZERO' */ ;
+DELIMITER ;;utf8
+CREATE DEFINER=`root`@`localhost` PROCEDUutf8ListarLosaPorCodigo`(IN `_id_losa` INT)
     NO SQL
-begin
-	SELECT lf.Aforo,lf. Estado, lf.id_losa,lf.MaxJugadores, 	lf.NomLosa
-	FROM		losafutbol lf WHERE lf.id_losa = _id_losa
-	ORDER BY	lf.id_losa DESC;
+begin
+
+	SELECT lf.Aforo,lf. Estado, lf.id_losa,lf.MaxJugadores, 	lf.NomLosa
+
+	FROM		losafutbol lf WHERE lf.id_losa = _id_losa
+
+	ORDER BY	lf.id_losa DESC;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -878,16 +1008,26 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_RegistrarLosa`(IN `_aforo` INT, IN `_estado` CHAR(1), IN `_max_jugadores` INT, IN `_nomlosa` VARCHAR(50))
     NO SQL
-BEGIN
-INSERT INTO losafutbol(Aforo,Estado,MaxJugadores,NomLosa) VALUES (_aforo,_estado,_max_jugadores,_nomlosa);
-
-IF (ROW_COUNT() > 0) THEN
-	SELECT 1 AS CodResultado,
-    'Registró correctamente' AS DesResultado;
-ELSE
-	SELECT 0 AS CodResultado,
-    'Ocurrió un error al registrar' AS DesResultado;
-END IF;
+BEGIN
+
+INSERT INTO losafutbol(Aforo,Estado,MaxJugadores,NomLosa) VALUES (_aforo,_estado,_max_jugadores,_nomlosa);
+
+
+
+IF (ROW_COUNT() > 0) THEN
+
+	SELECT 1 AS CodResultado,
+
+    'Registró correctamente' AS DesResultado;
+
+ELSE
+
+	SELECT 0 AS CodResultado,
+
+    'Ocurrió un error al registrar' AS DesResultado;
+
+END IF;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;

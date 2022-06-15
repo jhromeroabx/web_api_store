@@ -21,21 +21,21 @@
 
 DROP TABLE IF EXISTS `tb_producto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_producto` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `comentario` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `nombre` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `comentario` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `cantidad` int NOT NULL,
   `precio` double NOT NULL,
-  `barcode` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `imagen_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `barcode` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `imagen_url` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `id_categoria` int NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `tb_producto_ibfk_1` (`id_categoria`),
   CONSTRAINT `tb_producto_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `tb_categoria` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

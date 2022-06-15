@@ -15,7 +15,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de datos: `db_company`
@@ -222,7 +222,7 @@ END$$
 --
 -- Funciones
 --
-CREATE DEFINER=`qwert`@`%` FUNCTION `SPLIT_STR` (`x` VARCHAR(255), `delim` VARCHAR(12), `pos` INT) RETURNS VARCHAR(255) CHARSET utf8mb4 RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos),
+CREATE DEFINER=`qwert`@`%` FUNCTION `SPLIT_STR` (`x` VARCHAR(255), `delim` VARCHAR(12), `pos` INT) RETURNS VARCHAR(255) CHARSET utf8 RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos),
        LENGTH(SUBSTRING_INDEX(x, delim, pos -1)) + 1),
        delim, '')$$
 
@@ -239,7 +239,7 @@ CREATE TABLE `tb_categoria` (
   `nombre` varchar(30) NOT NULL,
   `comentario` varchar(150) NOT NULL,
   `active` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tb_categoria`
@@ -267,7 +267,7 @@ CREATE TABLE `tb_compra` (
   `fecha` datetime NOT NULL,
   `id_user_responsable` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tb_compra`
@@ -296,7 +296,7 @@ CREATE TABLE `tb_compra_producto` (
   `precio_comprado` double NOT NULL,
   `precio_actual` double NOT NULL,
   `active` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tb_compra_producto`
@@ -327,7 +327,7 @@ CREATE TABLE `tb_employee` (
   `name` varchar(45) DEFAULT NULL,
   `salary` int(11) DEFAULT NULL,
   `id_employee_type` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tb_employee`
@@ -352,7 +352,7 @@ CREATE TABLE `tb_employee_type` (
   `nom_type` varchar(45) NOT NULL,
   `desc` varchar(150) DEFAULT NULL,
   `estado` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tb_employee_type`
@@ -378,7 +378,7 @@ CREATE TABLE `tb_producto` (
   `precio` double NOT NULL,
   `id_categoria` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tb_producto`
@@ -403,7 +403,7 @@ CREATE TABLE `tb_profile` (
   `user` varchar(50) NOT NULL,
   `contrasenia` varchar(15) NOT NULL,
   `last_connection` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tb_profile`
@@ -431,7 +431,7 @@ CREATE TABLE `tb_retiro` (
   `comentario` varchar(150) NOT NULL,
   `fecha` datetime NOT NULL,
   `id_user_responsable` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -446,7 +446,7 @@ CREATE TABLE `tb_retiro_producto` (
   `cantidad` int(11) NOT NULL,
   `precio` double NOT NULL,
   `active` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -459,7 +459,7 @@ CREATE TABLE `tb_unidad_medida` (
   `nombre` varchar(20) NOT NULL,
   `comentario` varchar(150) NOT NULL,
   `level` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tb_unidad_medida`
@@ -485,7 +485,7 @@ CREATE TABLE `tb_user` (
   `fecha_nacimiento` date NOT NULL,
   `estado` tinyint(1) NOT NULL,
   `id_user_type` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tb_user`
@@ -514,7 +514,7 @@ CREATE TABLE `tb_user_type` (
   `nombre` varchar(200) NOT NULL,
   `descripcion` varchar(200) NOT NULL,
   `estado` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tb_user_type`
@@ -537,7 +537,7 @@ CREATE TABLE `test` (
   `id` int(11) NOT NULL,
   `valor` varchar(30) NOT NULL,
   `counter` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `test`

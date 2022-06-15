@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `tb_retiro_producto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tb_retiro_producto` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_retiro` int NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `tb_retiro_producto` (
   KEY `fk_retiro` (`id_retiro`),
   CONSTRAINT `fk_retiro` FOREIGN KEY (`id_retiro`) REFERENCES `tb_retiro` (`id`),
   CONSTRAINT `fk_retiro_producto` FOREIGN KEY (`id_producto`) REFERENCES `tb_producto` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
