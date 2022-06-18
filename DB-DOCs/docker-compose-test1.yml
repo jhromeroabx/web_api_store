@@ -37,22 +37,20 @@ services:
       - 8070:80
     network_mode: bridge
 
+  minio_jhosep:
+    container_name: minio_server_new
+    image: minio/minio:RELEASE.2022-04-29T01-27-09Z
+    volumes:
+      - /mnt/miniodata:/Data
+    command: server /Data --console-address ":9001" 
+    ports:
+      - '8530:9000'
+      - '8531:9001'
+    environment:
+      - MINIO_ROOT_USER=123wasd
+      - MINIO_ROOT_PASSWORD=123wasd@wasd
+    restart: always
 
-    # minio_jhosep:
-    # container_name: minio_server_new
-    # image: minio/minio:RELEASE.2022-04-29T01-27-09Z
-    # volumes:
-    #   - /mnt/miniodata:/Data
-    #   - /mnt/ssl:/root/.minio/certs/CAs
-    # command: server /Data --console-address ":9001" 
-    # ports:
-    #   - '8530:9000'
-    #   - '8531:9001'
-    # environment:
-    #   - MINIO_ROOT_USER=123wasd
-    #   - MINIO_ROOT_PASSWORD=123wasd@wasd
-    # restart: always
-#command: ['mysqld', '--character-set-server=utf8', '--collation-server=utf8_unicode_ci','--default-time-zone=+09:00']
 # docker-compose -f docker-compose-test1.yml down
 # docker-compose -f docker-compose-test1.yml up -d
 # docker-composer -f mysql-phpmyadmin.yml stop 

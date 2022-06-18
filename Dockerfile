@@ -1,5 +1,4 @@
 #USAMOS node 17
-#FROM node:16
 FROM node:17
 
 #creamos carpeta de trabajo
@@ -22,3 +21,10 @@ EXPOSE 5000
 #comandos a ejecutar para levantar proyecto
 CMD [ "npm", "run","pro" ]
 #docker build -t urname
+
+# docker build -t node-store-loasi .
+
+# docker run \
+# --name storeloasi \
+# --restart always \
+# -d -p 7770:5000 node-store-loasi
