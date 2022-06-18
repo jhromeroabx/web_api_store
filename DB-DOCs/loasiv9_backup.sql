@@ -193,7 +193,7 @@ CREATE TABLE `tb_orden_compra` (
   `stock_min` int NOT NULL,
   `fecha` datetime NOT NULL,
   PRIMARY KEY (`id_orden_compra`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -420,6 +420,27 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'db_company'
 --
+/*!50003 DROP FUNCTION IF EXISTS `contadorTrama` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` FUNCTION `contadorTrama`(`_concat` VARCHAR(5000), `_delim` CHAR) RETURNS int
+BEGIN
+
+	RETURN LENGTH(_concat) - LENGTH(REPLACE(_concat, _delim, '')) + 1;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP FUNCTION IF EXISTS `SPLIT_STR` */;
 ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -470,7 +491,6 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `categoriaAddOrEdit` */;
-ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -478,36 +498,62 @@ ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `categoriaAddOrEdit`(IN `_id` INT, IN `_nombre` VARCHAR(30), IN `_comentario` VARCHAR(150), IN `_active` BOOLEAN)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `categoriaAddOrEdit`(IN `_id` INT, IN `_nombre` VARCHAR(30), IN `_comentario` VARCHAR(150), IN `_active` BOOLEAN, IN `_id_user` INT)
 BEGIN
 
-SET @error = 'TODO BIEN!!!';
+	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-IF _id = 0 THEN
+	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
 
-	INSERT INTO tb_categoria (nombre, comentario, active) VALUES (_nombre, _comentario, 1);
+	
 
-    SET _id = last_insert_id();
+	SELECT @state, @response;-- ENVIAMOS RPTA
 
-ELSE
+	IF @state = 1 THEN
 
-	SET @existe_categoria = IF( EXISTS(select * from tb_categoria cat WHERE cat.id = _id),1,0);
+		SET @message = 'Registro exitoso!';
 
-    IF @existe_categoria = 1 THEN
+		IF _id = 0 THEN
 
-    	UPDATE tb_categoria SET nombre = _nombre, comentario = _comentario, active = _active WHERE id = _id;
+			INSERT INTO tb_categoria (nombre, comentario, active)
 
-    ELSE
+			VALUES (_nombre, _comentario, 1);
 
-    	SET @error = 'NO EXISTE LA CATEGORIA';
+			SET _id = last_insert_id();
 
-    END IF;
+		ELSE
 
-END IF;
+			SET @existe_categoria = IF( 
 
-SELECT _id AS id, @error as error;
+			EXISTS(SELECT * FROM tb_categoria cat WHERE cat.id = _id)
+
+			,1,0);
+
+		IF @existe_categoria = 1 THEN
+
+			UPDATE tb_categoria 
+
+			SET nombre = _nombre,
+
+			comentario = _comentario,
+
+			active = _active 
+
+			WHERE id = _id;
+
+		ELSE
+
+			SET @message = 'No existe la categoria!';
+
+			END IF;
+
+		END IF;
+
+		SELECT _id id, @message;
+
+	END IF;
 
 END ;;
 DELIMITER ;
@@ -515,7 +561,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `descontarStockProducto` */;
 ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -622,7 +667,6 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `employeeAddOrEdit` */;
-ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -632,64 +676,68 @@ ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`qwert`@`%` PROCEDURE `employeeAddOrEdit`(IN `_id` INT, IN `_name` VARCHAR(50), IN `_salary` DECIMAL, IN `_id_employee_type` INT)
+CREATE DEFINER=`qwert`@`%` PROCEDURE `employeeAddOrEdit`(IN `_id` INT, IN `_name` VARCHAR(50), IN `_salary` DECIMAL, IN `_id_employee_type` INT, IN `_id_user` INT)
 BEGIN
 
-    SET @EXISTE := 0;
+	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-    SET @ERROR := 'TODO BIEN!!!';
+	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
 
-	IF _id = 0 THEN
+	SELECT @state, @response;-- ENVIAMOS RPTA
 
-		INSERT INTO tb_employee (name, salary, id_employee_type)
+	IF @state = 1 THEN		
 
-		VALUES (_name,_salary, _id_employee_type);
+		IF _id = 0 THEN
 
-        
-        SET _id = last_insert_id();
+			INSERT INTO tb_employee (name, salary, id_employee_type)
 
-	ELSE
+			VALUES (_name,_salary, _id_employee_type);
 
-    	SET @EXISTE := IF( EXISTS
+			SET _id = last_insert_id();
 
-                (SELECT * FROM tb_employee te
+		ELSE
 
-            	 WHERE te.id = _id)
-                 ,1,0);
+			SET @exite = IF( 
 
-                 
+				EXISTS(SELECT * FROM tb_employee te
 
-    	IF @EXISTE = 1 THEN
+				WHERE te.id = _id)
 
-        	UPDATE tb_employee SET
+				,1,0);
 
-			name = _name,
+			IF @exite = 1 THEN
 
-            salary = _salary,
+				UPDATE tb_employee SET
 
-            id_employee_type = _id_employee_type
+				name = _name,
 
-            WHERE id = _id;
+				salary = _salary,
 
-        ELSE
+				id_employee_type = _id_employee_type
 
-        	SET @ERROR = 'NO EXISTE EL USER';
+				WHERE id = _id;
 
-    	END IF;    
+				SET @message = 'Registro exitoso!';
+
+			ELSE
+
+				SET @message = 'No existe el usuario!';
+
+			END IF;
+
+		END IF;
+
+		SELECT _id id, @message;
 
 	END IF;
 
-SELECT _id AS id, @ERROR AS error;
-
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `findProductBy` */;
-ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -699,46 +747,52 @@ ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `findProductBy`(IN `_id` INT, IN `_barcode` VARCHAR(50))
+CREATE DEFINER=`root`@`%` PROCEDURE `findProductBy`(IN `_id` INT, IN `_barcode` VARCHAR(50), IN `_id_user` INT)
 BEGIN
 
+	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
+	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
 
-	IF _id = 0 THEN    	
+	SELECT @state, @response;-- ENVIAMOS RPTA
 
+	IF @state = 1 THEN -- SI ES ADMIN NO TIENE LIMITES
 
+		IF _id = 0 THEN
 
-        SELECT * FROM tb_producto pro WHERE 
+			SELECT * FROM tb_producto pro WHERE
 
+			pro.barcode = _barcode;
 
+		ELSEIF _barcode = 0 THEN
 
-        pro.active = 1 AND 
+			SELECT * FROM tb_producto pro WHERE
 
+			pro.id = _id;
 
+		END IF;
 
-        pro.barcode = _barcode;
+	ELSE -- SI ES OTRO ROL, SOLO SE MUESTRA
 
+		IF _id = 0 THEN
 
+			SELECT * FROM tb_producto pro WHERE 
 
-    ELSEIF _barcode = 0 THEN
+			pro.active = 1 AND
 
+			pro.barcode = _barcode;
 
+		ELSEIF _barcode = 0 THEN
 
-    	SELECT * FROM tb_producto pro WHERE 
+			SELECT * FROM tb_producto pro WHERE 
 
+			pro.active = 1 AND 
 
+			pro.id = _id;
 
-        pro.active = 1 AND 
+		END IF;
 
-
-
-        pro.id = _id;
-
-
-
-    END IF;
-
-
+	END IF;
 
 END ;;
 DELIMITER ;
@@ -746,7 +800,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `generarOrdenCompra` */;
 ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -823,25 +876,15 @@ BEGIN
 
  	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-    CALL validarRolDelUsuario(_id_user, 3, @state, @response);
+    CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
 
     
 
-    IF @state = 1 THEN -- SI ES 1 TIENE ACCESO
+	SELECT @state, @response;
 
-    	-- MENSAJE PARA VALIDAR
+    IF @state = 1 THEN
 
-        SELECT @state AS `state`, @response AS `response`;
-
-        -- ACCESSO A LA INFORMACION
-
-        SELECT * FROM tb_ingreso tc WHERE tc.active = 1;
-
-    ELSE
-
-    	-- MENSAJE PARA INVALIDAR
-
-    	SELECT @state AS `state`, @response AS `response`;
+		SELECT * FROM tb_ingreso tc WHERE tc.active = 1;
 
     END IF;
 
@@ -864,103 +907,119 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ingresoAdd`(IN `_comentario` VARCHAR(150), IN `_id_user_responsable` INT, IN `_productos_concat` VARCHAR(250))
 BEGIN
 
-	-- call db_company.ingresoAdd('Comida para todo tipo de mascotas en distintas presentaciones', 3, '6|10|1.2@7|10|1', 2);
+	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-	START TRANSACTION;
+	CALL validarRolDelUsuario(_id_user_responsable, 3, @state, @response);-- SI ES 1 TIENE ACCESO
 
-	SET AUTOCOMMIT=0;
+	SELECT @state, @response;-- ENVIAMOS RPTA
 
-    
+	IF @state = 1 THEN
 
-    SET @response = 'COMPRA EXITOSA!!!';
+-- call db_company.ingresoAdd('Comida para todo tipo de mascotas en distintas presentaciones', 3, '6|10|1.2@7|10|1', 2);
 
-    
+		START TRANSACTION;
 
-    INSERT INTO tb_ingreso (comentario,fecha,id_user_responsable,active) VALUES (_comentario, NOW(), _id_user_responsable, 1);
+		SET AUTOCOMMIT=0;
 
-    SET @id_ingreso = last_insert_id();    
+		
 
-    
+		SET @message = 'Compra exitosa!';
 
-    SET @contadorProductos = 1;
+		
 
-    SET @cantidad_productos = LENGTH(_productos_concat) - LENGTH(REPLACE(_productos_concat, '@', '')) + 1;
+		INSERT INTO tb_ingreso (comentario,fecha,id_user_responsable,active)
 
-    SET @state = 1;
+		VALUES (_comentario, NOW(), _id_user_responsable, 1);
 
+		SET @id_ingreso = last_insert_id();
 
+		
 
-    WHILE (@contadorProductos <= @cantidad_productos AND @state = 1) DO
+		SET @contadorProductos = 1;
 
-    	SET @producto = SPLIT_STR(_productos_concat, '@', @contadorProductos);
+		SET @cantidad_productos = contadorTrama(_productos_concat, '@');
 
-        SET @contadorProductos = @contadorProductos + 1;
+		SET @state = 1;
 
+	
 
+		WHILE (@contadorProductos <= @cantidad_productos AND @state = 1) DO
 
-        SET @id_producto = SPLIT_STR(@producto, '|', 1);
+			SET @producto = SPLIT_STR(_productos_concat, '@', @contadorProductos);
 
-        SET @cantidad_comprada = SPLIT_STR(@producto, '|', 2);
+			SET @contadorProductos = @contadorProductos + 1;
 
-        SET @precio_comprado = SPLIT_STR(@producto, '|', 3);
+	
 
-        
+			SET @id_producto = SPLIT_STR(@producto, '|', 1);
 
-        SET @existe_producto = IF( EXISTS(
+			SET @cantidad_comprada = SPLIT_STR(@producto, '|', 2);
 
-             SELECT *
+			SET @precio_comprado = SPLIT_STR(@producto, '|', 3);
 
-             FROM tb_producto tp
+			
 
-             WHERE tp.id = @id_producto), 1, 0);
+			SET @existe_producto = IF( 
 
+				EXISTS(SELECT *
 
+				FROM tb_producto tp
 
-        IF @existe_producto = 1 THEN
+				WHERE tp.id = @id_producto),
 
-        	INSERT INTO tb_ingreso_producto (id_ingreso, id_producto, cantidad_comprada, cantidad_restante, precio_comprado, precio_actual,   active)
+				1, 0);
 
-            VALUES (@id_ingreso, @id_producto, @cantidad_comprada, @cantidad_comprada, @precio_comprado, @precio_comprado, 1);
+			IF @existe_producto = 1 THEN
 
+				INSERT INTO tb_ingreso_producto (id_ingreso, id_producto, cantidad_comprada,
 
+				cantidad_restante, precio_comprado, precio_actual, active)
 
-            SET @cantidad_producto = (SELECT cantidad FROM tb_producto where id = @id_producto);
+				VALUES (@id_ingreso, @id_producto, @cantidad_comprada, @cantidad_comprada, 
 
+				@precio_comprado, @precio_comprado, 1);
 
+				
 
-            SET @cantidad_producto = @cantidad_producto + @cantidad_comprada;
+				SET @cantidad_producto = (SELECT cantidad FROM tb_producto where id = @id_producto);
 
+	
 
+				SET @cantidad_producto = @cantidad_producto + @cantidad_comprada;
 
-            UPDATE tb_producto
+	
 
-            SET cantidad = @cantidad_producto,
+				UPDATE tb_producto
 
-            precio = @precio_comprado,
+				SET cantidad = @cantidad_producto,
 
-            active = 1
+				precio = @precio_comprado,
 
-            WHERE id = @id_producto;
+				active = 1
 
-            
+				WHERE id = @id_producto;
 
-            CALL generarOrdenCompra(0,@procesado);
+				
 
-        ELSE
+				CALL generarOrdenCompra(0,@procesado);
 
-            SET @state = 0;            
+			ELSE
 
-        	SET @response = CONCAT('NO EXISTE EL PRODUCTO', ': ' , @id_producto);
+				SET @state = 0;
 
-        	ROLLBACK;
+				SET @message = CONCAT('No existe el producto', ': ' , @id_producto);
 
-        END IF;
+				ROLLBACK;
 
-    END WHILE;
+			END IF;
 
-    COMMIT;
+		END WHILE;
 
-    SELECT @state AS state, @response as response;
+		COMMIT;
+
+		SELECT @state, @message;
+
+	END IF;
 
 END ;;
 DELIMITER ;
@@ -1030,7 +1089,6 @@ DELIMITER ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `productoAddOrEdit` */;
-ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1040,132 +1098,94 @@ ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`qwert`@`%` PROCEDURE `productoAddOrEdit`(IN `_id` INT, IN `_nombre` VARCHAR(50), IN `_comentario` VARCHAR(200), IN `_barcode` VARCHAR(50), IN `_stock_min` INT, IN `_imagen_url` TEXT, IN `_id_categoria` INT, IN `_active` INT)
-BEGIN	
+CREATE DEFINER=`qwert`@`%` PROCEDURE `productoAddOrEdit`(IN `_id` INT, IN `_nombre` VARCHAR(50), IN `_comentario` VARCHAR(200), IN `_barcode` VARCHAR(50), IN `_stock_min` INT, IN `_imagen_url` TEXT, IN `_id_categoria` INT, IN `_active` INT, IN `_id_user` INT)
+BEGIN
 
+	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
+	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
 
-    SET @error = 'TODO BIEN';
+	SELECT @state, @response;-- ENVIAMOS RPTA
 
+	IF @state = 1 THEN
 
+		SET @message = 'Registro exitoso!';
 
-    SET @STATE := true;
+		SET @state = true;
 
+		SET @existe_categoria = IF(
 
+			EXISTS(SELECT * FROM tb_categoria cat 
 
-    
+			WHERE cat.id = _id_categoria 
 
+			AND cat.active = 1),
 
+			1,0);
 
-    SET @existe_categoria = IF( EXISTS(select * from tb_categoria cat WHERE cat.id = _id_categoria AND cat.active = 1),1,0);
+		IF @existe_categoria = 1 THEN
 
+			IF _id = 0 THEN
 
+				INSERT INTO tb_producto (nombre, comentario, cantidad, precio, barcode, 
 
-	IF @existe_categoria = 1 THEN    
+				stock_min, imagen_url,id_categoria, active) VALUES 
 
+				(_nombre, _comentario, 0, 0,_barcode,_stock_min,_imagen_url, _id_categoria, 0);
 
-
-		IF _id = 0 THEN
-
-
-
-			INSERT INTO tb_producto (nombre, comentario, cantidad, precio, barcode, stock_min, imagen_url,id_categoria, active) VALUES 
-
-
-
-            (_nombre, _comentario, 0, 0,_barcode,_stock_min,_imagen_url, _id_categoria, 0);
-
-
-
-            SET _id = last_insert_id();
-
-
-
-		ELSE
-
-
-
-			SET @existe_producto = IF( EXISTS(select * from tb_producto prod WHERE prod.id = _id),1,0);
-
-
-
-			IF @existe_producto = 1 THEN
-
-
-
-				UPDATE tb_producto 
-
-
-
-                SET nombre = _nombre,
-
-
-
-                comentario = _comentario,
-
-
-
-                id_categoria = _id_categoria,
-
-
-
-                active = _active,
-
-
-
-                barcode = _barcode,
-
-                stock_min = _stock_min,
-
-
-
-                imagen_url = _imagen_url
-
-
-
-                WHERE id = _id;
-
-
+				SET _id = last_insert_id();
 
 			ELSE
 
+				SET @existe_producto = IF( 
 
+					EXISTS(SELECT * FROM tb_producto prod 
 
-				SET @error = 'NO EXISTE EL PRODUCTO';
+					WHERE prod.id = _id),
 
+					1,0);
 
+				IF @existe_producto = 1 THEN
 
-                SET @STATE := false;
+					UPDATE tb_producto 
 
+					SET nombre = _nombre,
 
+					comentario = _comentario,
+
+					id_categoria = _id_categoria,
+
+					active = _active,
+
+					barcode = _barcode,
+
+					stock_min = _stock_min,
+
+					imagen_url = _imagen_url
+
+					WHERE id = _id;
+
+				ELSE
+
+					SET @message = 'No existe el producto!';
+
+					SET @state = false;
+
+				END IF;
 
 			END IF;
 
+		ELSE
 
+			SET @message = 'No existe la categoria!';
 
-        END IF;
+			SET @state = false;
 
+		END IF;
 
-
-	ELSE
-
-
-
-		SET @error = 'NO EXISTE LA CATEGORIA';
-
-
-
-        SET @STATE := false;
-
-
+		SELECT _id AS id, @message, @state;
 
 	END IF;
-
-
-
-    SELECT _id AS id, @error as error, @STATE as state;
-
-
 
 END ;;
 DELIMITER ;
@@ -1173,7 +1193,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `ProductsByCategoryANDORActive` */;
 ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1238,7 +1257,6 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `retiroAdd` */;
-ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1248,86 +1266,96 @@ ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `retiroAdd`(IN `_comentario` VARCHAR(250), IN `_id_user_responsable` INT, IN `_productos_concat` VARCHAR(250))
+CREATE DEFINER=`root`@`%` PROCEDURE `retiroAdd`(IN `_comentario` VARCHAR(250), IN `_id_user_responsable` INT, IN `_productos_concat` VARCHAR(250), IN `_id_user` INT)
 BEGIN
 
-    START TRANSACTION; -- iniciamos transaction para evaluar
+	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-	SET AUTOCOMMIT=0; -- desactivamos la insercciones
+	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
 
-    -- insertamos el retiro cabecera para los retiros de productos
+	SELECT @state, @response;-- ENVIAMOS RPTA
 
-    INSERT INTO tb_retiro (comentario,fecha,id_user_responsable, active) VALUES (_comentario, NOW(), _id_user_responsable, 1);
+	IF @state = 1 THEN
 
-    -- obtenemos el id autoincrementable generado
+		START TRANSACTION; -- iniciamos transaction para evaluar
 
-    SET @id_retiro = (select @@identity);
+		SET AUTOCOMMIT=0; -- desactivamos la insercciones
 
-    -- seteamos el mensaje ya exitoso
+		-- insertamos el retiro cabecera para los retiros de productos
 
-    SET @response = 'RETIRO EXITOSO!!!';
+		INSERT INTO tb_retiro (comentario,fecha,id_user_responsable, active)
 
-    -- ejecutamos la validacion de stock para cada producto
+		VALUES (_comentario, NOW(), _id_user_responsable, 1);
 
-    SET @cantidad_productos = LENGTH(_productos_concat) - LENGTH(REPLACE(_productos_concat, '@', '')) + 1;
+		-- obtenemos el id autoincrementable generado
 
-    CALL validarRetiros(_productos_concat, @cantidad_productos, @result);
+		SET @id_retiro = (select @@identity);
 
-    -- SELECT @result;
+		-- seteamos el mensaje ya exitoso
 
-    -- seteamos el estado, si es 1 todos los productos tiene stock suficiente
+		SET @message = 'Retiro exitoso!';
 
-    SET @state_validacion = CAST(SPLIT_STR(@result, '@', 1) AS UNSIGNED);
+		-- ejecutamos la validacion de stock para cada producto
 
-    -- si el estado es valido
+		SET @cantidad_productos = contadorTrama(_productos_concat,'@');
 
-    IF @state_validacion = 1 THEN
+		CALL validarRetiros(_productos_concat, @cantidad_productos, @result);
 
-	    SET @contador = 1;        
+		-- seteamos el estado, si es 1 todos los productos tiene stock suficiente
 
-        WHILE ( @contador <= @cantidad_productos ) DO
+		SET @state = CAST(SPLIT_STR(@result, '@', 1) AS UNSIGNED);-- parseamos a int
 
-			-- deserializamos un producto
+		-- si el estado es valido
 
-    	    SET @producto = SPLIT_STR(_productos_concat, '@',@contador); -- DESERIALIZAMOS LOS PRODUCTOS
+		IF @state = 1 THEN
 
-            -- deserializamos el id_producto y la cantidad a retirar
+			SET @contador = 1;
 
-		    SET @id_producto = SPLIT_STR(@producto, '|', 1);
+			WHILE ( @contador <= @cantidad_productos ) DO
 
-		    SET @cantidad_retirar = SPLIT_STR(@producto, '|', 2);
+				-- deserializamos un producto
 
-            -- 
+				SET @producto = SPLIT_STR(_productos_concat, '@',@contador); -- DESERIALIZAMOS LOS PRODUCTOS
 
-            CALL descontarStockProducto(@id_producto, @cantidad_retirar);
+				-- deserializamos el id_producto y la cantidad a retirar
 
-            -- 
+				SET @id_producto = SPLIT_STR(@producto, '|', 1);
 
-            SET @contador = @contador + 1;
+				SET @cantidad_retirar = SPLIT_STR(@producto, '|', 2);
 
-		END WHILE;
+				--
 
-        -- generamos la lista de productos a comprar constantemente, pero colocamos 1 para exportar la data y enviar EMAIL
+				CALL descontarStockProducto(@id_producto, @cantidad_retirar);
 
-        CALL generarOrdenCompra(true,@procesado);
+				--
 
-        COMMIT;
+				SET @contador = @contador + 1;
 
-	ELSE
+			END WHILE;
 
-		-- si sale invalido, hacemos rollback a todo y respondemos la rpta del error
+			-- generamos la lista de productos a comprar constantemente, pero colocamos 1 para exportar la data y enviar EMAIL
 
-		SET @response = SPLIT_STR(@result, '@', 2);
+			CALL generarOrdenCompra(true,@procesado);
 
-        ROLLBACK;
+			COMMIT;
 
-    END IF;
+		ELSE
 
--- enviamos rpta del proceso y estado
+			-- si sale invalido, hacemos rollback a todo y respondemos la rpta del error
 
-SELECT @state_validacion AS state, @response AS response;
+			SET @message = SPLIT_STR(@result, '@', 2);
 
-SELECT @procesado AS procesado;
+			ROLLBACK;
+
+		END IF;
+
+	-- enviamos rpta del proceso y estado
+
+	SELECT @state, @message;
+
+	SELECT @procesado;
+
+	END IF;
 
 END ;;
 DELIMITER ;
@@ -1335,9 +1363,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `userAddOrEdit` */;
-ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1345,124 +1371,172 @@ ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_unicode_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `userAddOrEdit`(IN `_id` INT, IN `_nombre` VARCHAR(200), IN `_apellido` VARCHAR(200), IN `_dni` VARCHAR(10), IN `_telefono` VARCHAR(30), IN `_email` VARCHAR(50), IN `_fecha_nacimiento` DATE, IN `_estado` TINYINT(1), IN `_id_user_type` INT, IN `_contrasenia` VARCHAR(15))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `userAddOrEdit`(IN `_id` INT, IN `_nombre` VARCHAR(200), IN `_apellido` VARCHAR(200), IN `_dni` VARCHAR(10), IN `_telefono` VARCHAR(30), IN `_email` VARCHAR(50), IN `_fecha_nacimiento` DATE, IN `_estado` TINYINT(1), IN `_id_user_type` INT, IN `_contrasenia` VARCHAR(15), IN `_id_user` INT)
 BEGIN
 
-	SET @EXISTE_user := 0;
+	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-    SET @EXISTE_dni := 0;
+	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
 
-    SET @EXISTE_email := 0;
+	SELECT @state, @response;-- ENVIAMOS RPTA
 
-    SET @STATE := true;
+	IF @state = 1 THEN
 
-    SET @ERROR := 'TODO BIEN!!!';
+	SET @EXISTE_user = 0;
 
-    
+    SET @EXISTE_dni = 0;
+
+    SET @EXISTE_email = 0;
+
+    SET @state = true;
+
+    SET @message = 'Registro exitoso!';
+
+    --
 
     IF _id = 0 THEN
 
-    	SET @EXISTE_dni := IF( EXISTS(
+    	SET @EXISTE_dni = IF(
 
-             SELECT *
+			EXISTS(SELECT * 
 
-             FROM tb_user tu
+			FROM tb_user tu
 
-             WHERE tu.dni = _dni), 1, 0);
+			WHERE tu.dni = _dni),
 
-		SET @EXISTE_email := IF( EXISTS(
+			1, 0);
 
-             SELECT *
+		SET @EXISTE_email = IF(
 
-             FROM tb_user tu
+			EXISTS(SELECT *
 
-             WHERE tu.email = _email), 1, 0);             
+            FROM tb_user tu
+
+            WHERE tu.email = _email),
+
+			1, 0);
+
+		--
 
     	IF @EXISTE_dni = 1 OR @EXISTE_email = 1 THEN
 
-        	SET @ERROR = 'EL DNI EXISTE Y/O EL EMAIL EXISTE';
+        	SET @message = 'El Dni ya existe!';
 
-            SET @STATE := false;
+            SET @state = false;
 
-        ELSE
+        ELSEIF @EXISTE_email = 1 THEN
+
+			SET @message = 'El Correo ya existe!';
+
+            SET @state = false;
+
+		ELSE
 
         	INSERT INTO tb_user (nombre, apellido, dni, telefono, email,fecha_nacimiento, estado, id_user_type)
 
             VALUES (_nombre, _apellido,_dni, _telefono, _email, _fecha_nacimiento, _estado, _id_user_type);
 
-        
-
         	SET _id = last_insert_id();
 
-        
+			--
 
             INSERT INTO tb_profile (id_user, `user`, contrasenia, last_connection)
 
             VALUES (_id, _email, _contrasenia, NOW());
 
-    	END IF;		
+    	END IF;
 
 	ELSE
 
-    	SET @EXISTE_dni := IF( EXISTS(
+    	SET @EXISTE_dni = IF( 
 
-             SELECT *
+			EXISTS(SELECT *
 
-             FROM tb_user tu
+			FROM tb_user tu
 
-             WHERE tu.dni = _dni AND tu.id <> _id), 1, 0);
+			WHERE tu.dni = _dni AND tu.id <> _id),
 
-		SET @EXISTE_email := IF( EXISTS(
+			1, 0);
 
-             SELECT *
+		SET @EXISTE_email = IF(
 
-             FROM tb_user tu
+			EXISTS(SELECT *
 
-             WHERE tu.email = _email AND tu.id <> _id), 1, 0);
+			FROM tb_user tu
 
-        SET @EXISTE_user := IF( EXISTS(
+			WHERE tu.email = _email AND tu.id <> _id),
 
-             SELECT *
+			1, 0);
 
-             FROM tb_user tu
+        SET @EXISTE_user = IF( 
 
-             WHERE tu.id = _id), 1, 0);
+			EXISTS(SELECT *
 
-             
+			FROM tb_user tu
+
+			WHERE tu.id = _id),
+
+			1, 0);
+
+		--
 
     	IF @EXISTE_dni = 1 THEN
 
-        	SET @ERROR = 'EL DNI YA EXISTE';
+        	SET @message = 'EL DNI YA EXISTE';
 
-            SET @STATE := false;
+            SET @state = false;
 
         ELSEIF @EXISTE_email = 1 THEN
 
-        	SET @ERROR = 'EL CORREO YA EXISTE';
+        	SET @message = 'EL CORREO YA EXISTE';
 
-            SET @STATE := false;
+            SET @state = false;
 
         ELSEIF @EXISTE_user = 0 THEN
 
-        	SET @ERROR = 'EL USER NO EXISTE';
+        	SET @message = 'EL USER NO EXISTE';
 
-            SET @STATE := false;
+            SET @state = false;
 
         ELSE
 
-        	UPDATE tb_user SET nombre = _nombre, apellido = _apellido, dni = _dni, telefono = _telefono, email = _email, fecha_nacimiento = _fecha_nacimiento, estado = _estado, id_user_type = _id_user_type WHERE id = _id;
+        	UPDATE tb_user SET 
 
-            
+			nombre = _nombre, 
 
-            UPDATE tb_profile SET `user` = _email WHERE id_user = _id;            
+			apellido = _apellido, 
+
+			dni = _dni, 
+
+			telefono = _telefono, 
+
+			email = _email, 
+
+			fecha_nacimiento = _fecha_nacimiento, 
+
+			estado = _estado, 
+
+			id_user_type = _id_user_type 
+
+			WHERE id = _id;
+
+            --
+
+			UPDATE tb_profile SET 
+
+			`user` = _email
+
+			WHERE id_user = _id;            
 
     	END IF;    
 
 	END IF;
 
-    SELECT _id AS id, @ERROR as error, @STATE as state;
+    SELECT _id AS id, @message, @state;
+
+	END IF;
 
 END ;;
 DELIMITER ;
@@ -1470,7 +1544,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `validarRetiros` */;
 ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1616,16 +1689,34 @@ ALTER DATABASE `db_company` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`qwert`@`%` PROCEDURE `validarRolDelUsuario`(IN `_id_user` INT, IN `_id_user_type` INT, OUT `state` INT, OUT `response` VARCHAR(250))
-BEGIN	
+CREATE DEFINER=`qwert`@`%` PROCEDURE `validarRolDelUsuario`(IN `_id_user` INT, IN `_id_user_type_concat` VARCHAR(250), OUT `state` INT, OUT `response` VARCHAR(250))
+BEGIN
 
-    -- CALL `validarRolDelUsuario`(3, 3);
+	-- CALL `validarRolDelUsuario`(8, '3|1', @p2, @p3); SELECT @p2 state, @p3 response;
 
-    
+    CREATE TEMPORARY TABLE tempTable (var INT);
 
-    SET @ROL = (SELECT TUT.nombre FROM tb_user_type TUT WHERE TUT.id = _id_user_type);
+	-- 
 
-    
+    SET @cantidad_items = contadorTrama(_id_user_type_concat,'|');
+
+    -- 
+
+    SET @contador = 1;
+
+	WHILE (@contador <= @cantidad_items) DO
+
+		INSERT INTO tempTable SELECT CAST(SPLIT_STR(_id_user_type_concat, '|', @contador) AS UNSIGNED);
+
+        SET @contador = @contador + 1;
+
+	END WHILE;
+
+    -- 
+
+    SET @ROL = (SELECT GROUP_CONCAT( TUT.nombre SEPARATOR ' ') FROM tb_user_type TUT WHERE TUT.id IN (SELECT * FROM tempTable));
+
+    -- 
 
     SET @ACCESO = IF( EXISTS(
 
@@ -1633,7 +1724,7 @@ BEGIN
 
 		INNER JOIN tb_user_type TUT ON TU.id_user_type = TUT.id
 
-    	WHERE TU.id = _id_user AND TUT.id = _id_user_type
+    	WHERE TU.id = _id_user AND TUT.id IN (SELECT * FROM tempTable)
 
         ),1,0);
 
@@ -1672,39 +1763,13 @@ DELIMITER ;;
 CREATE DEFINER=`qwert`@`%` PROCEDURE `verIngresosPorProducto`(IN `_id_producto` INT, IN `_active` BOOLEAN, IN `_id_user` INT)
 BEGIN
 
-	-- MOSTRAR LOS MOVIMIENTOS DE INGRESO DE UN PRODUCTO
+	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-    
+	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- 1 TIENE ACCESO
 
-    -- CALL `verIngresosPorProducto`(3, 5, 3);
+	SELECT @state, @response;-- ENVIAMOS RPTA
 
-    -- CALL `verIngresosPorProducto`(3, 1, 3);
-
-    
-
-    SET @ACCESO = 1;
-
-    SET @ACCESO = IF( EXISTS(
-
-    	SELECT * FROM tb_user TU
-
-		INNER JOIN tb_user_type TUT ON TU.id_user_type = TUT.id
-
-    	WHERE TU.id = _id_user AND TUT.id = 3
-
-        ),1,0);
-
-	
-
-    IF @ACCESO = 0 THEN
-
-    	SELECT @ACCESO AS state, CONCAT('El usuario: ',_id_user,' no tiene permisos de administrador!') AS response;
-
-    ELSE
-
-    	SELECT @ACCESO AS state, CONCAT('Tienes acceso!') AS response;
-
-        
+	IF @state = 1 THEN
 
 		SELECT TI.id AS id_ingreso,
 
@@ -1736,15 +1801,19 @@ BEGIN
 
 		INNER JOIN tb_user TU ON TI.id_user_responsable = TU.id
 
-		WHERE TP.id = _id_producto AND
+		WHERE TP.id = _id_producto
 
     	-- si _active es 5 ALL sino 0-1
 
-    	TIP.active = IF(_active = 5,TIP.active, _active)
+    	AND TIP.active = IF(_active = 5,TIP.active, _active)
 
 		ORDER BY TI.fecha DESC;
 
-    END IF;
+	END IF;
+
+	-- SELECT NOW(); --SI ENTRA, EL ALMACENERO SOLO VER EL DIA DE HOY
+
+	-- SELECT CURDATE();
 
 END ;;
 DELIMITER ;
@@ -1762,46 +1831,58 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`qwert`@`%` PROCEDURE `verRetiroPorProducto`(IN `_id_producto` INT, IN `_active` BOOLEAN)
+CREATE DEFINER=`qwert`@`%` PROCEDURE `verRetiroPorProducto`(IN `_id_producto` INT, IN `_active` BOOLEAN, IN `_id_user` INT)
 BEGIN
 
-    -- CALL `retiroPorProducto`(3, 5);
+	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-    
+	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- 1 TIENE ACCESO
 
-    -- MOSTRAR LOS MOVIMIENTOS DE RETIRO DE UN PRODUCTO
+	SELECT @state, @response;-- ENVIAMOS RPTA
 
-	SELECT TR.id AS id_retiro,
+	IF @state = 1 THEN
 
-	   TRP.id AS id_movimiento,
+		-- CALL `retiroPorProducto`(3, 5);
 
-	   TP.nombre AS nombre_producto,
+		-- MOSTRAR LOS MOVIMIENTOS DE RETIRO DE UN PRODUCTO
 
-       TRP.cantidad,
+		SELECT TR.id AS id_retiro,
 
-       TRP.precio,
+		TRP.id AS id_movimiento,
 
-       TR.id_user_responsable,
+		TP.nombre AS nombre_producto,
 
-       TU.nombre AS nombre_usuario_responsable,
+		TRP.cantidad,
 
-       TR.fecha,
+		TRP.precio,
 
-       TRP.active
+		TR.id_user_responsable,
 
-	FROM tb_retiro_producto TRP
+		TU.nombre AS nombre_usuario_responsable,
 
-	INNER JOIN tb_retiro TR ON TR.id = TRP.id_retiro
+		TR.fecha,
 
-	INNER JOIN tb_producto TP ON TRP.id_producto = TP.id
+		TRP.active
 
-    INNER JOIN tb_user TU ON TR.id_user_responsable = TU.id
+		FROM tb_retiro_producto TRP
 
-	WHERE TP.id = _id_producto AND
+		INNER JOIN tb_retiro TR ON TR.id = TRP.id_retiro
 
-    TRP.active = IF(_active = 5,TRP.active, _active)
+		INNER JOIN tb_producto TP ON TRP.id_producto = TP.id
 
-	ORDER BY TR.fecha DESC;
+		INNER JOIN tb_user TU ON TR.id_user_responsable = TU.id
+
+		WHERE TP.id = _id_producto AND
+
+		TRP.active = IF(_active = 5,TRP.active, _active)
+
+		ORDER BY TR.fecha DESC;
+
+	END IF;
+
+	-- SELECT NOW(); --SI ENTRA, EL ALMACENERO SOLO VER EL DIA DE HOY
+
+	-- SELECT CURDATE();
 
 END ;;
 DELIMITER ;
@@ -1837,4 +1918,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-15  1:24:32
+-- Dump completed on 2022-06-18 18:14:13
