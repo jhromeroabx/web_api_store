@@ -505,7 +505,7 @@ BEGIN
 
 	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
+	CALL validarRolDelUsuario(_id_user, '3', @state, @response);-- SI ES 1 TIENE ACCESO
 
 	
 
@@ -681,7 +681,7 @@ BEGIN
 
 	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
+	CALL validarRolDelUsuario(_id_user, '3', @state, @response);-- SI ES 1 TIENE ACCESO
 
 	SELECT @state, @response;-- ENVIAMOS RPTA
 
@@ -752,7 +752,7 @@ BEGIN
 
 	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
+	CALL validarRolDelUsuario(_id_user, '3', @state, @response);-- SI ES 1 TIENE ACCESO
 
 	SELECT @state, @response;-- ENVIAMOS RPTA
 
@@ -876,7 +876,7 @@ BEGIN
 
  	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-    CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
+    CALL validarRolDelUsuario(_id_user, '3', @state, @response);-- SI ES 1 TIENE ACCESO
 
     
 
@@ -909,7 +909,7 @@ BEGIN
 
 	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-	CALL validarRolDelUsuario(_id_user_responsable, 3, @state, @response);-- SI ES 1 TIENE ACCESO
+	CALL validarRolDelUsuario(_id_user_responsable, '3|4', @state, @response);-- SI ES 1 TIENE ACCESO
 
 	SELECT @state, @response;-- ENVIAMOS RPTA
 
@@ -1103,7 +1103,7 @@ BEGIN
 
 	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
+	CALL validarRolDelUsuario(_id_user, '3', @state, @response);-- SI ES 1 TIENE ACCESO
 
 	SELECT @state, @response;-- ENVIAMOS RPTA
 
@@ -1271,7 +1271,7 @@ BEGIN
 
 	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
+	CALL validarRolDelUsuario(_id_user, '3|4', @state, @response);-- SI ES 1 TIENE ACCESO
 
 	SELECT @state, @response;-- ENVIAMOS RPTA
 
@@ -1378,7 +1378,7 @@ BEGIN
 
 	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- SI ES 1 TIENE ACCESO
+	CALL validarRolDelUsuario(_id_user, '3', @state, @response);-- SI ES 1 TIENE ACCESO
 
 	SELECT @state, @response;-- ENVIAMOS RPTA
 
@@ -1765,7 +1765,7 @@ BEGIN
 
 	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- 1 TIENE ACCESO
+	CALL validarRolDelUsuario(_id_user, '3|4', @state, @response);-- 1 TIENE ACCESO
 
 	SELECT @state, @response;-- ENVIAMOS RPTA
 
@@ -1836,7 +1836,7 @@ BEGIN
 
 	-- VALIDAMOS EL ROL DE USUARIO -- 3 ADMINISTRADOR
 
-	CALL validarRolDelUsuario(_id_user, 3, @state, @response);-- 1 TIENE ACCESO
+	CALL validarRolDelUsuario(_id_user, '3|4', @state, @response);-- 1 TIENE ACCESO
 
 	SELECT @state, @response;-- ENVIAMOS RPTA
 
@@ -1918,4 +1918,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-18 18:14:13
+-- Dump completed on 2022-06-18 20:47:18
