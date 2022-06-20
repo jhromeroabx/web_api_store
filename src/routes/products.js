@@ -7,6 +7,7 @@ router.get("/products", (req, res) => {
   res.json("HOLA, ACA GESTIONAREMOS TODOS LOS PRODUCTOS!!!");
 });
 
+//TODO: SP, ROL
 router.get("/getAllCategory", (req, res) => {
   try {
 
@@ -30,19 +31,8 @@ router.get("/getAllCategory", (req, res) => {
   }
 });
 
-// interface GetAllProductos{
-// 	id_categoria: string;
-// 	active: boolean;
-// }
-
 router.post("/getAllProducts", (req, res) => {
   try {
-    // let getAllProductos : GetAllProductos = req.body;
-
-    // if (getAllProductos.id_categoria == null) {
-    //   getAllProductos.id_categoria = "0";
-    // }
-
     let { id_categoria, active } = req.body;
 
     if (String(id_categoria).length == 0) {
@@ -53,7 +43,6 @@ router.post("/getAllProducts", (req, res) => {
 
     mysqlConnection.query(
       "CALL ProductsByCategoryANDORActive(?,?)",
-      // [getAllProductos.id_categoria, getAllProductos.active],
       [id_categoria, active],
       (err, rows, fields) => {
         if (err) {
@@ -75,7 +64,7 @@ router.post("/getAllProducts", (req, res) => {
 router.post("/findProductBy", (req, res) => {
   try {
     // const id_antiguo  = req.params.id;
-    let { id, barcode } = req.body;
+    let { id, barcode, _id_user } = req.body;
     let error_message = "";
     if (String(id).length == 0) {
       id = 0;
@@ -92,22 +81,31 @@ router.post("/findProductBy", (req, res) => {
     let mysqlConnection = connectMysql("/findProductBy");
 
     mysqlConnection.query(
-      "CALL findProductBy(?, ?);",
-      [id, barcode],
+      "CALL findProductBy(?, ?, ?);",
+      [id, barcode, _id_user],
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /findProductBy", err);
           res.status(500).send({ where: "ERROR AT ROUTER: /findProductBy", err });
         } else {
-          const [RowDataPacket] = rows[0];
-          if (RowDataPacket != undefined) { // si es null no traemos data
-            res.json({
-              status: true,
-              response: RowDataPacket
-            });
+          const [RolState] = rows[0];
+          const { state, response } = RolState;
+          if (state === 1) { // si es null no traemos data
+            const [DataState] = rows[1];
+            if (DataState != undefined) {
+              res.json({
+                state: true,
+                response: DataState
+              });
+            } else {
+              res.json({
+                state: false,
+                response: "No existe el producto!"
+              });
+            }
           } else {
             res.json({
-              status: false,
+              state: false,
               response: error_message
             });
           }
@@ -121,6 +119,7 @@ router.post("/findProductBy", (req, res) => {
   }
 });
 
+//TODO: SP, ROL
 router.post("/disableProductBy", (req, res) => {
   try {
     // const id_antiguo  = req.params.id;
@@ -156,29 +155,37 @@ router.post("/productoAddOrEdit", (req, res) => {
       nombre,
       comentario,
       barcode,
+
       stock_min,
       imagen_url,
       id_categoria,
       active,
+      id_user,
     } = req.body;
-    const query = "CALL productoAddOrEdit(?, ?, ?, ?, ?, ?, ?, ?);";
+    const query = "CALL productoAddOrEdit(?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     let mysqlConnection = connectMysql("/productoAddOrEdit");
 
     mysqlConnection.query(
       query,
-      [id, nombre, comentario, barcode, stock_min, imagen_url, id_categoria, active],
+      [id, nombre, comentario, barcode, stock_min, imagen_url, id_categoria, active, id_user],
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /productoAddOrEdit", err);
           res.status(500).send({ where: "ERROR AT ROUTER: /productoAddOrEdit", err });
         } else {
-          const [RowDataPacket] = rows[0];
-          const { state } = RowDataPacket;
+          const [RolState] = rows[0];
+          const { state, response } = RolState;
           if (state == 1) {
-            res.json({ response: RowDataPacket, state: true });
+            const [DataState] = rows[1];
+            const { state, message } = DataState;
+            if (state == 1) {
+              res.json({ response: message, state: true });
+            } else {
+              res.json({ response: message, state: false });
+            }
           } else {
-            res.json({ response: RowDataPacket, state: false });
+            res.json({ response: response, state: false });
           }
         }
       }
@@ -192,21 +199,33 @@ router.post("/productoAddOrEdit", (req, res) => {
 
 router.post("/categoriaAddOrEdit", (req, res) => {
   try {
-    const { id, nombre, comentario, active } = req.body;
+    const { id, nombre, comentario, active, id_user } = req.body;
 
-    const query = "CALL categoriaAddOrEdit(?, ?, ?, ?);";
+    const query = "CALL categoriaAddOrEdit(?, ?, ?, ?, ?);";
 
     let mysqlConnection = connectMysql("/categoriaAddOrEdit");
 
     mysqlConnection.query(
       query,
-      [id, nombre, comentario, active],
+      [id, nombre, comentario, active, id_user],
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /categoriaAddOrEdit", err);
           res.status(500).send({ where: "ERROR AT ROUTER: /categoriaAddOrEdit", err });
         } else {
-          res.json({ status: "Categoria Saved", response: rows[0] });
+          const [RolState] = rows[0];
+          const { state, response } = RolState;
+          if (state == 1) {
+            const [DataState] = rows[1];
+            const { state, message, id } = DataState;
+            if (state == 1) {
+              res.json({ response: `${message} - ${id}`, state: true });
+            } else {
+              res.json({ response: message, state: false });
+            }
+          } else {
+            res.json({ response: response, state: false });
+          }
         }
       }
     );
@@ -217,6 +236,7 @@ router.post("/categoriaAddOrEdit", (req, res) => {
   }
 });
 
+//TODO: SP, ROL
 router.delete("/DeleteCategoria", (req, res) => {
   try {
     const { id } = req.body;

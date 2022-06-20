@@ -117,6 +117,7 @@ router.post("/AddUserOrEdit", (req, res) => {
       email,
       fechaNacimiento,
       contrasenia,
+      id_responsable
     } = req.body;
 
     if (
@@ -127,7 +128,8 @@ router.post("/AddUserOrEdit", (req, res) => {
       String(telefono).length == 0 ||
       String(email).length == 0 ||
       String(fechaNacimiento).length == 0 ||
-      String(contrasenia).length == 0
+      String(contrasenia).length == 0 ||
+      String(id_responsable).length == 0
     ) {
       res.status(200).send({
         response: "Algunos campos o todos estan vacios!!!",
@@ -164,7 +166,7 @@ router.post("/AddUserOrEdit", (req, res) => {
         state: false,
       });
     } else {
-      const query = "CALL userAddOrEdit(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+      const query = "CALL userAddOrEdit(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
       let mysqlConnection = connectMysql("/userAddOrEdit");
 
@@ -181,18 +183,26 @@ router.post("/AddUserOrEdit", (req, res) => {
           estado,
           idUserType,
           contrasenia,
+          id_responsable
         ],
         (err, rows, fields) => {
           if (err) {
             console.error("ERROR AT: /AddUserOrEdit", err);
             res.status(500).send({ where: "ERROR AT ROUTER: /AddUserOrEdit (SEE LOG FOR DETAILS) ===> ", err });
           } else {
-            const [RowDataPacket] = rows[0];
-            const { state } = RowDataPacket;
-            if (state == 1) {
-              res.json({ response: RowDataPacket, state: true });
+            let RowDataPacket;
+            [RowDataPacket] = rows[0];
+            const { state, response } = RowDataPacket;
+            if (state === 1) {
+              [RowDataPacket] = rows[1];
+              const { state, message } = RowDataPacket;
+              if (state === 1) {
+                res.json({ response: message, state: true });
+              } else {
+                res.json({ response: message, state: false });
+              }
             } else {
-              res.json({ response: RowDataPacket, state: false });
+              res.json({ response: response, state: false });
             }
           }
         }

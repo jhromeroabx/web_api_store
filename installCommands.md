@@ -100,3 +100,7 @@ kill -9 $( lsof -i:5000 -t ) <!-- mata proceso -->
 systemctl restart bind9
 systemctl restart nginx 
 <!-- BIND9   NGINX -->
+
+<!-- MYSQL INSERTA DEFAULT DATA VALUE -->
+INSERT INTO tuTabla (columna1, columna2, rol)
+VALUES (valor1, valor2, DEFAULT),

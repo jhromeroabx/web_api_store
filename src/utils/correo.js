@@ -37,7 +37,7 @@ function sendEmail(to, subject, body) {
 
 function armarListaCompras(serializado) {
 
-    console.log('SI CUMPLE CRJJJJ!!!');
+    //console.log('SI CUMPLE CRJJJJ!!!');
 
     let listaProductos = serializado.split("@");
 

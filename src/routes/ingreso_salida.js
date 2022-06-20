@@ -122,9 +122,19 @@ router.post("/ingresoAdd", (req, res) => {
           console.error("ERROR AT: /ingresoAdd", err);
           res.status(500).send({ error: "ERROR AT: /ingresoAdd", cause: err });
         } else {
-          const [RowDataPacket] = rows[0];
-          const { state, response } = RowDataPacket;
-          res.json({ state: state === 1 ? true : false, response });
+          const [RolState] = rows[0];
+          const { state, response } = RolState;
+          if (state == 1) {
+            const [DataState] = rows[1];
+            const { state, message } = DataState;
+            if (state == 1) {
+              res.json({ state: true, message });
+            } else {
+              res.json({ state: false, message });
+            }
+          } else {
+            res.json({ state: false, response });
+          }
         }
       }
     );
@@ -208,20 +218,23 @@ router.post("/retiroAdd", (req, res) => {
           console.error("ERROR AT: /retiroAdd", err);
           res.status(500).send({ error: "ERROR AT: /retiroAdd", cause: err });
         } else {
-          let RowDataPacket;
-          [RowDataPacket] = rows[0];
-          const { state, response } = RowDataPacket;
-
-          [RowDataPacket] = rows[1];
-          const { procesado } = RowDataPacket;
-
-          if (procesado != null) {// VALIDAR QUE CUANDO NO HAYA PRODUCTOS BAJO NO ENVIE DATA
-            let emailToSend = armarListaCompras(procesado);
-
-            sendEmail('jhosepromero14@gmail.com', 'PRODUCTOS A COMPRAR - STOCK BAJO!!!', emailToSend);
+          const [RolData] = rows[0];
+          const { state, response } = RolData;
+          if (state == 1) {
+            [DataState] = rows[1];
+            const { state, procesado, message } = DataState;
+            if (state == 1) {
+              if (procesado != null) {// VALIDAR QUE CUANDO NO HAYA PRODUCTOS BAJO NO ENVIE DATA
+                let emailToSend = armarListaCompras(procesado);
+                sendEmail('jhosepromero14@gmail.com', 'PRODUCTOS A COMPRAR - STOCK BAJO!!!', emailToSend);
+              }
+              res.json({ state: true, message, procesado });
+            } else {
+              res.json({ state: false, message });
+            }
+          } else {
+            res.json({ state: false, response });
           }
-
-          res.json({ state: state === 1 ? true : false, response, procesado });
         }
       }
     );
