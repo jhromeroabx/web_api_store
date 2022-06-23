@@ -119,32 +119,32 @@ router.post("/findProductBy", (req, res) => {
   }
 });
 
-//TODO: SP, ROL
-router.post("/disableProductBy", (req, res) => {
+router.post("/disableOrActivateProductById", (req, res) => {
   try {
     // const id_antiguo  = req.params.id;
-    const { id } = req.body;
+    const { id_producto,id_user,factor } = req.body;// factor 0 - 1
 
-    let mysqlConnection = connectMysql("/disableProductBy");
+    let mysqlConnection = connectMysql("/disableOrActivateProductById");
 
     mysqlConnection.query(
-      "UPDATE tb_producto SET active = 0 WHERE id = ?",
-      [id],
+
+      "CALL disableOrActivateProductById(?, ?, ?);",
+      [id_producto],
       (err, rows, fields) => {
         if (err) {
-          console.error("ERROR AT: /disableProductBy", err);
-          res.status(500).send({ where: "ERROR AT ROUTER: /disableProductBy", err });
+          console.error("ERROR AT: /disableOrActivateProductById", err);
+          res.status(500).send({ where: "ERROR AT ROUTER: /disableOrActivateProductById", err });
         } else {
           res.json({
-            status: "El producto con id: " + [id] + " ha sido deshabilitado!",
+            status: "El producto con id: " + [id] + " ha actualizada!",
           });
         }
       }
     );
     mysqlConnection.end();
   } catch (error) {
-    console.error("ERROR AT: /disableProductBy", error);
-    res.status(500).send({ where: "ERROR AT ROUTER: /disableProductBy", error });
+    console.error("ERROR AT: /disableOrActivateProductById", error);
+    res.status(500).send({ where: "ERROR AT ROUTER: /disableOrActivateProductById", error });
   }
 });
 

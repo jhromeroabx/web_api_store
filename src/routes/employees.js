@@ -7,6 +7,7 @@ router.get("/employee", (req, res) => {
   res.json("HOLA A TODOS LOS EMPLEADOS!!!");
 });
 
+//TODO: SP, ROL
 router.get("/getAllEmployeeType", (req, res) => {
   try {
 
@@ -34,6 +35,7 @@ router.get("/getAllEmployeeType", (req, res) => {
   }
 });
 
+//TODO: SP, ROL
 router.get("/getAllEmployee", (req, res) => {
   try {
 
@@ -54,6 +56,7 @@ router.get("/getAllEmployee", (req, res) => {
   }
 });
 
+//TODO: SP, ROL
 router.get("/findEmployee", (req, res) => {
   try {
     // /findEmployee/:id
@@ -85,6 +88,7 @@ router.get("/findEmployee", (req, res) => {
   }
 });
 
+//TODO: SP, ROL
 router.delete("/deleteEmployee", (req, res) => {
   try {
     // /deleteEmployee/:id GET PARAM

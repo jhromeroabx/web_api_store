@@ -9,6 +9,7 @@ router.get("/ingresos&salidas", (req, res) => {
 });
 
 // lo veran solo los administradores 3
+// ver rango de fechas,
 router.get("/getAllIngresos", (req, res) => {
   try {
     let mysqlConnection = connectMysql("/getAllIngresos");
@@ -46,24 +47,59 @@ router.get("/getAllIngresos", (req, res) => {
   }
 });
 
-
-// EVALUAR
-router.post("/getAllIngresosDetailBy", (req, res) => {
+router.get("/getAllRetiros", (req, res) => {
   try {
-    const { id_ingreso } = req.body;
+    let mysqlConnection = connectMysql("/getAllRetiros");
 
-    let mysqlConnection = connectMysql("/getAllIngresosDetailBy");
+    const {
+      id_user_responsable,
+    } = req.body;
 
     mysqlConnection.query(
-      "SELECT TIP.*,TP.nombre,TI.active ingresoState FROM tb_ingreso_producto TIP INNER JOIN tb_ingreso TI ON TI.id = TIP.id_ingreso INNER JOIN tb_producto TP ON TIP.id_producto = TP.id WHERE TIP.id_ingreso = ?",
-      [id_ingreso],
+      "CALL getAllRetiros(?);",
+      [id_user_responsable],
       (err, rows, fields) => {
         if (err) {
           res
             .status(500)
-            .send({ error: "Error en /getAllIngresosDetailBy!", err });
+            .send({ error: "Error en /getAllRetiros!", cause: err });
+          console.error("ERROR AT: /getAllRetiros: ", err);
+        } else {
+          let rptaFromMysql;
+          [rptaFromMysql] = rows[0];// si encerramos entre corchetes obtenemos el objeto del arreglo
+          const { state, response } = rptaFromMysql;
+          if (state === 1) {
+            rptaFromMysql = rows[1];
+            res.json({ state: state, response: response, content: rptaFromMysql });
+          } else {
+            res.json({ state: state, response: response, content: null });
+          }
+        }
+      }
+    );
+    mysqlConnection.end();
+  } catch (error) {
+    res.status(500).send({ error: "ERROR AT: /getAllRetiros", error });
+    console.error("ERROR AT: /getAllRetiros", error);
+  }
+});
 
-          console.error("ERROR AT: /getAllIngresosDetailBy", err);
+router.post("/getAllIngresosDetailById", (req, res) => {
+  try {
+    const { id_ingreso, id_user_responsable } = req.body;
+
+    let mysqlConnection = connectMysql("/getAllIngresosDetailById");
+
+    mysqlConnection.query(
+      "CALL getAllIngresosDetailById(?, ?);",
+      [id_ingreso, id_user_responsable],
+      (err, rows, fields) => {
+        if (err) {
+          res
+            .status(500)
+            .send({ error: "Error en /getAllIngresosDetailById!", err });
+
+          console.error("ERROR AT: /getAllIngresosDetailById", err);
         } else {
           res.json(rows);
         }
@@ -71,8 +107,8 @@ router.post("/getAllIngresosDetailBy", (req, res) => {
     );
     mysqlConnection.end();
   } catch (error) {
-    console.error("ERROR AT: /getAllIngresosDetailBy", error);
-    res.status(500).send({ error: "ERROR AT: /getAllIngresosDetailBy", error });
+    console.error("ERROR AT: /getAllIngresosDetailById", error);
+    res.status(500).send({ error: "ERROR AT: /getAllIngresosDetailById", error });
   }
 });
 
@@ -145,22 +181,22 @@ router.post("/ingresoAdd", (req, res) => {
   }
 });
 
-router.post("/getAllRetirosDetailBy", (req, res) => {
+router.post("/getAllRetirosDetailById", (req, res) => {
   try {
-    const { id_retiro } = req.body;
+    const { id_retiro, id_user_responsable } = req.body;
 
-    let mysqlConnection = connectMysql("/getAllRetirosDetailBy");
+    let mysqlConnection = connectMysql("/getAllRetirosDetailById");
 
     mysqlConnection.query(
-      "SELECT TRP.*,TP.nombre,TR.comentario FROM tb_retiro TR INNER JOIN tb_retiro_producto TRP ON TR.id = TRP.id_retiro INNER JOIN tb_producto TP ON TRP.id_producto = TP.id WHERE TRP.id_retiro = ?",
-      [id_retiro],
+      "CALL getAllRetirosDetailById(?, ?);",
+      [id_retiro, id_user_responsable],
       (err, rows, fields) => {
         if (err) {
           res
             .status(500)
-            .send({ error: "Error en /getAllRetirosDetailBy!", err });
+            .send({ error: "Error en /getAllRetirosDetailById!", err });
 
-          console.error("ERROR AT: /getAllRetirosDetailBy", err);
+          console.error("ERROR AT: /getAllRetirosDetailById", err);
         } else {
           res.json(rows);
         }
@@ -168,8 +204,8 @@ router.post("/getAllRetirosDetailBy", (req, res) => {
     );
     mysqlConnection.end();
   } catch (error) {
-    console.error("ERROR AT: /getAllRetirosDetailBy", error);
-    res.status(500).send({ error: "ERROR AT: /getAllRetirosDetailBy", error });
+    console.error("ERROR AT: /getAllRetirosDetailById", error);
+    res.status(500).send({ error: "ERROR AT: /getAllRetirosDetailById", error });
   }
 });
 
@@ -244,7 +280,5 @@ router.post("/retiroAdd", (req, res) => {
     console.error("ERROR AT: /retiroAdd", error);
   }
 });
-
-
 
 module.exports = router;

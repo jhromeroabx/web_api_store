@@ -7,6 +7,7 @@ router.get("/users", (req, res) => {
   res.json("HOLA A TODOS LOS USERS!!!");
 });
 
+//TODO: SP, ROL
 router.get("/getAllUser", (req, res) => {
   try {
     let mysqlConnection = connectMysql("/getAllUser");
@@ -33,6 +34,7 @@ router.get("/getAllUser", (req, res) => {
   }
 });
 
+//TODO: SP, ROL
 router.get("/getAllUserType", (req, res) => {
   try {
 
