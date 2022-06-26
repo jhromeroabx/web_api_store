@@ -1,19 +1,20 @@
 const express = require("express");
 const router = express.Router();
-// const mysqlConfig = require("../database");
 const connectMysql = require("../database");
 
 router.get("/users", (req, res) => {
   res.json("HOLA A TODOS LOS USERS!!!");
 });
 
-//TODO: SP, ROL
 router.get("/getAllUser", (req, res) => {
   try {
+    const { id_user } = req.body;
+
     let mysqlConnection = connectMysql("/getAllUser");
 
     mysqlConnection.query(
-      "SELECT * FROM tb_user tu WHERE tu.estado = 1",
+      "CALL getAllUser(?);",
+      [id_user],
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /getAllUser", err);
@@ -34,14 +35,15 @@ router.get("/getAllUser", (req, res) => {
   }
 });
 
-//TODO: SP, ROL
 router.get("/getAllUserType", (req, res) => {
   try {
+    const { id_user } = req.body;
 
     let mysqlConnection = connectMysql("/getAllUser");
 
     mysqlConnection.query(
-      "SELECT * FROM tb_user_type tuy WHERE tuy.estado = 1",
+      "CALL getAllUserType(?);",
+      [id_user],
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /getAllUserType", err);

@@ -7,18 +7,20 @@ router.get("/products", (req, res) => {
   res.json("HOLA, ACA GESTIONAREMOS TODOS LOS PRODUCTOS!!!");
 });
 
-//TODO: SP, ROL
-router.get("/getAllCategory", (req, res) => {
+router.get("/getAllCategoria", (req, res) => {
   try {
 
-    let mysqlConnection = connectMysql("/getAllCategory");
+    let { id_user } = req.body;
+
+    let mysqlConnection = connectMysql("/getAllCategoria");
 
     mysqlConnection.query(
-      "SELECT * FROM tb_categoria cat WHERE cat.active = 1",
+      "CALL getAllCategoria(?);",
+      [id_user],
       (err, rows, fields) => {
         if (err) {
-          console.error("ERROR AT: /getAllCategory", err);
-          res.status(500).send({ where: "ERROR AT SQL: /getAllCategory", err })
+          console.error("ERROR AT: /getAllCategoria", err);
+          res.status(500).send({ where: "ERROR AT SQL: /getAllCategoria", err })
         } else {
           res.json(rows);
         }
@@ -26,8 +28,8 @@ router.get("/getAllCategory", (req, res) => {
     );
     mysqlConnection.end();
   } catch (err) {
-    console.error("ERROR AT ROUTER: /getAllCategory (SEE LOG FOR DETAILS) => ", err);
-    res.status(500).send({ where: "ERROR AT ROUTER: /getAllCategory (SEE LOG FOR DETAILS) ===> " });
+    console.error("ERROR AT ROUTER: /getAllCategoria (SEE LOG FOR DETAILS) => ", err);
+    res.status(500).send({ where: "ERROR AT ROUTER: /getAllCategoria (SEE LOG FOR DETAILS) ===> " });
   }
 });
 
@@ -122,7 +124,7 @@ router.post("/findProductBy", (req, res) => {
 router.post("/disableOrActivateProductById", (req, res) => {
   try {
     // const id_antiguo  = req.params.id;
-    const { id_producto,id_user,factor } = req.body;// factor 0 - 1
+    const { id_producto, id_user, factor } = req.body;// factor 0 - 1
 
     let mysqlConnection = connectMysql("/disableOrActivateProductById");
 
@@ -236,23 +238,25 @@ router.post("/categoriaAddOrEdit", (req, res) => {
   }
 });
 
-//TODO: SP, ROL
 router.delete("/DeleteCategoria", (req, res) => {
   try {
-    const { id } = req.body;
+    const { id, id_user } = req.body;
 
-    const query = "DELETE FROM tb_categoria WHERE id = ?";
+    const query = "CALL DeleteCategoria(?, ?);";
 
     let mysqlConnection = connectMysql("/DeleteCategoria");
 
-    mysqlConnection.query(query, [id], (err, rows, fields) => {
-      if (err) {
-        console.error("ERROR AT: /DeleteCategoria", err);
-        res.status(500).send({ where: "ERROR AT ROUTER: /DeleteCategoria", err });
-      } else {
-        res.json({ status: "Categoria deleted", response: rows[0] });
-      }
-    });
+    mysqlConnection.query(
+      query,
+      [id, id_user],
+      (err, rows, fields) => {
+        if (err) {
+          console.error("ERROR AT: /DeleteCategoria", err);
+          res.status(500).send({ where: "ERROR AT ROUTER: /DeleteCategoria", err });
+        } else {
+          res.json({ status: "Categoria deleted", response: rows[0] });
+        }
+      });
     mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /DeleteCategoria", error);

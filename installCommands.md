@@ -115,3 +115,20 @@ npm config set https-proxy http://xxx.xxx.xxx.4:8080
 
 npm config rm proxy   
 npm config rm https-proxy
+
+<!-- ESTRUCTURA -->
+node --max-old-space-size=<SPACE_REQD> index.js
+<!-- ABARCAR 2GB DE RAN PARA PROCESAMIENTO NODE -->
+node --max-old-space-size=2048 index.js
+<!-- ABARCAR 3GB DE RAN PARA PROCESAMIENTO NODE -->
+node --max-old-space-size=3072 index.js
+<!-- TRY -->
+let items = [];
+  
+for (let i = 0; i < 90000000; i++) {
+    items.push("GeeksforGeeks");
+    items.push(i);
+}
+  
+console.log(items);
+<!-- TRY -->
