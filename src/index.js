@@ -12,6 +12,11 @@ const PORT_HTTPS = 5001;
 const Sentry = require("@sentry/node");
 const Tracing = require("@sentry/tracing");
 
+var morgan = require('morgan');
+
+// app.use(morgan('combined'))
+app.use(morgan('tiny'))
+
 //token 7bc3856ec9b511ecb7fa3a3a141bbc4f
 Sentry.init({
   dsn: "https://a10c2360b46b4f6cb8499e2f09ee69e2@o1228261.ingest.sentry.io/6373959",
