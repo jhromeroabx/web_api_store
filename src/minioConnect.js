@@ -1,21 +1,17 @@
 const Minio = require('minio');
+require("dotenv").config();
 
 var minioConnection;
 
 try {
     minioConnection = new Minio.Client({
-        endPoint: '192.168.18.6',
-        // endPoint: "play.minio.io",
-        port: 7700,
-        // port: 9000,
-        // useSSL: true,
-        accessKey: 'loasi.wastore',
-        secretKey: 'loasi.wastore@wasd12125'
-        // accessKey: 'Q3AM3UQ867SPQQA43P2F',
-        // secretKey: 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG'
+        endPoint: process.env.MINIO_URL,
+        port: 8700,
+        accessKey: process.env.MINIO_ACCESSKEY,
+        secretKey: process.env.MINIO_SECRETKEY
     });
-} catch (error) {
-    console.console.error("Error MINIO Server: ", error);
+} catch (err) {
+    console.log("Error MINIO Server: ", err);
 }
 
 module.exports = minioConnection;
