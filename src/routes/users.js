@@ -6,6 +6,7 @@ router.get("/users", (req, res) => {
   res.json("HOLA A TODOS LOS USERS!!!");
 });
 
+//TODO: FIX RES
 router.get("/getAllUser", (req, res) => {
   try {
     const { id_user } = req.body;
@@ -20,7 +21,7 @@ router.get("/getAllUser", (req, res) => {
           console.error("ERROR AT: /getAllUser", err);
           res
             .status(500)
-            .send({ error: "ERROR AT: /getAllUser", err });
+            .send({ where: "ERROR AT: /getAllUser", err });
         } else {
           res.json(rows);
         }
@@ -31,10 +32,11 @@ router.get("/getAllUser", (req, res) => {
     console.error("ERROR AT: /getAllUser", error);
     res
       .status(500)
-      .send({ error: "ERROR AT: /getAllUser", error });
+      .send({ where: "ERROR AT: /getAllUser", error });
   }
 });
 
+//TODO: FIX RES
 router.get("/getAllUserType", (req, res) => {
   try {
     const { id_user } = req.body;
@@ -49,7 +51,7 @@ router.get("/getAllUserType", (req, res) => {
           console.error("ERROR AT: /getAllUserType", err);
           res
             .status(500)
-            .send({ error: "ERROR AT: /getAllUserType", err });
+            .send({ where: "ERROR AT: /getAllUserType", err });
         } else {
           res.json(rows);
         }
@@ -69,15 +71,15 @@ router.post("/login", (req, res) => {
     const { user, contrasenia } = req.body;
 
     if (String(user).length == 0 || String(contrasenia).length == 0) {
-      res.status(500).send({ error: "el user y/o la contrasena estan vacias!" });
+      res.status(500).send({ where: "el user y/o la contrasena estan vacias!" });
     } else if (String(user).length > 50) {
       res
         .status(500)
-        .send({ error: "el user no puede ser mayor de 50 caracteres!" });
+        .send({ where: "el user no puede ser mayor de 50 caracteres!" });
     } else if (String(contrasenia).length > 15) {
       res
         .status(500)
-        .send({ error: "la contrasenia no puede ser mayor a 15 caracteres!" });
+        .send({ where: "la contrasenia no puede ser mayor a 15 caracteres!" });
     } else {
 
       let mysqlConnection = connectMysql("/login");

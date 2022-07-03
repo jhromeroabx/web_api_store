@@ -20,7 +20,7 @@ router.get("/getAllEmployeeType", (req, res) => {
           console.error("ERROR AT: /getAllEmployeeType", err);
           res
             .status(500)
-            .send({ error: "ERROR AT: /getAllEmployeeType", err });
+            .send({ where: "ERROR AT: /getAllEmployeeType", err });
         } else {
           res.json(rows);
         }
@@ -31,7 +31,7 @@ router.get("/getAllEmployeeType", (req, res) => {
     console.error("ERROR AT: /getAllEmployeeType", error);
     res
       .status(500)
-      .send({ error: "ERROR AT: /getAllEmployeeType", error });
+      .send({ where: "ERROR AT: /getAllEmployeeType", error });
   }
 });
 
@@ -71,7 +71,7 @@ router.get("/findEmployee", (req, res) => {
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /findEmployee/:id", err);
-          res.status(500).send({ error: "ERROR AT: /findEmployee", err });
+          res.status(500).send({ where: "ERROR AT: /findEmployee", err });
         } else {
           if (!rows.length) {
             res.json({ status: "El empleado con id: " + [id] + " no existe!" });
@@ -84,7 +84,7 @@ router.get("/findEmployee", (req, res) => {
     mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /findEmployee", error);
-    res.status(500).send({ error: "ERROR AT: /findEmployee", error });
+    res.status(500).send({ where: "ERROR AT: /findEmployee", error });
   }
 });
 
@@ -103,7 +103,7 @@ router.delete("/deleteEmployee", (req, res) => {
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /deleteEmployee", err);
-          res.status(500).send({ error: "ERROR AT: /deleteEmployee", err });
+          res.status(500).send({ where: "ERROR AT: /deleteEmployee", err });
         } else {
           res.json({
             status: "El empleado con id: " + [id] + " ha sido borrado!",
@@ -114,7 +114,7 @@ router.delete("/deleteEmployee", (req, res) => {
     mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /deleteEmployee", error);
-    res.status(500).send({ error: "ERROR AT: /deleteEmployee", error });
+    res.status(500).send({ where: "ERROR AT: /deleteEmployee", error });
   }
 });
 
@@ -132,7 +132,7 @@ router.post("/AddEmployeeOrEdit", (req, res) => {
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /AddEmployeeOrEdit", err);
-          res.status(500).send({ error: "ERROR AT: /AddEmployeeOrEdit", err });
+          res.status(500).send({ where: "ERROR AT: /AddEmployeeOrEdit", err });
         } else {
           res.json({ status: "Employeed Saved", response: rows[0] });
         }
@@ -141,7 +141,7 @@ router.post("/AddEmployeeOrEdit", (req, res) => {
     mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /AddEmployeeOrEdit", error);
-    res.status(500).send({ error: "ERROR AT: /AddEmployeeOrEdit", error });
+    res.status(500).send({ where: "ERROR AT: /AddEmployeeOrEdit", error });
   }
 });
 

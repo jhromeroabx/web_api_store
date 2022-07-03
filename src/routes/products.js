@@ -7,6 +7,7 @@ router.get("/products", (req, res) => {
   res.json("HOLA, ACA GESTIONAREMOS TODOS LOS PRODUCTOS!!!");
 });
 
+//TODO: FIX RES
 router.get("/getAllCategoria", (req, res) => {
   try {
 

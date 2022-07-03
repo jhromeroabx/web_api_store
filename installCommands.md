@@ -38,6 +38,8 @@ npm install --save https
 <!-- SENTRY test -->
 npm install --save @sentry/node @sentry/tracing
 
+npm install dotenv
+
 <!-- INSTALL NGROK IN UBUNTU -->
 https://youtu.be/_WttIi-24PQ
 <!-- wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz --> EL LINK SE OBTIENE EN LA PAGINA OFICIAL

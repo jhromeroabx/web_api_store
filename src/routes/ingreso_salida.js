@@ -25,7 +25,7 @@ router.get("/getAllIngresos", (req, res) => {
         if (err) {
           res
             .status(500)
-            .send({ error: "Error en /getAllIngresos!", cause: err });
+            .send({ where: "Error en /getAllIngresos!", cause: err });
           console.error("ERROR AT: /getAllIngresos: ", err);
         } else {
           let rptaFromMysql;
@@ -42,7 +42,7 @@ router.get("/getAllIngresos", (req, res) => {
     );
     mysqlConnection.end();
   } catch (error) {
-    res.status(500).send({ error: "ERROR AT: /getAllIngresos", error });
+    res.status(500).send({ where: "ERROR AT: /getAllIngresos", error });
     console.error("ERROR AT: /getAllIngresos", error);
   }
 });
@@ -62,7 +62,7 @@ router.get("/getAllRetiros", (req, res) => {
         if (err) {
           res
             .status(500)
-            .send({ error: "Error en /getAllRetiros!", cause: err });
+            .send({ where: "Error en /getAllRetiros!", cause: err });
           console.error("ERROR AT: /getAllRetiros: ", err);
         } else {
           let rptaFromMysql;
@@ -79,11 +79,12 @@ router.get("/getAllRetiros", (req, res) => {
     );
     mysqlConnection.end();
   } catch (error) {
-    res.status(500).send({ error: "ERROR AT: /getAllRetiros", error });
+    res.status(500).send({ where: "ERROR AT: /getAllRetiros", error });
     console.error("ERROR AT: /getAllRetiros", error);
   }
 });
 
+//TODO: FIX RES
 router.post("/getAllIngresosDetailById", (req, res) => {
   try {
     const { id_ingreso, id_user_responsable } = req.body;
@@ -97,7 +98,7 @@ router.post("/getAllIngresosDetailById", (req, res) => {
         if (err) {
           res
             .status(500)
-            .send({ error: "Error en /getAllIngresosDetailById!", err });
+            .send({ where: "Error en /getAllIngresosDetailById!", err });
 
           console.error("ERROR AT: /getAllIngresosDetailById", err);
         } else {
@@ -108,7 +109,7 @@ router.post("/getAllIngresosDetailById", (req, res) => {
     mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /getAllIngresosDetailById", error);
-    res.status(500).send({ error: "ERROR AT: /getAllIngresosDetailById", error });
+    res.status(500).send({ where: "ERROR AT: /getAllIngresosDetailById", error });
   }
 });
 
@@ -156,7 +157,7 @@ router.post("/ingresoAdd", (req, res) => {
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /ingresoAdd", err);
-          res.status(500).send({ error: "ERROR AT: /ingresoAdd", cause: err });
+          res.status(500).send({ where: "ERROR AT: /ingresoAdd", cause: err });
         } else {
           const [RolState] = rows[0];
           const { state, response } = RolState;
@@ -176,11 +177,12 @@ router.post("/ingresoAdd", (req, res) => {
     );
     mysqlConnection.end();
   } catch (error) {
-    res.status(500).send({ error: "ERROR AT: /ingresoAdd", error });
+    res.status(500).send({ where: "ERROR AT: /ingresoAdd", error });
     console.error("ERROR AT: /ingresoAdd", error);
   }
 });
 
+//TODO: FIX RES
 router.post("/getAllRetirosDetailById", (req, res) => {
   try {
     const { id_retiro, id_user_responsable } = req.body;
@@ -194,7 +196,7 @@ router.post("/getAllRetirosDetailById", (req, res) => {
         if (err) {
           res
             .status(500)
-            .send({ error: "Error en /getAllRetirosDetailById!", err });
+            .send({ where: "Error en /getAllRetirosDetailById!", err });
 
           console.error("ERROR AT: /getAllRetirosDetailById", err);
         } else {
@@ -205,7 +207,7 @@ router.post("/getAllRetirosDetailById", (req, res) => {
     mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /getAllRetirosDetailById", error);
-    res.status(500).send({ error: "ERROR AT: /getAllRetirosDetailById", error });
+    res.status(500).send({ where: "ERROR AT: /getAllRetirosDetailById", error });
   }
 });
 
@@ -252,7 +254,7 @@ router.post("/retiroAdd", (req, res) => {
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /retiroAdd", err);
-          res.status(500).send({ error: "ERROR AT: /retiroAdd", cause: err });
+          res.status(500).send({ where: "ERROR AT: /retiroAdd", cause: err });
         } else {
           const [RolData] = rows[0];
           const { state, response } = RolData;
@@ -276,7 +278,7 @@ router.post("/retiroAdd", (req, res) => {
     );
     mysqlConnection.end();
   } catch (error) {
-    res.status(500).send({ error: "ERROR AT: /retiroAdd", error });
+    res.status(500).send({ where: "ERROR AT: /retiroAdd", error });
     console.error("ERROR AT: /retiroAdd", error);
   }
 });

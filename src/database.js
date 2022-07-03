@@ -1,14 +1,15 @@
 const mysql = require("mysql2");
+require("dotenv").config();
 
 const mysqlConfig = {
   //     host: "25.38.59.175",
   //     host: "192.168.18.5",
   //     host: "127.0.0.1",
-  host: "192.168.18.6",
-  port: "3350",
-  user: "root",
-  password: "wasd12125",
-  database: "db_company",
+  host: process.env.MYSQL_URL,
+  port: process.env.MYSQL_PORT,
+  user: process.env.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
 }
 
 function connectMysql(funcion) {
