@@ -4,7 +4,7 @@ var fs = require("file-system");
 const https = require("https");
 var path = require("path");
 const swaggerUI = require("swagger-ui-express");
-const docs = require('./docs');
+const docs = require("./docs");
 
 const PORT_HTTP = 5000;
 const PORT_HTTPS = 5001;
@@ -12,10 +12,10 @@ const PORT_HTTPS = 5001;
 const Sentry = require("@sentry/node");
 const Tracing = require("@sentry/tracing");
 
-var morgan = require('morgan');
+var morgan = require("morgan");
 
 // app.use(morgan('combined'))
-app.use(morgan('tiny'))
+app.use(morgan("tiny"));
 
 //token 7bc3856ec9b511ecb7fa3a3a141bbc4f
 Sentry.init({
@@ -72,8 +72,9 @@ app.use(require("./routes/users"));
 app.use(require("./routes/products"));
 app.use(require("./routes/ingreso_salida"));
 app.use(require("./routes/minio"));
+app.use(require("./routes/mercadopago"));
 
-app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(docs));
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(docs));
 
 app.use(function onError(err, req, res, next) {
   res.statusCode = 500;
