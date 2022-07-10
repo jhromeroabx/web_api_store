@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const connectMysql = require("../database");
 
-router.get("/ingresos&salidas", (_req, res) => {
+router.get("/ingresos&salidas", async (_req, res) => {
   res.json(
     "HOLA ACA SE GESTIONARA TODOS LOS INGRESOS Y SALIDAS DE PRODUCTOS PARA ALMACEN!!!"
   );
@@ -106,7 +106,21 @@ router.post("/getAllIngresosDetailById", (req, res) => {
 
           console.error("ERROR AT: /getAllIngresosDetailById", err);
         } else {
-          res.json(rows);
+          const [RolState] = rows[0];
+          const { state, response } = RolState;
+          if (state === 1) {
+            // si es null no traemos data
+            const Data = rows[1];
+            res.json({
+              state: true,
+              content: Data,
+            });
+          } else {
+            res.json({
+              state: false,
+              response: response,
+            });
+          }
         }
       }
     );
@@ -185,7 +199,7 @@ router.post("/ingresoAdd", (req, res) => {
 });
 
 //TODO: FIX RES
-router.post("/getAllRetirosDetailById", (req, res) => {
+router.get("/getAllRetirosDetailById", (req, res) => {
   try {
     const { id_retiro, id_user_responsable } = req.body;
 
@@ -202,7 +216,21 @@ router.post("/getAllRetirosDetailById", (req, res) => {
 
           console.error("ERROR AT: /getAllRetirosDetailById", err);
         } else {
-          res.json(rows);
+          const [RolState] = rows[0];
+          const { state, response } = RolState;
+          if (state === 1) {
+            // si es null no traemos data
+            const Data = rows[1];
+            res.json({
+              state: true,
+              content: Data,
+            });
+          } else {
+            res.json({
+              state: false,
+              response: response,
+            });
+          }
         }
       }
     );

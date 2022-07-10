@@ -6,15 +6,15 @@ router.get("/products", (_req, res) => {
   res.json("HOLA, ACA GESTIONAREMOS TODOS LOS PRODUCTOS!!!");
 });
 
-router.get("/getAllCategoria", (req, res) => {
+router.get("/getAllCategory", (req, res) => {
   try {
-    let { id_user } = req.body;
+    let { id_user_responsable } = req.body;
 
     let mysqlConnection = connectMysql("/getAllCategoria");
 
     mysqlConnection.query(
-      "CALL getAllCategoria(?);",
-      [id_user],
+      "CALL getAllCategory(?);",
+      [id_user_responsable],
       (err, rows, _fields) => {
         if (err) {
           console.error("ERROR AT: /getAllCategoria", err);
@@ -22,7 +22,21 @@ router.get("/getAllCategoria", (req, res) => {
             .status(500)
             .send({ where: "ERROR AT SQL: /getAllCategoria", err });
         } else {
-          res.json(rows);
+          const [RolState] = rows[0];
+          const { state, response } = RolState;
+          if (state === 1) {
+            // si es null no traemos data
+            const Data = rows[1];
+            res.json({
+              state: true,
+              content: Data,
+            });
+          } else {
+            res.json({
+              state: false,
+              response: response,
+            });
+          }
         }
       }
     );

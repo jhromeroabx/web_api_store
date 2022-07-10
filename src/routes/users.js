@@ -19,20 +19,30 @@ router.get("/getAllUser", (req, res) => {
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /getAllUser", err);
-          res
-            .status(500)
-            .send({ where: "ERROR AT: /getAllUser", err });
+          res.status(500).send({ where: "ERROR AT: /getAllUser", err });
         } else {
-          res.json(rows);
+          const [RolState] = rows[0];
+          const { state, response } = RolState;
+          if (state === 1) {
+            // si es null no traemos data
+            const Data = rows[1];
+            res.json({
+              state: true,
+              content: Data,
+            });
+          } else {
+            res.json({
+              state: false,
+              response: response,
+            });
+          }
         }
       }
     );
     mysqlConnection.end();
   } catch (error) {
     console.error("ERROR AT: /getAllUser", error);
-    res
-      .status(500)
-      .send({ where: "ERROR AT: /getAllUser", error });
+    res.status(500).send({ where: "ERROR AT: /getAllUser", error });
   }
 });
 
@@ -49,20 +59,33 @@ router.get("/getAllUserType", (req, res) => {
       (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /getAllUserType", err);
-          res
-            .status(500)
-            .send({ where: "ERROR AT: /getAllUserType", err });
+          res.status(500).send({ where: "ERROR AT: /getAllUserType", err });
         } else {
-          res.json(rows);
+          const [RolState] = rows[0];
+          const { state, response } = RolState;
+          if (state === 1) {
+            // si es null no traemos data
+            const Data = rows[1];
+            res.json({
+              state: true,
+              content: Data,
+            });
+          } else {
+            res.json({
+              state: false,
+              response: response,
+            });
+          }
         }
       }
     );
     mysqlConnection.end();
   } catch (error) {
-    console.error("ERROR AT ROUTER: /getAllUserType (SEE LOG FOR DETAILS) => ", error);
-    res
-      .status(500)
-      .send({ error_causado: "ERROR AT: /getAllUserType", error });
+    console.error(
+      "ERROR AT ROUTER: /getAllUserType (SEE LOG FOR DETAILS) => ",
+      error
+    );
+    res.status(500).send({ error_causado: "ERROR AT: /getAllUserType", error });
   }
 });
 
@@ -71,7 +94,9 @@ router.post("/login", (req, res) => {
     const { user, contrasenia } = req.body;
 
     if (String(user).length == 0 || String(contrasenia).length == 0) {
-      res.status(500).send({ where: "el user y/o la contrasena estan vacias!" });
+      res
+        .status(500)
+        .send({ where: "el user y/o la contrasena estan vacias!" });
     } else if (String(user).length > 50) {
       res
         .status(500)
@@ -81,14 +106,16 @@ router.post("/login", (req, res) => {
         .status(500)
         .send({ where: "la contrasenia no puede ser mayor a 15 caracteres!" });
     } else {
-
       let mysqlConnection = connectMysql("/login");
 
       const query = "CALL login(?, ?);";
       mysqlConnection.query(query, [user, contrasenia], (err, rows, fields) => {
         if (err) {
           console.error("ERROR AT: /login", err);
-          res.status(500).send({ where: "ERROR AT ROUTER: /login (SEE LOG FOR DETAILS) ===> ", err });
+          res.status(500).send({
+            where: "ERROR AT ROUTER: /login (SEE LOG FOR DETAILS) ===> ",
+            err,
+          });
         } else {
           let RowDataPacket;
           [RowDataPacket] = rows[0];
@@ -105,7 +132,9 @@ router.post("/login", (req, res) => {
     }
   } catch (error) {
     console.error("ERROR AT ROUTER: /login (SEE LOG FOR DETAILS) => ", error);
-    res.status(500).send({ where: "ERROR AT ROUTER: /login (SEE LOG FOR DETAILS) ===> " });
+    res
+      .status(500)
+      .send({ where: "ERROR AT ROUTER: /login (SEE LOG FOR DETAILS) ===> " });
   }
 });
 
@@ -123,7 +152,7 @@ router.post("/AddUserOrEdit", (req, res) => {
       email,
       fechaNacimiento,
       contrasenia,
-      id_responsable
+      id_responsable,
     } = req.body;
 
     if (
@@ -189,12 +218,16 @@ router.post("/AddUserOrEdit", (req, res) => {
           estado,
           idUserType,
           contrasenia,
-          id_responsable
+          id_responsable,
         ],
         (err, rows, fields) => {
           if (err) {
             console.error("ERROR AT: /AddUserOrEdit", err);
-            res.status(500).send({ where: "ERROR AT ROUTER: /AddUserOrEdit (SEE LOG FOR DETAILS) ===> ", err });
+            res.status(500).send({
+              where:
+                "ERROR AT ROUTER: /AddUserOrEdit (SEE LOG FOR DETAILS) ===> ",
+              err,
+            });
           } else {
             let RowDataPacket;
             [RowDataPacket] = rows[0];
@@ -217,7 +250,10 @@ router.post("/AddUserOrEdit", (req, res) => {
     }
   } catch (error) {
     console.error("ERROR AT: /AddUserOrEdit", error);
-    res.status(500).send({ where: "ERROR AT ROUTER: /AddUserOrEdit (SEE LOG FOR DETAILS) ===> ", error });
+    res.status(500).send({
+      where: "ERROR AT ROUTER: /AddUserOrEdit (SEE LOG FOR DETAILS) ===> ",
+      error,
+    });
   }
 });
 
