@@ -6,21 +6,21 @@ router.get("/products", (_req, res) => {
   res.json("HOLA, ACA GESTIONAREMOS TODOS LOS PRODUCTOS!!!");
 });
 
-router.get("/getAllCategory", (req, res) => {
+router.post("/getAllCategories", (req, res) => {
   try {
     let { id_user_responsable } = req.body;
 
-    let mysqlConnection = connectMysql("/getAllCategoria");
+    let mysqlConnection = connectMysql("/getAllCategories");
 
     mysqlConnection.query(
       "CALL getAllCategory(?);",
       [id_user_responsable],
       (err, rows, _fields) => {
         if (err) {
-          console.error("ERROR AT: /getAllCategoria", err);
+          console.error("ERROR AT: /getAllCategories", err);
           res
             .status(500)
-            .send({ where: "ERROR AT SQL: /getAllCategoria", err });
+            .send({ where: "ERROR AT SQL: /getAllCategories", err });
         } else {
           const [RolState] = rows[0];
           const { state, response } = RolState;
@@ -43,11 +43,11 @@ router.get("/getAllCategory", (req, res) => {
     mysqlConnection.end();
   } catch (err) {
     console.error(
-      "ERROR AT ROUTER: /getAllCategoria (SEE LOG FOR DETAILS) => ",
+      "ERROR AT ROUTER: /getAllCategories (SEE LOG FOR DETAILS) => ",
       err
     );
     res.status(500).send({
-      where: "ERROR AT ROUTER: /getAllCategoria (SEE LOG FOR DETAILS) ===> ",
+      where: "ERROR AT ROUTER: /getAllCategories (SEE LOG FOR DETAILS) ===> ",
     });
   }
 });

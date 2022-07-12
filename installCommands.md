@@ -187,3 +187,7 @@ items.push(i);
 console.log(items);
 
 <!-- TRY -->
+
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+npm install --global --production npm-windows-upgrade
+npm-windows-upgrade --npm-version latest
