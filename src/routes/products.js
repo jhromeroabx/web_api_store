@@ -86,7 +86,7 @@ router.post("/getAllProducts", (req, res) => {
 
 router.post("/findProductBy", (req, res) => {
   try {
-    let { id, barcode, _id_user } = req.body;
+    let { id, barcode, id_user } = req.body;
     let error_message = "";
     if (String(id).length == 0) {
       id = 0;
@@ -94,27 +94,17 @@ router.post("/findProductBy", (req, res) => {
         "El producto con barCode: " +
         [barcode] +
         " no existe o no esta habilitado!";
-
-      res.json({
-        state: false,
-        response: error_message,
-      });
     } else {
       barcode = 0;
       error_message =
         "El producto con id: " + [id] + " no existe o no esta habilitado!";
-
-      res.json({
-        state: false,
-        response: error_message,
-      });
     }
 
     let mysqlConnection = connectMysql("/findProductBy");
 
     mysqlConnection.query(
       "CALL findProductBy(?, ?, ?);",
-      [id, barcode, _id_user],
+      [id, barcode, id_user],
       (err, rows, _fields) => {
         if (err) {
           console.error("ERROR AT: /findProductBy", err);
