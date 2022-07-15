@@ -1,6 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `db_company` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db_company`;
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
 --
 -- Host: 192.168.18.6    Database: db_company
 -- ------------------------------------------------------
@@ -175,7 +175,7 @@ CREATE TABLE `tb_ingreso_producto` (
 
 LOCK TABLES `tb_ingreso_producto` WRITE;
 /*!40000 ALTER TABLE `tb_ingreso_producto` DISABLE KEYS */;
-INSERT INTO `tb_ingreso_producto` VALUES (1,1,3,40,0,1,1,0),(2,1,4,40,0,1,1,0),(3,2,3,40,0,1,1,0),(4,2,4,40,0,1,1,0),(5,3,3,40,0,1,1,0),(6,3,4,40,0,1,1,0),(7,4,3,40,0,1,1,0),(8,4,4,40,0,1,1,0),(10,6,3,100,0,1,1,0),(11,6,4,400,274,1,1,1),(12,7,3,100,0,1,1,0),(13,7,4,400,400,1,1,1),(14,8,3,3,0,1,1,0),(15,8,4,3,3,1,1,1),(16,9,3,3,0,1,1,0),(17,9,4,3,3,1,1,1),(18,10,3,3,3,7,7,1),(19,10,4,3,3,7,7,1);
+INSERT INTO `tb_ingreso_producto` VALUES (1,1,3,40,0,1,1,0),(2,1,4,40,0,1,1,0),(3,2,3,40,0,1,1,0),(4,2,4,40,0,1,1,0),(5,3,3,40,0,1,1,0),(6,3,4,40,0,1,1,0),(7,4,3,40,0,1,1,0),(8,4,4,40,0,1,1,0),(10,6,3,100,0,1,1,0),(11,6,4,400,271,1,1,1),(12,7,3,100,0,1,1,0),(13,7,4,400,400,1,1,1),(14,8,3,3,0,1,1,0),(15,8,4,3,3,1,1,1),(16,9,3,3,0,1,1,0),(17,9,4,3,3,1,1,1),(18,10,3,3,0,7,7,0),(19,10,4,3,3,7,7,1);
 /*!40000 ALTER TABLE `tb_ingreso_producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +202,7 @@ CREATE TABLE `tb_orden_compra` (
 
 LOCK TABLES `tb_orden_compra` WRITE;
 /*!40000 ALTER TABLE `tb_orden_compra` DISABLE KEYS */;
-INSERT INTO `tb_orden_compra` VALUES (1,3,'Agua Cielo',20,'2022-06-20 21:33:34'),(2,6,'Chistris',20,'2022-06-20 21:33:34'),(3,7,'Casino',20,'2022-06-20 21:33:34'),(4,9,'Picaras clasicas',20,'2022-06-20 21:33:34'),(5,10,'Ventilador portatil 123',20,'2022-06-20 21:33:34'),(6,11,'NFT',20,'2022-06-20 21:33:34'),(7,12,'Big Cola',20,'2022-06-20 21:33:34'),(8,13,'test13',50,'2022-06-20 21:33:34'),(9,14,'test',20,'2022-06-20 21:33:34'),(10,15,'test',20,'2022-06-20 21:33:34'),(11,16,'test',20,'2022-06-20 21:33:34'),(12,17,'Manzanas roja',20,'2022-06-20 21:33:34'),(13,18,'frac',20,'2022-06-20 21:33:34'),(14,19,'gretel',20,'2022-06-20 21:33:34'),(15,20,'foquito',20,'2022-06-20 21:33:34'),(16,21,'cifrut granadilla personal',20,'2022-06-20 21:33:34'),(17,22,'alcohol',20,'2022-06-20 21:33:34'),(18,23,'líquido paper standford',20,'2022-06-20 21:33:34'),(19,24,'sporade',20,'2022-06-20 21:33:34'),(20,25,'johan',20,'2022-06-20 21:33:34'),(21,26,'DNI',20,'2022-06-20 21:33:34'),(22,27,'desodorante Rexona men sport',20,'2022-06-20 21:33:34'),(23,28,'banco de energía zmi aura',20,'2022-06-20 21:33:34'),(24,29,'palillos chinos para restaurante',20,'2022-06-20 21:33:34');
+INSERT INTO `tb_orden_compra` VALUES (1,3,'Agua Cielo',20,'2022-07-05 17:14:55'),(2,6,'Chistris',20,'2022-07-05 17:14:55'),(3,7,'Casino',20,'2022-07-05 17:14:55'),(4,9,'Picaras clasicas',20,'2022-07-05 17:14:55'),(5,10,'Ventilador portatil 123',20,'2022-07-05 17:14:55'),(6,11,'NFT',20,'2022-07-05 17:14:55'),(7,12,'Big Cola',20,'2022-07-05 17:14:55'),(8,13,'test13',50,'2022-07-05 17:14:55'),(9,14,'test',20,'2022-07-05 17:14:55'),(10,15,'test',20,'2022-07-05 17:14:55'),(11,16,'test',20,'2022-07-05 17:14:55'),(12,17,'Manzanas roja',20,'2022-07-05 17:14:55'),(13,18,'frac',20,'2022-07-05 17:14:55'),(14,19,'gretel',20,'2022-07-05 17:14:55'),(15,20,'foquito',20,'2022-07-05 17:14:55'),(16,21,'cifrut granadilla personal',20,'2022-07-05 17:14:55'),(17,22,'alcohol',20,'2022-07-05 17:14:55'),(18,23,'líquido paper standford',20,'2022-07-05 17:14:55'),(19,24,'sporade',20,'2022-07-05 17:14:55'),(20,25,'johan',20,'2022-07-05 17:14:55'),(21,26,'DNI',20,'2022-07-05 17:14:55'),(22,27,'desodorante Rexona men sport',20,'2022-07-05 17:14:55'),(23,28,'banco de energía zmi aura',20,'2022-07-05 17:14:55'),(24,29,'palillos chinos para restaurante',20,'2022-07-05 17:14:55');
 /*!40000 ALTER TABLE `tb_orden_compra` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +227,7 @@ CREATE TABLE `tb_producto` (
   PRIMARY KEY (`id`),
   KEY `tb_producto_ibfk_1` (`id_categoria`),
   CONSTRAINT `tb_producto_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `tb_categoria` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,7 +236,7 @@ CREATE TABLE `tb_producto` (
 
 LOCK TABLES `tb_producto` WRITE;
 /*!40000 ALTER TABLE `tb_producto` DISABLE KEYS */;
-INSERT INTO `tb_producto` VALUES (3,'Agua Cielo','Agua Cielo de 500 ml',3,7,'7750670244954',20,'https://www.ajegroup.com/en/wp-content/uploads/sites/3/2020/05/colombia-cielo.jpg',2,1),(4,'Rellenitas','Rellenitas de 6 galletas',683,7,'234',20,'https://pbs.twimg.com/media/FFuZ7zpXMAkAf0Y.jpg',7,1),(6,'Chistris','Snack de queso Chistris',0,0,'7758574003219',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMW_jP4ozCdC1c9BiiDBj--fdPaA8JR3zBFQ&usqp=CAU',7,0),(7,'Casino','Galleta con relleno de menta',0,0,'789',20,'https://scontent.flim33-1.fna.fbcdn.net/v/t1.6435-9/71323181_530995607711671_7328968735476154368_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=9267fe&_nc_ohc=qQn6_MJCcKEAX8c-ct7&_nc_ht=scontent.flim33-1.fna&oh=00_AT8JpFExVmXEMIrZhamoPuNf1204ztcpX4WVscAsz-Vyvw&oe=628D6ECD',7,0),(9,'Picaras clasicas','Galleta picaras sabor clasica',0,0,'111',20,'https://marketpedidoslima.pe/images/slideshow/picaras-xl.png',7,0),(10,'Ventilador portatil 123','Ventiladores pequeños portatil conbateria de litio incluida',0,0,'123456',20,'https://falabella.scene7.com/is/image/FalabellaPE/17703192_1?wid=800&hei=800&qlt=70',10,0),(11,'NFT','gaaaa',0,0,'',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcWpwqTsUeIYI4HqWmoWP2tn0o5x7eHkkU9w&usqp=CAU',1,0),(12,'Big Cola','Gaseosa BigCola',0,0,'7751731004722',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGIZG49jAb8ACamLz6DG-slyH770VskE2sqg&usqp=CAU',2,0),(13,'test13','test 11113',0,0,'',50,'',2,1),(14,'test','test 111',0,0,'',20,'',1,0),(15,'test','test 111',0,0,'',20,'',10,0),(16,'test','test 111',0,0,'',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxTQ_y_tbsdmqUMmZK2zyqPzvvd2LRV0HfVw&usqp=CAU',10,0),(17,'Manzanas roja','manzanas orgánicas jugosas',0,0,'',20,'http://pngimg.com/uploads/apple/apple_PNG12405.png',7,0),(18,'frac','galleta de chocolate',0,0,'7750885012881',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5ARMRFuIStzBcFLWVee36ABt33WPx6mxYRA&usqp=CAU',7,0),(19,'gretel','galleta gretel de chocolate',0,0,'7750885011907',20,'https://www.pidemeperu.com/files/productos/galleta-gretel-chocolate.jpg',7,0),(20,'foquito','foco de carrito o refrigerador',0,0,'7751279245021',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqdtTIesLRkJUfYJgjB-ISL6JdNJhaK8oCKQ&usqp=CAU',10,0),(21,'cifrut granadilla personal','bebida de granadilla',0,0,'7750670014632',20,'https://dojiw2m9tvv09.cloudfront.net/53648/product/sintitulo0357.jpg',2,0),(22,'alcohol','alcohol de 1 litro',0,0,'7750075055810',20,'https://vivanda.vtexassets.com/arquivos/ids/230956/20198336.jpg?v=637422289081000000',5,0),(23,'líquido paper standford','lápiz corrector stanford',0,0,'7750822007697',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCVofq04NSVvB6Rg83Nd_Cl9Wuwmc8pgossQ&usqp=CAU',9,0),(24,'sporade','botella personal de sporade',0,0,'7750670010238',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrfk7fWLD_bzrcOJgxS3UNYHhR1LoPhTrMrw&usqp=CAU',2,0),(25,'johan','johan',0,0,'74906411',20,'',4,0),(26,'DNI','DNI de papa',0,0,'10532635',20,'',10,0),(27,'desodorante Rexona men sport','desodorante aerosol',0,0,'7791293041629',20,'https://www.urumercado.com/wp-content/uploads/2021/08/7791293041629.png',5,0),(28,'banco de energía zmi aura','banco de energía de 20mAh',0,0,'6934263401073',20,'https://m.media-amazon.com/images/I/61omytS3m8L._AC_SL1500_.jpg',10,0),(29,'palillos chinos para restaurante','caja de 100 palillos chinos',0,0,'6936805409066',20,'https://mh-1-banco-de-imagen.panthermedia.net/media/media_detail/0001000000/01636000/~mondadientes_01636319_detail.jpg',9,0);
+INSERT INTO `tb_producto` VALUES (3,'Agua Cielo','Agua Cielo de 500 ml',0,7,'7750670244954',20,'https://www.ajegroup.com/en/wp-content/uploads/sites/3/2020/05/colombia-cielo.jpg',2,1),(4,'Rellenitas','Rellenitas de 6 galletas',680,7,'234',20,'https://pbs.twimg.com/media/FFuZ7zpXMAkAf0Y.jpg',7,1),(6,'Chistris','Snack de queso Chistris',0,0,'7758574003219',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMW_jP4ozCdC1c9BiiDBj--fdPaA8JR3zBFQ&usqp=CAU',7,0),(7,'Casino','Galleta con relleno de menta',0,0,'789',20,'https://scontent.flim33-1.fna.fbcdn.net/v/t1.6435-9/71323181_530995607711671_7328968735476154368_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=9267fe&_nc_ohc=qQn6_MJCcKEAX8c-ct7&_nc_ht=scontent.flim33-1.fna&oh=00_AT8JpFExVmXEMIrZhamoPuNf1204ztcpX4WVscAsz-Vyvw&oe=628D6ECD',7,0),(9,'Picaras clasicas','Galleta picaras sabor clasica',0,0,'111',20,'https://marketpedidoslima.pe/images/slideshow/picaras-xl.png',7,0),(10,'Ventilador portatil 123','Ventiladores pequeños portatil conbateria de litio incluida',0,0,'123456',20,'https://falabella.scene7.com/is/image/FalabellaPE/17703192_1?wid=800&hei=800&qlt=70',10,0),(11,'NFT','gaaaa',0,0,'',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcWpwqTsUeIYI4HqWmoWP2tn0o5x7eHkkU9w&usqp=CAU',1,0),(12,'Big Cola','Gaseosa BigCola',0,0,'7751731004722',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGIZG49jAb8ACamLz6DG-slyH770VskE2sqg&usqp=CAU',2,0),(13,'test13','test 11113',0,0,'',50,'',2,1),(14,'test','test 111',0,0,'',20,'',1,0),(15,'test','test 111',0,0,'',20,'',10,0),(16,'test','test 111',0,0,'',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxTQ_y_tbsdmqUMmZK2zyqPzvvd2LRV0HfVw&usqp=CAU',10,0),(17,'Manzanas roja','manzanas orgánicas jugosas',0,0,'',20,'http://pngimg.com/uploads/apple/apple_PNG12405.png',7,0),(18,'frac','galleta de chocolate',0,0,'7750885012881',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5ARMRFuIStzBcFLWVee36ABt33WPx6mxYRA&usqp=CAU',7,0),(19,'gretel','galleta gretel de chocolate',0,0,'7750885011907',20,'https://www.pidemeperu.com/files/productos/galleta-gretel-chocolate.jpg',7,0),(20,'foquito','foco de carrito o refrigerador',0,0,'7751279245021',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqdtTIesLRkJUfYJgjB-ISL6JdNJhaK8oCKQ&usqp=CAU',10,0),(21,'cifrut granadilla personal','bebida de granadilla',0,0,'7750670014632',20,'https://dojiw2m9tvv09.cloudfront.net/53648/product/sintitulo0357.jpg',2,0),(22,'alcohol','alcohol de 1 litro',0,0,'7750075055810',20,'https://vivanda.vtexassets.com/arquivos/ids/230956/20198336.jpg?v=637422289081000000',5,0),(23,'líquido paper standford','lápiz corrector stanford',0,0,'7750822007697',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCVofq04NSVvB6Rg83Nd_Cl9Wuwmc8pgossQ&usqp=CAU',9,0),(24,'sporade','botella personal de sporade',0,0,'7750670010238',20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrfk7fWLD_bzrcOJgxS3UNYHhR1LoPhTrMrw&usqp=CAU',2,0),(25,'johan','johan',0,0,'74906411',20,'',4,0),(26,'DNI','DNI de papa',0,0,'10532635',20,'',10,0),(27,'desodorante Rexona men sport','desodorante aerosol',0,0,'7791293041629',20,'https://www.urumercado.com/wp-content/uploads/2021/08/7791293041629.png',5,0),(28,'banco de energía zmi aura','banco de energía de 20mAh',0,0,'6934263401073',20,'https://m.media-amazon.com/images/I/61omytS3m8L._AC_SL1500_.jpg',10,0),(29,'palillos chinos para restaurante','caja de 100 palillos chinos',0,0,'6936805409066',20,'https://mh-1-banco-de-imagen.panthermedia.net/media/media_detail/0001000000/01636000/~mondadientes_01636319_detail.jpg',9,0),(30,'Beex2','Beex2',0,0,'',50,'',1,0),(31,'Beex3','Beex3',0,0,'',50,'',1,0),(32,'mi band 5','reloj Xiaomi',0,0,'6934177720192',25,'',10,0),(33,'mi band 5','reloj Xiaomi',0,0,'6934177720192',25,'',10,0);
 /*!40000 ALTER TABLE `tb_producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +265,7 @@ CREATE TABLE `tb_profile` (
 
 LOCK TABLES `tb_profile` WRITE;
 /*!40000 ALTER TABLE `tb_profile` DISABLE KEYS */;
-INSERT INTO `tb_profile` VALUES (1,1,'jhromero.abx@gmail.com','123','2022-06-05 17:08:23'),(2,2,'dromero.abx@gmail.com','123','2022-03-27 17:00:00'),(3,4,'wasd@gmail.com','123','2022-05-14 22:06:21'),(7,8,'pepit1.abx@gmail.com','12345','2022-04-12 22:18:55'),(8,9,'pepitooo.abx@gmail.com','12345','2022-04-12 22:19:24'),(9,10,'Flutter.abx@gmail.com','12345','2022-04-12 23:34:10'),(10,11,'vimaloa@gmail.com','123','2022-04-15 04:37:36'),(11,12,'celu.loasi@gmail.com','123','2022-04-13 00:15:20'),(12,13,'dloa@papu','1234','2022-04-13 00:35:24'),(13,14,'mouse.loasi@gmail.com','123','2022-04-14 22:32:28'),(14,16,'123','123','2022-06-19 00:15:50'),(15,17,'ffffff','123','2022-04-14 23:37:02'),(16,18,'jgarcia.abx@gmail.com','123','2022-05-13 19:14:40'),(17,19,'new123','new123','2022-06-19 00:22:56'),(18,2,'newemail.com','123','2022-06-19 00:51:20');
+INSERT INTO `tb_profile` VALUES (1,1,'jhosepromero14@gmail.com','123','2022-07-12 19:37:44'),(2,2,'dromero.abx@gmail.com','123','2022-03-27 17:00:00'),(3,4,'wasd@gmail.com','123','2022-05-14 22:06:21'),(7,8,'pepit1.abx@gmail.com','12345','2022-04-12 22:18:55'),(8,9,'pepitooo.abx@gmail.com','12345','2022-04-12 22:19:24'),(9,10,'Flutter.abx@gmail.com','12345','2022-04-12 23:34:10'),(10,11,'vimaloa@gmail.com','123','2022-04-15 04:37:36'),(11,12,'celu.loasi@gmail.com','123','2022-04-13 00:15:20'),(12,13,'dloa@papu','1234','2022-04-13 00:35:24'),(13,14,'mouse.loasi@gmail.com','123','2022-04-14 22:32:28'),(14,16,'123','123','2022-06-19 00:15:50'),(15,17,'ffffff','123','2022-04-14 23:37:02'),(16,18,'jgarcia.abx@gmail.com','123','2022-05-13 19:14:40'),(17,19,'new123','new123','2022-06-19 00:22:56'),(18,2,'newemail.com','123','2022-06-19 00:51:20');
 /*!40000 ALTER TABLE `tb_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -283,7 +283,7 @@ CREATE TABLE `tb_retiro` (
   `id_user_responsable` int NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -292,7 +292,7 @@ CREATE TABLE `tb_retiro` (
 
 LOCK TABLES `tb_retiro` WRITE;
 /*!40000 ALTER TABLE `tb_retiro` DISABLE KEYS */;
-INSERT INTO `tb_retiro` VALUES (1,'TEST RETIRO','2022-05-29 17:49:00',3,1),(2,'RETIRO GASEOSA','2022-05-29 18:26:24',3,1),(3,'RETIRO GASEOSA','2022-05-29 18:28:23',3,1),(4,'RETIRO GASEOSA','2022-05-29 18:33:52',3,1),(5,'RETIRO GASEOSA','2022-05-29 18:35:48',3,1),(6,'RETIRO GASEOSA','2022-05-29 18:36:20',3,1),(7,'RETIRO GASEOSA','2022-05-29 18:36:40',3,1),(8,'RETIRO GASEOSA','2022-05-29 18:36:43',3,1),(9,'RETIRO GASEOSA','2022-05-29 23:48:30',3,1),(10,'RETIRO GASEOSA','2022-05-30 23:59:42',3,1),(11,'RETIRO GASEOSA','2022-05-31 00:01:00',3,1),(12,'RETIRO GASEOSA','2022-05-31 00:08:46',3,1),(13,'RETIRO GASEOSA','2022-05-31 00:09:16',3,1),(14,'RETIRO GASEOSA','2022-05-31 00:19:05',3,1),(15,'RETIRO GASEOSA','2022-05-31 00:20:04',3,1),(16,'RETIRO GASEOSA','2022-05-31 00:20:34',3,1),(17,'RETIRO GASEOSA','2022-05-31 00:21:27',3,1),(18,'RETIRO GASEOSA','2022-06-04 22:57:18',3,1),(19,'RETIRO GASEOSA','2022-06-04 23:10:04',3,1),(20,'RETIRO GASEOSA','2022-06-04 23:11:29',3,1),(21,'RETIRO GASEOSA','2022-06-12 22:47:31',3,1),(22,'RETIRO GASEOSA','2022-06-12 22:48:19',3,1),(23,'RETIRO GASEOSA','2022-06-12 22:49:55',3,1),(24,'RETIRO GASEOSA','2022-06-12 22:51:06',3,1),(25,'RETIRO GASEOSA','2022-06-12 22:56:05',3,1),(26,'RETIRO GASEOSA','2022-06-12 22:58:23',3,1),(27,'RETIRO GASEOSA','2022-06-12 23:10:51',3,1),(28,'RETIRO GASEOSA','2022-06-12 23:22:41',3,1),(29,'RETIRO GASEOSA','2022-06-12 23:24:22',3,1),(30,'RETIRO GASEOSA','2022-06-12 23:25:12',3,1),(32,'RETIRO GASEOSA','2022-06-12 23:27:36',3,1),(33,'RETIRO GASEOSA','2022-06-12 23:28:50',3,1),(34,'RETIRO GASEOSA','2022-06-12 23:31:15',3,1),(35,'RETIRO GASEOSA','2022-06-12 23:31:42',3,1),(36,'RETIRO GASEOSA','2022-06-12 23:32:35',3,1),(37,'RETIRO GASEOSA','2022-06-12 23:33:31',3,1),(38,'RETIRO GASEOSA','2022-06-12 23:36:13',3,1),(39,'RETIRO GASEOSA','2022-06-12 23:36:32',3,1),(40,'RETIRO GASEOSA','2022-06-12 23:37:51',3,1),(41,'RETIRO GASEOSA','2022-06-19 22:48:12',1,1),(42,'RETIRO GASEOSA','2022-06-19 22:50:31',1,1),(43,'RETIRO GASEOSA','2022-06-19 22:54:05',1,1),(44,'RETIRO GASEOSA','2022-06-19 22:54:26',1,1),(45,'RETIRO GASEOSA','2022-06-19 22:56:48',1,1),(46,'RETIRO GASEOSA','2022-06-19 22:57:41',1,1);
+INSERT INTO `tb_retiro` VALUES (1,'TEST RETIRO','2022-05-29 17:49:00',3,1),(2,'RETIRO GASEOSA','2022-05-29 18:26:24',3,1),(3,'RETIRO GASEOSA','2022-05-29 18:28:23',3,1),(4,'RETIRO GASEOSA','2022-05-29 18:33:52',3,1),(5,'RETIRO GASEOSA','2022-05-29 18:35:48',3,1),(6,'RETIRO GASEOSA','2022-05-29 18:36:20',3,1),(7,'RETIRO GASEOSA','2022-05-29 18:36:40',3,1),(8,'RETIRO GASEOSA','2022-05-29 18:36:43',3,1),(9,'RETIRO GASEOSA','2022-05-29 23:48:30',3,1),(10,'RETIRO GASEOSA','2022-05-30 23:59:42',3,1),(11,'RETIRO GASEOSA','2022-05-31 00:01:00',3,1),(12,'RETIRO GASEOSA','2022-05-31 00:08:46',3,1),(13,'RETIRO GASEOSA','2022-05-31 00:09:16',3,1),(14,'RETIRO GASEOSA','2022-05-31 00:19:05',3,1),(15,'RETIRO GASEOSA','2022-05-31 00:20:04',3,1),(16,'RETIRO GASEOSA','2022-05-31 00:20:34',3,1),(17,'RETIRO GASEOSA','2022-05-31 00:21:27',3,1),(18,'RETIRO GASEOSA','2022-06-04 22:57:18',3,1),(19,'RETIRO GASEOSA','2022-06-04 23:10:04',3,1),(20,'RETIRO GASEOSA','2022-06-04 23:11:29',3,1),(21,'RETIRO GASEOSA','2022-06-12 22:47:31',3,1),(22,'RETIRO GASEOSA','2022-06-12 22:48:19',3,1),(23,'RETIRO GASEOSA','2022-06-12 22:49:55',3,1),(24,'RETIRO GASEOSA','2022-06-12 22:51:06',3,1),(25,'RETIRO GASEOSA','2022-06-12 22:56:05',3,1),(26,'RETIRO GASEOSA','2022-06-12 22:58:23',3,1),(27,'RETIRO GASEOSA','2022-06-12 23:10:51',3,1),(28,'RETIRO GASEOSA','2022-06-12 23:22:41',3,1),(29,'RETIRO GASEOSA','2022-06-12 23:24:22',3,1),(30,'RETIRO GASEOSA','2022-06-12 23:25:12',3,1),(32,'RETIRO GASEOSA','2022-06-12 23:27:36',3,1),(33,'RETIRO GASEOSA','2022-06-12 23:28:50',3,1),(34,'RETIRO GASEOSA','2022-06-12 23:31:15',3,1),(35,'RETIRO GASEOSA','2022-06-12 23:31:42',3,1),(36,'RETIRO GASEOSA','2022-06-12 23:32:35',3,1),(37,'RETIRO GASEOSA','2022-06-12 23:33:31',3,1),(38,'RETIRO GASEOSA','2022-06-12 23:36:13',3,1),(39,'RETIRO GASEOSA','2022-06-12 23:36:32',3,1),(40,'RETIRO GASEOSA','2022-06-12 23:37:51',3,1),(41,'RETIRO GASEOSA','2022-06-19 22:48:12',1,1),(42,'RETIRO GASEOSA','2022-06-19 22:50:31',1,1),(43,'RETIRO GASEOSA','2022-06-19 22:54:05',1,1),(44,'RETIRO GASEOSA','2022-06-19 22:54:26',1,1),(45,'RETIRO GASEOSA','2022-06-19 22:56:48',1,1),(46,'RETIRO GASEOSA','2022-06-19 22:57:41',1,1),(48,'RETIRO GASEOSA','2022-07-03 00:34:34',1,1),(49,'RETIRO GASEOSA','2022-07-03 00:37:26',1,1),(50,'RETIRO GASEOSA','2022-07-05 17:14:55',1,1);
 /*!40000 ALTER TABLE `tb_retiro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -315,7 +315,7 @@ CREATE TABLE `tb_retiro_producto` (
   KEY `fk_retiro` (`id_retiro`),
   CONSTRAINT `fk_retiro` FOREIGN KEY (`id_retiro`) REFERENCES `tb_retiro` (`id`),
   CONSTRAINT `fk_retiro_producto` FOREIGN KEY (`id_producto`) REFERENCES `tb_producto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -324,7 +324,7 @@ CREATE TABLE `tb_retiro_producto` (
 
 LOCK TABLES `tb_retiro_producto` WRITE;
 /*!40000 ALTER TABLE `tb_retiro_producto` DISABLE KEYS */;
-INSERT INTO `tb_retiro_producto` VALUES (1,1,3,10,1,1),(2,1,4,10,1,1),(3,2,4,10,1,1),(4,2,3,10,1,1),(5,3,4,10,1,1),(6,3,3,10,1,1),(7,4,4,10,1,1),(8,4,3,10,1,1),(9,5,4,10,1,1),(10,5,3,10,1,1),(11,6,4,10,1,1),(12,6,3,10,1,1),(13,7,4,10,1,1),(14,7,3,10,1,1),(15,8,4,10,1,1),(16,8,3,10,1,1),(17,9,4,10,1,1),(18,9,3,10,1,1),(19,10,4,10,1,1),(20,10,3,10,1,1),(21,11,4,15,1,1),(22,11,3,15,1,1),(23,12,4,15,1,1),(24,12,3,15,1,1),(25,13,4,5,1,1),(26,13,3,5,1,1),(27,14,4,5,1,1),(28,14,3,5,1,1),(29,15,4,5,1,1),(30,15,3,5,1,1),(31,16,4,1,1,1),(32,16,3,1,1,1),(33,17,4,1,1,1),(34,17,3,1,1,1),(35,18,4,1,1,1),(36,18,3,1,1,1),(37,19,4,1,1,1),(38,19,3,1,1,1),(39,20,4,1,1,1),(40,20,3,1,1,1),(41,21,4,1,1,1),(42,21,3,1,1,1),(43,22,4,1,1,1),(44,22,3,1,1,1),(45,23,4,1,1,1),(46,23,3,1,1,1),(47,24,4,1,1,1),(48,24,3,1,1,1),(49,25,4,1,1,1),(50,25,3,1,1,1),(51,26,4,1,1,1),(52,26,3,1,1,1),(53,27,4,1,1,1),(54,27,3,1,1,1),(55,28,4,1,1,1),(56,28,3,1,1,1),(57,29,4,1,1,1),(58,29,3,1,1,1),(59,30,4,1,1,1),(60,30,3,1,1,1),(61,32,4,1,1,1),(62,32,3,1,1,1),(63,33,4,1,1,1),(64,33,3,1,1,1),(65,34,4,1,1,1),(66,34,3,1,1,1),(67,35,4,1,1,1),(68,35,3,1,1,1),(69,36,4,1,1,1),(70,36,3,1,1,1),(71,37,4,1,1,1),(72,37,3,1,1,1),(73,38,4,1,1,1),(74,38,3,1,1,1),(75,39,4,1,1,1),(76,39,3,1,1,1),(77,40,4,1,1,1),(78,40,3,1,1,1),(79,41,4,7,1,1),(80,41,3,7,1,1),(81,42,4,10,1,1),(82,42,3,10,1,1),(83,43,4,80,1,1),(84,43,3,80,1,1),(85,44,4,-80,1,1),(86,44,3,80,1,1),(87,45,4,80,1,1),(88,46,4,20,1,1),(89,46,3,20,1,1);
+INSERT INTO `tb_retiro_producto` VALUES (1,1,3,10,1,1),(2,1,4,10,1,1),(3,2,4,10,1,1),(4,2,3,10,1,1),(5,3,4,10,1,1),(6,3,3,10,1,1),(7,4,4,10,1,1),(8,4,3,10,1,1),(9,5,4,10,1,1),(10,5,3,10,1,1),(11,6,4,10,1,1),(12,6,3,10,1,1),(13,7,4,10,1,1),(14,7,3,10,1,1),(15,8,4,10,1,1),(16,8,3,10,1,1),(17,9,4,10,1,1),(18,9,3,10,1,1),(19,10,4,10,1,1),(20,10,3,10,1,1),(21,11,4,15,1,1),(22,11,3,15,1,1),(23,12,4,15,1,1),(24,12,3,15,1,1),(25,13,4,5,1,1),(26,13,3,5,1,1),(27,14,4,5,1,1),(28,14,3,5,1,1),(29,15,4,5,1,1),(30,15,3,5,1,1),(31,16,4,1,1,1),(32,16,3,1,1,1),(33,17,4,1,1,1),(34,17,3,1,1,1),(35,18,4,1,1,1),(36,18,3,1,1,1),(37,19,4,1,1,1),(38,19,3,1,1,1),(39,20,4,1,1,1),(40,20,3,1,1,1),(41,21,4,1,1,1),(42,21,3,1,1,1),(43,22,4,1,1,1),(44,22,3,1,1,1),(45,23,4,1,1,1),(46,23,3,1,1,1),(47,24,4,1,1,1),(48,24,3,1,1,1),(49,25,4,1,1,1),(50,25,3,1,1,1),(51,26,4,1,1,1),(52,26,3,1,1,1),(53,27,4,1,1,1),(54,27,3,1,1,1),(55,28,4,1,1,1),(56,28,3,1,1,1),(57,29,4,1,1,1),(58,29,3,1,1,1),(59,30,4,1,1,1),(60,30,3,1,1,1),(61,32,4,1,1,1),(62,32,3,1,1,1),(63,33,4,1,1,1),(64,33,3,1,1,1),(65,34,4,1,1,1),(66,34,3,1,1,1),(67,35,4,1,1,1),(68,35,3,1,1,1),(69,36,4,1,1,1),(70,36,3,1,1,1),(71,37,4,1,1,1),(72,37,3,1,1,1),(73,38,4,1,1,1),(74,38,3,1,1,1),(75,39,4,1,1,1),(76,39,3,1,1,1),(77,40,4,1,1,1),(78,40,3,1,1,1),(79,41,4,7,1,1),(80,41,3,7,1,1),(81,42,4,10,1,1),(82,42,3,10,1,1),(83,43,4,80,1,1),(84,43,3,80,1,1),(85,44,4,-80,1,1),(86,44,3,80,1,1),(87,45,4,80,1,1),(88,46,4,20,1,1),(89,46,3,20,1,1),(90,48,4,1,7,1),(91,48,3,1,7,1),(92,49,4,1,7,1),(93,49,3,1,7,1),(94,50,4,1,7,1),(95,50,3,1,7,1);
 /*!40000 ALTER TABLE `tb_retiro_producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1038,7 +1038,7 @@ BEGIN
 
 		SELECT @state state, @response response;
 
-    	SELECT * FROM tb_ingreso;
+    	SELECT * FROM tb_categoria;
 
     ELSE
 
@@ -1048,7 +1048,7 @@ BEGIN
 
         	SELECT @state state, @response response;
 
-    		SELECT * FROM tb_ingreso tc WHERE tc.active = 1; -- solo los activos
+    		SELECT * FROM tb_categoria tcat WHERE tcat.active = 1; -- solo los activos
 
         END IF;
 
@@ -1105,6 +1105,10 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`%` PROCEDURE `getAllIngresosDetailById`(IN `_id_ingreso` INT, IN `_id_user` INT)
 BEGIN
+
+	-- AGREGAR POR PRODUCTO Y RANGO DE FECHAS
+
+    -- 
 
 	-- CALL getAllIngresosDetailById(10, 1);
 
@@ -1179,6 +1183,10 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`%` PROCEDURE `getAllRetirosDetailById`(IN `_id_retiro` INT, IN `_id_user` INT)
 BEGIN
+
+	-- AGREGAR POR PRODUCTO Y RANGO DE FECHAS
+
+    -- 
 
 	-- CALL getAllRetirosDetailById(10, 1);
 
@@ -2302,4 +2310,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-26  0:45:41
+-- Dump completed on 2022-07-14 21:38:42
