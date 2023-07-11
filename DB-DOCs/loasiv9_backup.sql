@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `db_erp_osmosys1` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `db_erp_osmosys1`;
+CREATE DATABASE  IF NOT EXISTS `db_almacen1` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `db_almacen1`;
 -- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
--- Host: 25.38.59.175    Database: db_erp_osmosys1
+-- Host: 25.38.59.175    Database: db_almacen1
 -- ------------------------------------------------------
 -- Server version	8.0.28
 
@@ -414,7 +414,7 @@ INSERT INTO `tb_user_type` VALUES (1,'Administrador del Sistema','administrador 
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'db_erp_osmosys1'
+-- Dumping routines for database 'db_almacen1'
 --
 /*!50003 DROP FUNCTION IF EXISTS `contadorTrama` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -427,6 +427,10 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`%` FUNCTION `contadorTrama`(`_concat` VARCHAR(5000), `_delim` CHAR) RETURNS int
+DETERMINISTIC
+--NOT DETERMINISTIC
+READS SQL DATA
+--NO SQL
 BEGIN
 
 
@@ -452,6 +456,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`qwert`@`%` FUNCTION `SPLIT_STR`(`x` VARCHAR(500), `delim` VARCHAR(2), `pos` INT) RETURNS varchar(500) CHARSET utf8
+DETERMINISTIC
+--NOT DETERMINISTIC
+READS SQL DATA
+--NO SQL
 BEGIN
 
 
@@ -1939,7 +1947,7 @@ BEGIN
 
 
 
--- call db_erp_osmosys1.ingresoAdd('Comida para todo tipo de mascotas en distintas presentaciones', 3, '6|10|1.2@7|10|1', 2);
+-- call db_almacen1.ingresoAdd('Comida para todo tipo de mascotas en distintas presentaciones', 3, '6|10|1.2@7|10|1', 2);
 
 
 
@@ -3081,7 +3089,7 @@ BEGIN
 
 
 
--- call db_erp_osmosys1.validarRetiros('11|10@10|0', 2, @result);
+-- call db_almacen1.validarRetiros('11|10@10|0', 2, @result);
 
 
 
