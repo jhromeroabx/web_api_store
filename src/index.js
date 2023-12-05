@@ -1,16 +1,16 @@
 const express = require("express");
 const app = express();
-var fs = require("file-system");
-const https = require("https");
-var path = require("path");
-const swaggerUI = require("swagger-ui-express");
-const docs = require("./docs");
+// var fs = require("file-system");
+// const https = require("https");
+// var path = require("path");
+// const swaggerUI = require("swagger-ui-express");
+// const docs = require("./docs");
 
 const PORT_HTTP = 5000;
-const PORT_HTTPS = 5001;
+// const PORT_HTTPS = 5001;
 
-const Sentry = require("@sentry/node");
-const Tracing = require("@sentry/tracing");
+// const Sentry = require("@sentry/node");
+// const Tracing = require("@sentry/tracing");
 
 var morgan = require("morgan");
 
@@ -18,47 +18,47 @@ var morgan = require("morgan");
 app.use(morgan("tiny"));
 
 //token 7bc3856ec9b511ecb7fa3a3a141bbc4f
-Sentry.init({
-  dsn: "https://a10c2360b46b4f6cb8499e2f09ee69e2@o1228261.ingest.sentry.io/6373959",
-  integrations: [
-    new Sentry.Integrations.Http({ tracing: true }),
-    new Tracing.Integrations.Express({
-      app,
-    }),
-  ],
-  tracesSampleRate: 1.0,
-});
+// Sentry.init({
+//   dsn: "https://a10c2360b46b4f6cb8499e2f09ee69e2@o1228261.ingest.sentry.io/6373959",
+//   integrations: [
+//     new Sentry.Integrations.Http({ tracing: true }),
+//     new Tracing.Integrations.Express({
+//       app,
+//     }),
+//   ],
+//   tracesSampleRate: 1.0,
+// });
 
-app.use(
-  Sentry.Handlers.requestHandler({
-    shouldHandleError(error) {
-      if (error.status === 404 || error.status === 500) {
-        return true;
-      }
-      return false;
-    },
-  })
-);
-app.use(
-  Sentry.Handlers.tracingHandler({
-    shouldHandleError(error) {
-      if (error.status === 404 || error.status === 500) {
-        return true;
-      }
-      return false;
-    },
-  })
-);
-app.use(
-  Sentry.Handlers.errorHandler({
-    shouldHandleError(error) {
-      if (error.status === 404 || error.status === 500) {
-        return true;
-      }
-      return false;
-    },
-  })
-);
+// app.use(
+//   Sentry.Handlers.requestHandler({
+//     shouldHandleError(error) {
+//       if (error.status === 404 || error.status === 500) {
+//         return true;
+//       }
+//       return false;
+//     },
+//   })
+// );
+// app.use(
+//   Sentry.Handlers.tracingHandler({
+//     shouldHandleError(error) {
+//       if (error.status === 404 || error.status === 500) {
+//         return true;
+//       }
+//       return false;
+//     },
+//   })
+// );
+// app.use(
+//   Sentry.Handlers.errorHandler({
+//     shouldHandleError(error) {
+//       if (error.status === 404 || error.status === 500) {
+//         return true;
+//       }
+//       return false;
+//     },
+//   })
+// );
 
 // Settings
 // app.set("port", process.env.PORT || PORT_HTTP); //si el sistema tiene un puerto que nos lo de o sino 5000 por defecto
@@ -67,18 +67,19 @@ app.use(
 app.use(express.json()); //convertira en JSON nuestra info
 
 // routes
-app.use(require("./routes/employees"));
+// app.use(require("./routes/employees"));
 app.use(require("./routes/users"));
 app.use(require("./routes/products"));
 app.use(require("./routes/ingreso_salida"));
-app.use(require("./routes/minio"));
+// app.use(require("./routes/minio"));
 app.use(require("./routes/mercadopago"));
 
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(docs));
+// app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(docs));
 
 app.use(function onError(err, req, res, next) {
   res.statusCode = 500;
-  res.end(res.sentry + "\n");
+  // res.end(res.sentry + "\n");
+  res.end(err);
 });
 
 const https_state = false;
