@@ -17,6 +17,10 @@ var morgan = require("morgan");
 // app.use(morgan('combined'))
 app.use(morgan("tiny"));
 
+app.set('view engine', 'ejs');
+
+app.use('/css', express.static(path.join(__dirname, 'routes/perfection-found/css')));
+
 //token 7bc3856ec9b511ecb7fa3a3a141bbc4f
 Sentry.init({
   dsn: "https://a10c2360b46b4f6cb8499e2f09ee69e2@o1228261.ingest.sentry.io/6373959",
@@ -71,8 +75,9 @@ app.use(require("./routes/employees"));
 app.use(require("./routes/users"));
 app.use(require("./routes/products"));
 app.use(require("./routes/ingreso_salida"));
-app.use(require("./routes/minio"));
+// app.use(require("./routes/minio"));
 app.use(require("./routes/mercadopago"));
+app.use(require("./routes/personal"));
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(docs));
 
@@ -127,4 +132,14 @@ if (https_state) {
 //ruta incial de la appcon
 app.get("/", (req, res) => {
   res.json("SERVICIO WEB DE ALMACENES, PROP: JHOSEP ADBEL ROMERO LOA");
+// // res.json({
+// //   primero: "perdon por lo que dije, si fue fuerte creo, :,c",
+// //   segundo: "gracias karen por conocerte, la verdad el Practigest me hizo valorarme como persona y profesional, eso es algo que nunca podre pagartelo, no sabes todo el dolor que sentia pero bueno ... eso es otra historia",
+// //   tercero: "te puedo devolver el favor aunque sea pagandote el 0.5% ayudante con tu tesis que estoy seguro que no has avanzado mucho, totalmente gratis :)",
+// //   cuarto: "¿te gustaria ser mi amiga especial Karen Andrea Torres Colan?",
+// //   cuarto_5: "TRUE = Si || FALSE = No"
+// // });
+//   // res.json({
+//   //   Jhosep_Adbel_Romero_Loa: "¿Karen Andrea Torres Colan, Te gustaria ser mi mejor amiga para toda la vida?",
+//   // });
 });

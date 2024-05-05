@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poema de JARL #3</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(0deg, #ffffff 25%, #f88080 75%);
+        overflow: hidden;
+        position: relative;
+    }
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(0deg, #f88080 25%, #ffffff 75%);
+        opacity: 1;
+        animation: anim 3s linear infinite;
+    }
+
+    @keyframes anim {
+        0%   { opacity: 1; }
+        50%  { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    .cube {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        transform-style: preserve-3d;
+        transform: rotateX(-15deg);
+        animation: animatess 4s linear infinite;
+    }
+    @keyframes animatess {
+        0%   { transform: rotateX(-15deg) rotateY(0deg); }
+        /* 50% { transform: rotateX(-10deg) rotateY(180deg); } */
+        100% { transform: rotateX(-15deg) rotateY(360deg); }
+    }
+
+    .cube div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+    }
+
+    .cube div span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(#00000046, #ff00005e);
+        transform: rotateY(calc(90deg * var(--i))) translateZ(100px);
+    }
+
+    .image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 300px;
+        height: 300px;
+        /* transform: rotateX(-15deg); */
+        animation: notanimate 4s linear infinite;
+    }
+    
+    @keyframes notanimate {
+        0%   { transform: rotateX(-15deg) rotateY(360deg); }
+        /* 50% { transform: rotateX(-10deg) rotateY(180deg); } */
+        100% { transform: rotateX(-15deg) rotateY(0deg); }
+    }
+    
+
+    .poema-container {
+        max-width: 1000px;
+        max-height: 800px;
+        overflow-y: auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    h1 {
+        color: #f44242;
+    }
+
+    p {
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    .autor {
+        font-style: italic;
+        color: #666;
+    }
+</style>
+<body>
+
+    <div class="poema-container">
+        <h1>${poemaData.Jhosep_Adbel_Romero_Loa}</h1>
+        <p>${poemaData.body.replace(/\n/g, '<br>')}</p>
+        <p class="autor">— by JARL with ❤️😘😍💕 —</p>
+    </div>
+    <main style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;">
+        <div class="cube" style="position: absolute;top: 7%;left: 5%;">
+            <div class="image" style="background: url('https://i2.wp.com/static.wikia.nocookie.net/minecraft_gamepedia/images/a/a7/Heart.svg/revision/latest/scale-to-width-down/630?cb=20200522040142');background-size: cover;"></div>
+            <div>
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+        </div>
+        <div class="cube" style="position: absolute;top: 7%;left: 78%;
+        background: url('https://www.pikpng.com/pngl/b/234-2343575_super-mario-fire-flower-fire-flower-mario-pixel.png');
+        background-size: cover;">
+            <div class="image"></div>
+            <div>
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+        </div>
+        <div class="cube" style="position: absolute;bottom: 7%;left: 5%;
+        background: url('https://art.pixilart.com/420a3f841c6c2cd.png');
+        background-size: cover;">
+            <div class="image"></div>
+            <div>
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+        </div>
+        <div class="cube" style="position: absolute;bottom: 7%;left: 78%;
+        background: url('https://static.vecteezy.com/system/resources/previews/027/191/064/original/pixel-art-red-rose-icon-png.png');
+        background-size: cover;">
+            <div class="image"></div>
+            <div>
+                <span style="--i:0;"></span>
+                <span style="--i:1;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:3;"></span>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

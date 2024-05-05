@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(0deg, #ffffff 25%, #f88080 75%);
+    overflow: hidden;
+    position: relative;
+}
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, #f88080 25%, #ffffff 75%);
+    opacity: 1;
+    animation: anim 3s linear infinite;
+}
+
+@keyframes anim {
+    0%   { opacity: 1; }
+    50%  { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.cube {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    transform-style: preserve-3d;
+    transform: rotateX(-15deg);
+    animation: animatess 4s linear infinite;
+}
+@keyframes animatess {
+    0%   { transform: rotateX(-15deg) rotateY(0deg); }
+    /* 50% { transform: rotateX(-10deg) rotateY(180deg); } */
+    100% { transform: rotateX(-15deg) rotateY(360deg); }
+}
+
+.cube div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.cube div span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#00000046, #ff00005e);
+    transform: rotateY(calc(90deg * var(--i))) translateZ(90px);
+}
+
+.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 300px;
+    /* transform: rotateX(-15deg); */
+    animation: notanimate 4s linear infinite;
+}
+
+@keyframes notanimate {
+    0%   { transform: rotateX(-15deg) rotateY(360deg); }
+    /* 50% { transform: rotateX(-10deg) rotateY(180deg); } */
+    100% { transform: rotateX(-15deg) rotateY(0deg); }
+}
+
+
+.poema-container {
+    max-width: 700px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    color: #f44242;
+}
+
+p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.autor {
+    font-style: italic;
+    color: #666;
+}
