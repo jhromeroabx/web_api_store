@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poema para KATC de JARL #4 ❤️</title>
+    <link rel="stylesheet" href="/css3/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <h1>
+            <%= poemaData.Jhosep_Adbel_Romero_Loa %>
+        </h1>
+        <!-- <h1>${poemaData.Jhosep_Adbel_Romero_Loa}</h1> -->
+        <!-- <p><%= poemaData.body.replace(/\n/g, "<br>") %></p> -->
+        <!-- <p><%- poemaData.body %></p> -->
+        <div class="container">
+            <%- poemaData.body %>
+        </div>
+        <!-- <p>${poemaData.body.replace(/\n/g, '<br>')}</p> -->
+        <p class="autor">— by JARL and Jojo with ❤️😘😍 for Karen & Andreita —</p>
+        <p class="autor">— Happy <%- poemaData.date %> Date ❤️ —</p>
+
+        <img class="photo" src="https://miniowebapi-dev.abexa.pe/api/Archivo/verImagen?NombreCarpeta=test&NombreImagen=1" />
+        <img class="photo" src="https://miniowebapi-dev.abexa.pe/api/Archivo/verImagen?NombreCarpeta=test&NombreImagen=2" />
+        <img class="photo" src="https://miniowebapi-dev.abexa.pe/api/Archivo/verImagen?NombreCarpeta=test&NombreImagen=3" />
+        <img class="photo" src="https://miniowebapi-dev.abexa.pe/api/Archivo/verImagen?NombreCarpeta=test&NombreImagen=4" />
+        <img class="photo" src="https://miniowebapi-dev.abexa.pe/api/Archivo/verImagen?NombreCarpeta=test&NombreImagen=5" />
+        <img class="photo" src="https://miniowebapi-dev.abexa.pe/api/Archivo/verImagen?NombreCarpeta=test&NombreImagen=6" />
+
+        <button class="japanese-line" onclick="getVoice(this,'55')">❤️👂▶️<p>Heaven - Bryan Adams❤️</p></button>
+        <button class="japanese-line" onclick="getVoice(this,'44')">❤️👂▶️<p>Amor del bueno - Reyli Barba❤️</p></button>
+        <button class="japanese-line" onclick="getVoice(this,'33')">❤️👂▶️<p>Es por ti - Complices</p></button>
+        <button class="japanese-line" onclick="getVoice(this,'22')">❤️👂▶️<p>Drive - The Cars❤️</p></button>
+    </div>
+    <script src="/js3/script.js"></script>
+</body>
+
+</html>

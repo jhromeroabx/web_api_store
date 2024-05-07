@@ -22,70 +22,118 @@ router.get("/first", (_req, res) => {
   });
 });
 
-router.get("/make", (_req, res) => {
+router.get("/with-you", (_req, res) => {
   const poemaData = {
-    // Jhosep_Adbel_Romero_Loa: "A TU LADO by JARL with so much love ❤️",
-    Jhosep_Adbel_Romero_Loa: "HAGAMOS ESTO JUNTOS ❤️",
+    Jhosep_Adbel_Romero_Loa: "A TU LADO ❤️",
     date: "19-04-2024",
     body: `
-    <p>A TU LADO</p>
-    <button class="japanese-line" onclick="translateJapanese(this)">Traducir</button><p>あなたの側で</p>
-    <p>Anata no soba de</p>
+    <div class="heart-frame">
+    <h3>A TU LADO</h3>
+    <button class="japanese-line" onclick="getVoice(this,'01')">❤️👂▶️<p>あなたの側で</p></button>
+    <p>01. Anata no soba de</p>
+    </div>
+    <div class="heart-frame">
     <p>Mi bella musa Karen amada mia,</p>
-    <p>私の美しいミューズ、❤️カレン、❤️ 私の最愛の人、</p>
-    <p>Watashi no utsukushī myūzu, Karen, watashi no saiai no hito,</p>
+    <button class="japanese-line" onclick="getVoice(this,'02')">❤️👂▶️<p>私の美しいミューズ、❤️カレン、❤️ 私の最愛の人、</p></button>
+    <p>02. Watashi no utsukushī myūzu, Karen, watashi no saiai no hito,</p>
+    </div>
+    <div class="heart-frame">
     <p>te amo tanto que no tienes idea.</p>
-    <p>私はあなたをとても愛しています。</p>
-    <p>Watashi wa anata o totemo aishiteimasu.</p>
+    <button class="japanese-line" onclick="getVoice(this,'03')">❤️👂▶️<p>私はあなたをとても愛しています。</p></button>
+    <p>03. Watashi wa anata o totemo aishiteimasu.</p>
+    </div>
+    <div class="heart-frame">
     <p>Tus ojos son como estrellas.</p>
-    <p>あなたの目は星のようです。</p>
-    <p>Anata no me wa hoshi no yōdesu.</p>
+    <button class="japanese-line" onclick="getVoice(this,'04')">❤️👂▶️<p>あなたの目は星のようです。</p></button>
+    <p>04. Anata no me wa hoshi no yōdesu.</p>
+    </div>
+    <div class="heart-frame">
     <p>tus mejillas rosadas,</p>
-    <p>あなたのバラ色の頬、</p>
-    <p>Anata no bara-iro no hoho,</p>
+    <button class="japanese-line" onclick="getVoice(this,'05')">❤️👂▶️<p>あなたのバラ色の頬、</p></button>
+    <p>05. Anata no bara-iro no hoho,</p>
+    </div>
+    <div class="heart-frame">
     <p>eres bonita como una hada.</p>
-    <p>あなたは妖精のようにかわいいです。</p>
-    <p>Anata wa yōsei no yō ni kawaīdesu.</p>
+    <button class="japanese-line" onclick="getVoice(this,'06')">❤️👂▶️<p>あなたは妖精のようにかわいいです。</p></button>
+    <p>06. Anata wa yōsei no yō ni kawaīdesu.</p>
+    </div>
+    <div class="heart-frame">
     <p>Cada vez que estoy a tu lado,</p>
-    <p>私があなたのそばにいるたびに、</p>
-    <p>Watashi ga anata no soba ni iru tabi ni,</p>
+    <button class="japanese-line" onclick="getVoice(this,'07')">❤️👂▶️<p>私があなたのそばにいるたびに、</p></button>
+    <p>07. Watashi ga anata no soba ni iru tabi ni,</p>
+    </div>
+    <div class="heart-frame">
     <p>Me siento muy inspirado y motivado, </p>
-    <p>とても刺激を受けて、モチベーションも上がっていると感じますので、</p>
-    <p>Totemo shigeki o ukete, mochibēshon mo agatte iru to kanjimasunode,</p>
+    <button class="japanese-line" onclick="getVoice(this,'08')">❤️👂▶️<p>とても刺激を受けて、モチベーションも上がっていると感じますので、</p></button>
+    <p>08. Totemo shigeki o ukete, mochibēshon mo agatte iru to kanjimasunode,</p>
+    </div>
+    <div class="heart-frame">
     <p>es que estoy enamorado.</p>
-    <p>それは私が恋をしているということです。</p>
-    <p>Sore wa watashi ga koiwoshiteiru to iu kotodesu.</p>
+    <button class="japanese-line" onclick="getVoice(this,'09')">❤️👂▶️<p>それは私が恋をしているということです。</p></button>
+    <p>09. Sore wa watashi ga koiwoshiteiru to iu kotodesu.</p>
+    </div>
+    <div class="heart-frame">
     <p>Amo cada detalle de ti,</p>
-    <p>私はあなたのあらゆる細部を愛しています、</p>
-    <p>Watashi wa anata no arayuru saibu o aishiteimasu,</p>
+    <button class="japanese-line" onclick="getVoice(this,'10')">❤️👂▶️<p>私はあなたのあらゆる細部を愛しています、</p></button>
+    <p>10. Watashi wa anata no arayuru saibu o aishiteimasu,</p>
+    </div>
+    <div class="heart-frame">
     <p>me gusta tu corazón feliz.</p>
-    <p>あなたの幸せな心が好きです。</p>
-    <p>Anata no shiawasena kokoro ga sukidesu.</p>
+    <button class="japanese-line" onclick="getVoice(this,'11')">❤️👂▶️<p>あなたの幸せな心が好きです。</p></button>
+    <p>11. Anata no shiawasena kokoro ga sukidesu.</p>
+    </div>
+    <div class="heart-frame">
     <p>Contigo me siento muy feliz,</p>
-    <p>あなたと一緒にいると私はとても幸せに感じます、</p>
-    <p>Anata to issho ni iru to watashi wa totemo shiawase ni kanjimasu,</p>
+    <button class="japanese-line" onclick="getVoice(this,'12')">❤️👂▶️<p>あなたと一緒にいると私はとても幸せに感じます、</p></button>
+    <p>12. Anata to issho ni iru to watashi wa totemo shiawase ni kanjimasu,</p>
+    </div>
+    <div class="heart-frame">
     <p>quiero tener ese sentimiento sin fin.</p>
-    <p>その終わりのない感覚を味わいたい。</p>
-    <p>Sono owari no nai kankaku o ajiwaitai.</p>
+    <button class="japanese-line" onclick="getVoice(this,'13')">❤️👂▶️<p>その終わりのない感覚を味わいたい。</p></button>
+    <p>13. Sono owari no nai kankaku o ajiwaitai.</p>
+    </div>
+    <div class="heart-frame">
     <p>Por eso te pido que caminemos juntos siempre,</p>
-    <p>だから、いつも一緒に歩いてください。</p>
-    <p>Dakara, itsumoissho ni aruite kudasai.</p>
+    <button class="japanese-line" onclick="getVoice(this,'14')">❤️👂▶️<p>だから、いつも一緒に歩いてください。</p></button>
+    <p>14. Dakara, itsumoissho ni aruite kudasai.</p>
+    </div>
+    <div class="heart-frame">
     <p>contigo quiero viajar por todos los continentes.</p>
-    <p>あなたと一緒にすべての大陸を旅したいです。</p>
-    <p>Anata to issho ni subete no tairiku o tabi shitaidesu.</p>
+    <button class="japanese-line" onclick="getVoice(this,'15')">❤️👂▶️<p>あなたと一緒にすべての大陸を旅したいです。</p></button>
+    <p>15. Anata to issho ni subete no tairiku o tabi shitaidesu.</p>
+    </div>
+    <div class="heart-frame">
     <p>Quiero darte todo lo mejor de mi,</p>
-    <p>私の全力を尽くしたいと思います、</p>
-    <p>Watashi no zenryoku o tsukushitai to omoimasu,</p>
+    <button class="japanese-line" onclick="getVoice(this,'16')">❤️👂▶️<p>私の全力を尽くしたいと思います、</p></button>
+    <p>16. Watashi no zenryoku o tsukushitai to omoimasu,</p>
+    </div>
+    <div class="heart-frame">
     <p>tener una familia y que mis hijos se parezcan a ti.</p>
-    <p>家族がいて、私の子供たちはあなたに似ています。</p>
-    <p>Kazoku ga ite, watashi no kodomo-tachi wa anata ni nite imasu.</p>
+    <button class="japanese-line" onclick="getVoice(this,'17')">❤️👂▶️<p>家族がいて、私の子供たちはあなたに似ています。</p></button>
+    <p>17. Kazoku ga ite, watashi no kodomo-tachi wa anata ni nite imasu.</p>
+    </div>
+    <div class="heart-frame">
     <p>Te amo mucho mi bella princesa Karen Andrea Torres Colan, </p>
-    <p>私はあなたをとても愛しています、私の美しいプリンセス、❤️カレン・アンドレア・トーレス・コラン、❤️</p>
-    <p>Watashi wa anata o totemo aishiteimasu, watashi no utsukushī purinsesu, Karen andorea tōresu koran,</p>
+    <button class="japanese-line" onclick="getVoice(this,'18')">❤️👂▶️<p>私はあなたをとても愛しています、私の美しいプリンセス、❤️カレン・アンドレア・トーレス・コラン、❤️</p></button>
+    <p>18. Watashi wa anata o totemo aishiteimasu, watashi no utsukushī purinsesu, Karen andorea tōresu koran,</p>
+    </div>
+    <div class="heart-frame">
     <p>Un poema de tu caballero de jengibre Jhosep Adbel Romero Loa ❤️💕😍😘💖🥰❣💕💞💓💗💝💘💟💌</p>
-    <p>ジンジャーブレッドの騎士からの詩。❤️ジョセップ・アドベル・ロメロ・ロア❤️</p>
-    <p>Jinjābureddo no kishi kara no uta. Joseppu adoberu romero roa</p>
+    <button class="japanese-line" onclick="getVoice(this,'19')">❤️👂▶️<p>ジンジャーブレッドの騎士からの詩。❤️ジョセップ・アドベル・ロメロ・ロア❤️</p></button>    
+    <p>19. Jinjābureddo no kishi kara no uta. Joseppu adoberu romero roa</p>
+    </div>
     `,
+  };
+
+  res.render(path.join(__dirname, "with-you/view/index.ejs"), {
+    poemaData: poemaData,
+  });
+});
+
+router.get("/make", (_req, res) => {
+  const poemaData = {
+    Jhosep_Adbel_Romero_Loa: "HAGAMOS ESTO JUNTOS ❤️",
+    date: "19-04-2024",
   };
 
   res.render(path.join(__dirname, "make/view/index.ejs"), {

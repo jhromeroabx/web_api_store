@@ -1,0 +1,64 @@
+.wrapper {
+    max-width: 800px; /* Ancho máximo del contenedor */
+    margin: 0 auto; /* Margen automático en los lados para centrar */
+    text-align: center; /* Centrar el texto */
+    /* padding: 20px; /* Añadir espacio alrededor del contenido */
+}
+
+h1 {
+    color: #f44242;
+}
+
+.heart-frame {
+    border: 2px solid red; /* Borde transparente */
+    padding: 20px;
+    border-radius: 20px; /* Bordes redondeados */
+    display: inline-block; /* Para que se ajuste al contenido */
+}
+
+.container {
+    text-align: center; /* Alinea los marcos al centro */
+}
+
+.photo {
+    width: 300px;
+    height: auto; /* Esto mantendrá la proporción de aspecto original de las imágenes */
+}
+
+@media (min-width: 768px) { /* Cambiar a columnas en pantallas más grandes */
+    .heart-frame {
+        display: block;
+    }
+}
+
+.heart-frame:hover {
+    border-width: 8px; /* Ajusta el ancho del borde al pasar el mouse */
+    border-color: pink; /* Cambia el color del borde al pasar el mouse */
+}
+
+.japanese-line {
+    background-color: #ee8080; /* Color rojo */
+    color: #fff; /* Texto blanco */
+    border-radius: 20px; /* Bordes curvos */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cambio de cursor al pasar el ratón */
+    /*display: block; /* Convertir en bloque para ocupar todo el ancho disponible */
+    display: inline-block; /* Para que los botones estén uno al lado del otro */    ; /* Convertir en bloque para ocupar todo el ancho disponible */
+    margin-bottom: 10px; /* Añadir un pequeño margen inferior */
+}
+
+.japanese-line p {
+    margin: 0; /* Elimina el margen del párrafo dentro del botón */
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
