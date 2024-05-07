@@ -1,28 +1,104 @@
 const express = require("express");
-const path = require('path');
+const path = require("path");
 
 const router = express.Router();
 
 router.get("/main", (_req, res) => {
-    res.json({ Jhosep_Adbel_Romero_Loa: "¿Karen Andrea Torres Colan, Te gustaria ser mi novia o mejor aun casarte conmigo?", });
+  res.json({
+    Jhosep_Adbel_Romero_Loa:
+      "¿Karen Andrea Torres Colan, Te gustaria ser mi novia o mejor aun casarte conmigo?",
+  });
 });
 
 router.get("/first", (_req, res) => {
-    res.json({
-        primero: "perdon por lo que dije, si fue fuerte creo, :,c",
-        segundo: "gracias karen por conocerte, la verdad el Practigest me hizo valorarme como persona y profesional, eso es algo que nunca podre pagartelo, no sabes todo el dolor que sentia pero bueno ... eso es otra historia",
-        tercero: "te puedo devolver el favor aunque sea pagandote el 0.5% ayudante con tu tesis que estoy seguro que no has avanzado mucho, totalmente gratis :)",
-        cuarto: "¿te gustaria ser mi amiga especial Karen Andrea Torres Colan?",
-        cuarto_5: "TRUE = Si || FALSE = No"
-    });
+  res.json({
+    primero: "perdon por lo que dije, si fue fuerte creo, :,c",
+    segundo:
+      "gracias karen por conocerte, la verdad el Practigest me hizo valorarme como persona y profesional, eso es algo que nunca podre pagartelo, no sabes todo el dolor que sentia pero bueno ... eso es otra historia",
+    tercero:
+      "te puedo devolver el favor aunque sea pagandote el 0.5% ayudante con tu tesis que estoy seguro que no has avanzado mucho, totalmente gratis :)",
+    cuarto: "¿te gustaria ser mi amiga especial Karen Andrea Torres Colan?",
+    cuarto_5: "TRUE = Si || FALSE = No",
+  });
+});
+
+router.get("/make", (_req, res) => {
+  const poemaData = {
+    // Jhosep_Adbel_Romero_Loa: "A TU LADO by JARL with so much love ❤️",
+    Jhosep_Adbel_Romero_Loa: "HAGAMOS ESTO JUNTOS ❤️",
+    date: "19-04-2024",
+    body: `
+    <p>A TU LADO</p>
+    <button class="japanese-line" onclick="translateJapanese(this)">Traducir</button><p>あなたの側で</p>
+    <p>Anata no soba de</p>
+    <p>Mi bella musa Karen amada mia,</p>
+    <p>私の美しいミューズ、❤️カレン、❤️ 私の最愛の人、</p>
+    <p>Watashi no utsukushī myūzu, Karen, watashi no saiai no hito,</p>
+    <p>te amo tanto que no tienes idea.</p>
+    <p>私はあなたをとても愛しています。</p>
+    <p>Watashi wa anata o totemo aishiteimasu.</p>
+    <p>Tus ojos son como estrellas.</p>
+    <p>あなたの目は星のようです。</p>
+    <p>Anata no me wa hoshi no yōdesu.</p>
+    <p>tus mejillas rosadas,</p>
+    <p>あなたのバラ色の頬、</p>
+    <p>Anata no bara-iro no hoho,</p>
+    <p>eres bonita como una hada.</p>
+    <p>あなたは妖精のようにかわいいです。</p>
+    <p>Anata wa yōsei no yō ni kawaīdesu.</p>
+    <p>Cada vez que estoy a tu lado,</p>
+    <p>私があなたのそばにいるたびに、</p>
+    <p>Watashi ga anata no soba ni iru tabi ni,</p>
+    <p>Me siento muy inspirado y motivado, </p>
+    <p>とても刺激を受けて、モチベーションも上がっていると感じますので、</p>
+    <p>Totemo shigeki o ukete, mochibēshon mo agatte iru to kanjimasunode,</p>
+    <p>es que estoy enamorado.</p>
+    <p>それは私が恋をしているということです。</p>
+    <p>Sore wa watashi ga koiwoshiteiru to iu kotodesu.</p>
+    <p>Amo cada detalle de ti,</p>
+    <p>私はあなたのあらゆる細部を愛しています、</p>
+    <p>Watashi wa anata no arayuru saibu o aishiteimasu,</p>
+    <p>me gusta tu corazón feliz.</p>
+    <p>あなたの幸せな心が好きです。</p>
+    <p>Anata no shiawasena kokoro ga sukidesu.</p>
+    <p>Contigo me siento muy feliz,</p>
+    <p>あなたと一緒にいると私はとても幸せに感じます、</p>
+    <p>Anata to issho ni iru to watashi wa totemo shiawase ni kanjimasu,</p>
+    <p>quiero tener ese sentimiento sin fin.</p>
+    <p>その終わりのない感覚を味わいたい。</p>
+    <p>Sono owari no nai kankaku o ajiwaitai.</p>
+    <p>Por eso te pido que caminemos juntos siempre,</p>
+    <p>だから、いつも一緒に歩いてください。</p>
+    <p>Dakara, itsumoissho ni aruite kudasai.</p>
+    <p>contigo quiero viajar por todos los continentes.</p>
+    <p>あなたと一緒にすべての大陸を旅したいです。</p>
+    <p>Anata to issho ni subete no tairiku o tabi shitaidesu.</p>
+    <p>Quiero darte todo lo mejor de mi,</p>
+    <p>私の全力を尽くしたいと思います、</p>
+    <p>Watashi no zenryoku o tsukushitai to omoimasu,</p>
+    <p>tener una familia y que mis hijos se parezcan a ti.</p>
+    <p>家族がいて、私の子供たちはあなたに似ています。</p>
+    <p>Kazoku ga ite, watashi no kodomo-tachi wa anata ni nite imasu.</p>
+    <p>Te amo mucho mi bella princesa Karen Andrea Torres Colan, </p>
+    <p>私はあなたをとても愛しています、私の美しいプリンセス、❤️カレン・アンドレア・トーレス・コラン、❤️</p>
+    <p>Watashi wa anata o totemo aishiteimasu, watashi no utsukushī purinsesu, Karen andorea tōresu koran,</p>
+    <p>Un poema de tu caballero de jengibre Jhosep Adbel Romero Loa ❤️💕😍😘💖🥰❣💕💞💓💗💝💘💟💌</p>
+    <p>ジンジャーブレッドの騎士からの詩。❤️ジョセップ・アドベル・ロメロ・ロア❤️</p>
+    <p>Jinjābureddo no kishi kara no uta. Joseppu adoberu romero roa</p>
+    `,
+  };
+
+  res.render(path.join(__dirname, "make/view/index.ejs"), {
+    poemaData: poemaData,
+  });
 });
 
 router.get("/perfection-found", (_req, res) => {
-    const poemaData = {
-        Jhosep_Adbel_Romero_Loa: "LA PERFECCIÓN ENCONTRADA by JARL with so much love ❤️❤️",
-        date: "19-01-2024",
-        body:
-            `Oh mi hermosa princesa de fuego color canela,\n
+  const poemaData = {
+    Jhosep_Adbel_Romero_Loa:
+      "LA PERFECCIÓN ENCONTRADA by JARL with so much love ❤️❤️",
+    date: "19-01-2024",
+    body: `Oh mi hermosa princesa de fuego color canela,\n
             eres mi Karen Andrea Torres Colan️❤️❤️❤️, la mujer mas bella,\n
             desde que llegaste a mi vida,\n
             le diste color y sentido a todos mis dias,\n
@@ -59,23 +135,23 @@ router.get("/perfection-found", (_req, res) => {
             No sabes cuanto te amo mi hermosa, inteligente y apasionada Karen Andrea Torres Colan,\n
             espero guardes bajo 7 llaves mi corazón que te dan, ya que es solo tuyo y de nadie más,\n
             Feliz primer mes juntos y que esta bella historia se siga escribiendo en una gran biblioteca por que habrán muchas hojas, libros y volúmenes, yo me encargaré de ello mi hermosa deidad.\n
-            Con toda mi amor❤️💕😍😘💖🥰❣💕💞💓💗💝💘💟💌, alma, cuerpo y espíritu para mi amada, bella, esbelta e inteligente Karen Andrea Torres Colan de tu amado Jhosep Adbel Romero Loa. - 19.01.2024\n`
-    };
+            Con toda mi amor❤️💕😍😘💖🥰❣💕💞💓💗💝💘💟💌, alma, cuerpo y espíritu para mi amada, bella, esbelta e inteligente Karen Andrea Torres Colan de tu amado Jhosep Adbel Romero Loa. - 19.01.2024\n`,
+  };
 
-    // poemaData.body = poemaData.body.replace('/\n/g', '<br>');
-  poemaData.body = poemaData.body.replace(/\n/g, '<br>');
+  // poemaData.body = poemaData.body.replace('/\n/g', '<br>');
+  poemaData.body = poemaData.body.replace(/\n/g, "<br>");
 
-    // res.send(html);
-    res.render(path.join(__dirname, 'perfection-found/view/index.ejs'), { poemaData: poemaData });
-
-})
+  // res.send(html);
+  res.render(path.join(__dirname, "perfection-found/view/index.ejs"), {
+    poemaData: poemaData,
+  });
+});
 
 router.get("/confirmation", (_req, res) => {
-    const poemaData = {
-        Jhosep_Adbel_Romero_Loa: "LA CONFIRMACIÓN by JARL with ❤️",
-        date: "24-12-2023",
-        body:
-            `Oh mi bella deidad, eres tan hermosa,\n
+  const poemaData = {
+    Jhosep_Adbel_Romero_Loa: "LA CONFIRMACIÓN by JARL with ❤️",
+    date: "24-12-2023",
+    body: `Oh mi bella deidad, eres tan hermosa,\n
 Es por eso que eres mi diosa.\n
 No sabes cuánto te amo,\n
 ya que por ti todo lo hago.\n
@@ -111,10 +187,10 @@ no te defraudare ni te traicionare.\n
 Eres la más hermosa casualidad que la vida me puedo ofrecer.\n
 te amo mucho mi niña hermosa, mi deidad, mi amorcito bella y esbelta.\n
 Gracias por haberme leído, te amo mucho, nunca lo olvides.\n
-De JARL con ❤️💕 para Karen Andrea Torres Colan (mi hermosa deidad) – 24/12/2023.\n`
-    };
+De JARL con ❤️💕 para Karen Andrea Torres Colan (mi hermosa deidad) – 24/12/2023.\n`,
+  };
 
-    const html = `
+  const html = `
     <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -178,7 +254,7 @@ De JARL con ❤️💕 para Karen Andrea Torres Colan (mi hermosa deidad) – 24
 
 <div class="poema-container">
     <h1>${poemaData.Jhosep_Adbel_Romero_Loa}</h1>
-    <p>${poemaData.body.replace(/\n/g, '<br>')}</p>
+    <p>${poemaData.body.replace(/\n/g, "<br>")}</p>
     <p class="autor">— by JARL with ❤️😘😍💕 —</p>
 </div>
 
@@ -186,15 +262,14 @@ De JARL con ❤️💕 para Karen Andrea Torres Colan (mi hermosa deidad) – 24
 </html>
     `;
 
-    res.send(html);
-})
+  res.send(html);
+});
 
 router.get("/JARLandKATC", (_req, res) => {
-    const poemaData = {
-        Jhosep_Adbel_Romero_Loa: "NUESTRA ODISEA by JARL with ❤️",
-        date: "28-11-2023",
-        body:
-            `Era un día soleado,\n
+  const poemaData = {
+    Jhosep_Adbel_Romero_Loa: "NUESTRA ODISEA by JARL with ❤️",
+    date: "28-11-2023",
+    body: `Era un día soleado,\n
 estaba triste y mareado,\n
 angustiado por haber pedido todo,\n
 pues estaba metido en la soledad ni modo.\n
@@ -231,9 +306,10 @@ Ya que es mío y ahora tuyo y de nadie más.\n
 Gracias por haberme escuchado y\n
 Haberme soportado.\n
 Con ❤️ por Jhosep Adbel Romero Loa 28.11.2023
-` };
+`,
+  };
 
-    const html = `
+  const html = `
         <!DOCTYPE html>
         <html lang="es">
         <head>
@@ -250,9 +326,7 @@ Con ❤️ por Jhosep Adbel Romero Loa 28.11.2023
         </html>
     `;
 
-    res.send(html);
-
-
+  res.send(html);
 });
 
 //   res.json({

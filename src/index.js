@@ -21,6 +21,9 @@ app.set('view engine', 'ejs');
 
 app.use('/css', express.static(path.join(__dirname, 'routes/perfection-found/css')));
 
+app.use('/css2', express.static(path.join(__dirname, 'routes/make/css')));
+app.use('/js2', express.static(path.join(__dirname, 'routes/make/js')));
+
 //token 7bc3856ec9b511ecb7fa3a3a141bbc4f
 Sentry.init({
   dsn: "https://a10c2360b46b4f6cb8499e2f09ee69e2@o1228261.ingest.sentry.io/6373959",

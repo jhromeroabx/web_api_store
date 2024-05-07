@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css2/style.css">
+<title>Grabador de Audio</title>
+</head>
+<body>
+<div class="wrapper">
+    <!-- <h1>${poemaData.Jhosep_Adbel_Romero_Loa}</h1> Mueve el h1 fuera del contenedor -->
+    <h1><%= poemaData.Jhosep_Adbel_Romero_Loa %></h1>
+    <div class="container">
+        <button id="startButton">Iniciar Grabación</button>
+        <button id="stopButton" disabled>Detener Grabación</button>
+        <div id="counter">Tiempo de grabación: 00:00:00</div>
+        <audio id="audioElement" controls></audio>
+        <input type="text" id="textInput" placeholder="Nombre del audio...">
+        <button id="submitButton">Guardar Audio</button>
+    </div>
+</div>
+
+<script src="/js2/script.js"></script>
+
+</body>
+</html>

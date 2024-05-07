@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(0deg, #ffffff 25%, #f88080 75%);
+    overflow: hidden;
+    position: relative;
+}
+body::before {
+    /* content: '';*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, #f88080 25%, #ffffff 75%);
+    opacity: 1;
+    animation: anim 3s linear infinite;
+}
+
+h1 {
+    color: #f44242;
+}
+
+.container {
+    text-align: center;
+    position: relative;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px; 
+}
+
+#textInput {
+    border-radius: 20px; 
+    width: 300px; 
+    height: 40px; 
+    margin: 10px; 
+    padding: 5px 10px;
+    border: none; 
+}
+
+#textInput {
+    display: block;
+    margin: 20px auto;
+}
+
+#submitButton {
+    display: block;
+    margin: 20px auto;
+    background-color: #f44242;
+    color: #fff;
+}
+
+#startButton {
+    background-color: #f44242;
+    color: #fff;
+}
+
+#stopButton {
+    background-color: #f44242;
+    color: #fff;
+}
+
+#startButton:disabled {
+    background-color: #d3d3d3;
+    color: #fff;
+}
+
+#stopButton:disabled {
+    background-color: #d3d3d3;
+    color: #fff;
+}
+
+#counter {
+    font-size: 24px;
+    margin-top: 20px;
+    color: red;
+}
+
+.wrapper {
+    text-align: center;
+}
+
+
+.rainbow {
+    animation: changeColor 2s linear infinite;
+}
+
+@keyframes changeColor {
+    0%, 100% { color: red; }
+    25% { color: rgb(230, 105, 157); }
+    50% { color: rgb(202, 82, 82); }
+    75% { color: rgba(223, 16, 119); }
+}
